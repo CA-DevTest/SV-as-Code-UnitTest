@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <soapenv:Body>
+    <deleteUser xmlns="http://ejb3.examples.itko.com/">
+      <!--username is optional-->
+      <username xmlns="">looth</username>
+    </deleteUser>
+  </soapenv:Body>
+</soapenv:Envelope>

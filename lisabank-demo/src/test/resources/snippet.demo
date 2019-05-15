@@ -1,0 +1,93 @@
+	
+	
+	@DevTestVirtualServer()
+	-------------------
+	
+	@ClassRule
+	public static VirtualServiceClassScopeRule clazzRule = new VirtualServiceClassScopeRule();
+	@Rule
+	public VirtualServicesRule rules = new VirtualServicesRule();
+
+	-----------------------------------
+	
+	
+		@DevTestVirtualService(serviceName = "getListUser0", 
+								basePath = "/itkoExamples/EJB3UserControlBean", 
+								port = 9081, 
+								workingFolder = "UserServiceTest/getListUser/EJB3UserControlBean", 
+							requestDataProtocol = {@Protocol(ProtocolType.DPH_SOAP) })
+	
+	
+	
+	
+	
+	
+	-----------------------------------
+	
+@DevTestVirtualService(serviceName = "getListUser1",
+				 basePath = "/itkoExamples/EJB3UserControlBean", port = 9081, 
+			workingFolder = "UserServiceTest/getListUser/EJB3UserControlBean1", 
+			requestDataProtocol = {
+			@Protocol(ProtocolType.DPH_SOAP) })
+	@Test
+	public void getListUser1() {
+		User[] users = bankServices.getListUser();
+		assertNotNull(users);
+		printUsers(users);
+		assertEquals(1, users.length);
+	}
+		
+------------------- FROM RRPAIRS
+Test 
+GenerateRRPairs
+
+
+@DevTestVirtualService(serviceName = "UserServiceTest-EJB3UserControlBean", 
+	port = 9081, basePath = "/itkoExamples/EJB3UserControlBean", 
+	workingFolder = "rawtraffic/rrpairs/itkoExamples/EJB3UserControlBean", 
+	requestDataProtocol = {
+	@Protocol(ProtocolType.DPH_SOAP) })
+	
+	@DevTestVirtualService(serviceName = "UserServiceTest-EJB3AccountControlBean", 
+	port = 9081, basePath = "/itkoExamples/EJB3AccountControlBean", 
+	workingFolder = "rawtraffic/rrpairs/itkoExamples/EJB3AccountControlBean", 
+	requestDataProtocol = {
+	@Protocol(ProtocolType.DPH_SOAP) })	
+	
+	
+	
+	
+	
+	
+	
+	----------------------
+	@DevTestVirtualService(serviceName = "getListUserTemplate", 
+			basePath = "/itkoExamples/EJB3UserControlBean", 
+			port = 9081, workingFolder = "UserServiceTest/getListUser/template", 
+			parameters={@Parameter(name="email", value="pascal.gasp@gmail.com"),
+			@Parameter(name="nom", value="Gasp"),
+			@Parameter(name="login", value="pgasp"),
+			@Parameter(name="pwd", value="HELLO")},
+			requestDataProtocol = {
+			@Protocol(ProtocolType.DPH_SOAP) })
+	@Test
+	public void getListUserTemplate() {
+		User[] users = bankServices.getListUser();
+		assertNotNull(users);
+		assertEquals(1, users.length);
+		printUsers(users);
+	}
+	
+	
+	-------------------------------
+	@DevTestVirtualService(serviceName = "getListUser2", basePath = "/itkoExamples/EJB3UserControlBean", port = 9081, 
+			workingFolder = "UserServiceTest/getListUser/EJB3UserControlBean2", 
+			requestDataProtocol = {
+			@Protocol(ProtocolType.DPH_SOAP) })
+	@Test
+	public void getListUser2() {
+		User[] users = bankServices.getListUser();
+		assertNotNull(users);
+		
+		assertEquals(2, users.length);
+	}

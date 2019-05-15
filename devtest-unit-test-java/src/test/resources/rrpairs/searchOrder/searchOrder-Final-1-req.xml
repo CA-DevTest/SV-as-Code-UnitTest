@@ -1,0 +1,8 @@
+POST /oms2/directService/router?extTID=20&extAction=orderServiceUI&extMethod=getOrderList&extType=rpc&extUpload=false&idBranch=&transferFilter=0&idDisposition=&externalReference=REVREM1&dispositionTypeId=&securitiesAccount=&ucits=&remaked=&status=&reverse=&receiveDateFrom=&receiveDateTo=&preTransmitted=&isin=&idCurrency=&billingType=&idNetwork=&idDossier=&networkName=&dossierName=&ctaRefId=&payment=&taName=&sendingMethod=&externalRef=&internalRef=&shipmentRef=&quantityFrom=&quantityTo=&shortCutoff=&homeFund=&user=&navDateFrom=&navDateTo=&loadDateFrom=&loadDateTo=&contractNoteDateFrom=&contractNoteDateTo=&archiveId=0 HTTP/1.1
+ Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+Referer: http://localhost:8003/oms2/fds/home/index.jsp?NM_LOGIN=oms_lux&NM_VIEW=order_search
+Accept-Language: fr-FR
+Accept-Encoding: gzip, deflate
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko
+Content-Length: 591
+Cookie: JSESSIONID=D18B46FCD09725ECBDE9988B69B55D61

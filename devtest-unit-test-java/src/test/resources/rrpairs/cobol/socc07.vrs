@@ -1,0 +1,65 @@
+<?xml version="1.0" ?>
+
+<RecordingSession nonLeaf="WIDE" leaf="LOOSE" asObject="true">
+<Protocol type="com.itko.lisa.vse.stateful.protocol.rrpairs.VSFromRRPairsTransportProtocol">
+<Transport allAreStateless="true" asObject="true" desensitize="false" duptxns="false">
+<exportFile></exportFile>
+<RequestSide>
+<Protocol type="com.itko.lisa.vse.stateful.protocol.copybook.CopybookDataProtocol">
+<cb2XmlColumnStartUnparsed>6</cb2XmlColumnStartUnparsed>
+<validateFieldLengthsUnparsed>false</validateFieldLengthsUnparsed>
+<requestSideUnparsed>true</requestSideUnparsed>
+<cb2XmlColumnEndUnparsed>72</cb2XmlColumnEndUnparsed>
+<copybookCacheTTLUnparsed>-1</copybookCacheTTLUnparsed>
+<encodingUnparsed>UTF-8</encodingUnparsed>
+<fileDefinitionMapPathUnparsed>{{LISA_RELATIVE_PROJ_ROOT}}/Data/services/SOCC07/CPY/mapping.xml</fileDefinitionMapPathUnparsed>
+<copybookFileDefinitionFolderUnparsed>{{LISA_RELATIVE_PROJ_ROOT}}/Data/services/SOCC07/CPY</copybookFileDefinitionFolderUnparsed>
+<xmlElementsToRequestArgsUnparsed>true</xmlElementsToRequestArgsUnparsed>
+</Protocol>
+</RequestSide>
+<ResponseSide>
+<Protocol type="com.ca.devtest.copybook.dph.CopybookRRPairsDatahandler">
+<cb2XmlColumnStartUnparsed>6</cb2XmlColumnStartUnparsed>
+<validateFieldLengthsUnparsed>false</validateFieldLengthsUnparsed>
+<requestSideUnparsed>true</requestSideUnparsed>
+<cb2XmlColumnEndUnparsed>72</cb2XmlColumnEndUnparsed>
+<copybookCacheTTLUnparsed>-1</copybookCacheTTLUnparsed>
+<encodingUnparsed>UTF-8</encodingUnparsed>
+<fileDefinitionMapPathUnparsed>{{LISA_RELATIVE_PROJ_ROOT}}/Data/services/SOCC07/CPY/mapping.xml</fileDefinitionMapPathUnparsed>
+<copybookFileDefinitionFolderUnparsed>{{LISA_RELATIVE_PROJ_ROOT}}/Data/services/SOCC07/CPY</copybookFileDefinitionFolderUnparsed>
+<xmlElementsToRequestArgsUnparsed>true</xmlElementsToRequestArgsUnparsed>
+</Protocol>
+</ResponseSide>
+</Transport>
+<rrDir>{{LISA_RELATIVE_PROJ_ROOT}}/Data/services/SOCC07/RR</rrDir>
+<transportProtocol>
+<Protocol type="com.itko.lisa.vse.stateful.protocol.ctg.CTGProtocolHandler">
+<Transport allAreStateless="true" asObject="true" desensitize="false" duptxns="false">
+</Transport>
+<sslClientAuthTypeUnparsed>none</sslClientAuthTypeUnparsed>
+<enablePingUnparsed>false</enablePingUnparsed>
+<needSeparateBindUnparsed>false</needSeparateBindUnparsed>
+<useSslToClientUnparsed>false</useSslToClientUnparsed>
+<targetPortUnparsed>1234</targetPortUnparsed>
+<treatAllAsStatelessUnparsed>false</treatAllAsStatelessUnparsed>
+<hostHeaderPassThroughUnparsed>false</hostHeaderPassThroughUnparsed>
+<hasSecurityUnparsed>false</hasSecurityUnparsed>
+<targetHostUnparsed>localhost</targetHostUnparsed>
+<useGatewayUnparsed>true</useGatewayUnparsed>
+<allAreStatelessUnparsed>true</allAreStatelessUnparsed>
+<doApplyStructureUnparsed>false</doApplyStructureUnparsed>
+<useSslToServerUnparsed>false</useSslToServerUnparsed>
+<versionUnparsed>7.2.0</versionUnparsed>
+<chainedHttpProxyBypassUnparsed>127.0.0.1</chainedHttpProxyBypassUnparsed>
+<asObjectUnparsed>true</asObjectUnparsed>
+<chainedHttpsProxyBypassUnparsed>127.0.0.1</chainedHttpsProxyBypassUnparsed>
+<jvmTextUnparsed>LISA CTG Server</jvmTextUnparsed>
+<chainedHttpProxyActiveUnparsed>false</chainedHttpProxyActiveUnparsed>
+<listenPortUnparsed>2006</listenPortUnparsed>
+<desensitizeUnparsed>false</desensitizeUnparsed>
+<chainedHttpsProxyActiveUnparsed>false</chainedHttpsProxyActiveUnparsed>
+<duptxnsUnparsed>false</duptxnsUnparsed>
+</Protocol>
+</transportProtocol>
+</Protocol>
+</RecordingSession>

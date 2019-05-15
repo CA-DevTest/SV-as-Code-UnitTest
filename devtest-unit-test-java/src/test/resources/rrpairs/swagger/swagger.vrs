@@ -1,0 +1,20 @@
+<?xml version="1.0" ?>
+<RecordingSession nonLeaf="WIDE" leaf="LOOSE" asObject="true">
+	<Protocol
+		type="com.ca.devtest.sv.dph.ExtendedFromSwaggerProtocolHandler">
+		<basePath>$basePath</basePath>
+		<listenPort>$port</listenPort>
+		<Transport allAreStateless="true" asObject="true"
+			desensitize="false" duptxns="true">
+			<RequestSide>
+				<Protocol
+					type="com.itko.lisa.vse.stateful.protocol.json.JSONDataProtocolHandler2"></Protocol>
+			</RequestSide>
+			<ResponseSide></ResponseSide>
+		</Transport>
+		<swaggerUri>file:/Users/gaspa03/00-CA/01-Tools/00_DevTest/Workspace/BBVA/Data/swagger/cars-inventory-swagger.json</swaggerUri>
+		<selectedEndpoint>http://localhost/cars-inventory</selectedEndpoint>
+		<selectedRequestMimeType>APPLICATION_JSON</selectedRequestMimeType>
+		<selectedResponseMimeType>APPLICATION_JSON</selectedResponseMimeType>
+	</Protocol>
+</RecordingSession>

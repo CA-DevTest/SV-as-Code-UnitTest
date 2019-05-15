@@ -1,0 +1,185 @@
+== CA Service Virtualization As Code
+
+This project provides simple **Java annotations** that can be used  in your Junit Test to deploy Virtual Services before starting your test. The scope of annotations are test methods. +
+This java annotation helps to embed your Virtual Services in your source code. This approach makes your application ready for Continous Integration testing by removing system and data constraints with **CA Service Virtualization**. **Your tests become more reliable, repeatable and automated**. +
+With this approach, using **CA Virtual Services** from your Continuous Integration plateform becomes native. 
+
+== Projects description
+- **devtest-unit-test-java** : Source code of java annotations and java API wrapped on **CA Devtest Rest API** to build and deploy virtual services
+- **lisabank-demo** : Demo project using SV as Code annotation to deploy virtual services in junit test
+
+== Pre-requises 
+
+You should have **CA DevTest Server ** up and running. This server could be installed on your machine or on remote server. You will setup registry url and VSE name through Java Annotation *@DevTestVirtualServer* . 
+This both parameters will be used to build and deploy your virtual services.
+This annotations will use ***CA DevTest Rest API (CA DevTest Invoke 2)*** and it's compatible **from CA DevTest 8.0 to 10.1**. 
+
+== Getting started
+
+In  the **pom file** of your maven project  add a new repository to get the libraries dependencies.
+[source,xml]
+----
+	<repositories>
+		<repository>
+			<id>git-devtest</id>
+			<name>DevTest's Git based repo</name>
+			<url>https://raw.github.com/helpingdev/maven/master/</url>
+		</repository>
+	</repositories>
+----
+
+Add below dependency with scope test in your **pom file** : 
+[source,xml]
+----
+	<dependency>
+			<groupId>com.ca.devtest.sv.devtools</groupId>
+			<artifactId>devtest-unit-test-java</artifactId>
+			<version>1.1.11</version>
+	</dependency>
+
+----
+
+Below is a quick sample of how to use " SV as code " in your Junit classes:
+
+[source,java,indent=0]
+----
+/**
+ * @author pascal.gasp@ca.com
+ *
+ */
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringApplicationConfiguration(classes = LisaBankClientApplication.class)
+@DevTestVirtualServer(registryHost = "localhost", deployServiceToVse = "VSE")
+
+public class SimpleDemo {
+	static final Log logger = LogFactory.getLog(SimpleDemo.class);
+	@Autowired
+	private BankService bankServices;
+	@Rule
+	public VirtualServicesRule rules = new VirtualServicesRule();
+
+	@DevTestVirtualService(serviceName = "UserServiceTest-EJB3UserControlBean",
+			port = 9080, basePath = "/itkoExamples/EJB3UserControlBean",
+			rrpairsFolder = "UserServiceTest/getListUser/EJB3UserControlBean", 
+			requestDataProtocol = {@Protocol(ProtocolType.DPH_SOAP) })
+	@Test
+	public void getListUser() {
+		User[] users = bankServices.getListUser();
+		assertNotNull(users);
+		assertEquals(9, users.length);
+	}
+}
+----	
+
+First, flag your Junit class as a Test using CA Virtual Services. This annotation will be used to refer to the CA DevTest Server :
+
+* *registryHost* :* Registry hostname _(default value localhost)_
+* *deployServiceToVse :* Name of VSE
+* *login :* CA Devtest username _(default value svpower)_
+* *password :* CA Devtest password _(default value svpower)_
+all of this parameters are optional. You could set values in local-svascode.porperties file.
+[source,java,indent=0]
+----	
+@DevTestVirtualServer()
+----
+Add *VirtualServices* rule as a field member of Junit class. This rule will handle *SV as Code annotations* during Junit life cycle. Rules allow very flexible addition or redefinition of the behavior of each test method in a test class
+[source,java,indent=0]
+----	
+	@Rule
+	public VirtualServicesRule rules = new VirtualServicesRule();
+----
+
+Above of each test method, add virtual service annotations. This annotation should refer to the Requests/Responses folder and define virtual service configuration such as service name, listnen port, path, type of protocole
+[source,java,indent=0]
+----	
+@DevTestVirtualService(serviceName = "UserServiceTest-EJB3UserControlBean",
+	port = 9080, basePath = "/itkoExamples/EJB3UserControlBean",
+	rrpairsFolder = "UserServiceTest/getListUser/EJB3UserControlBean", 
+	requestDataProtocol = {@Protocol(ProtocolType.DPH_SOAP) })
+			
+----
+It's possible to define a set of Virtual Services with Class scope. In this case all virtual services will be deployed once at class level.
+First you should add Junit Class Rule as described below
+[source,java,indent=0]
+----
+	@ClassRule
+	public static VirtualServiceClassScopeRule ruleClass= new VirtualServiceClassScopeRule();
+----
+Then you could use DevTestVirtualService annotations on top of your class. 
+[source,java,indent=0]
+----
+/**
+ * 
+ */
+package com.ca.devtest.lisabank.demo.sv.http;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.junit.ClassRule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import com.ca.devtest.lisabank.demo.LisaBankClientApplication;
+import com.ca.devtest.lisabank.demo.business.BankService;
+import com.ca.devtest.lisabank.wsdl.User;
+import com.ca.devtest.sv.devtools.annotation.DevTestVirtualServer;
+import com.ca.devtest.sv.devtools.annotation.DevTestVirtualService;
+import com.ca.devtest.sv.devtools.annotation.Protocol;
+import com.ca.devtest.sv.devtools.annotation.ProtocolType;
+import com.ca.devtest.sv.devtools.junit.VirtualServiceClassScopeRule;
+
+/**
+ * @author pascal.gasp@ca.com
+ *
+ */
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringBootTest(classes = LisaBankClientApplication.class)
+// Mark as Test using CA Service Virtualization
+@DevTestVirtualServer()
+// Define Virtual Service with Clazz scope => Deploy once for all methods
+@DevTestVirtualService(serviceName = "VSClazzScopeSimpleDemo",
+basePath = "/itkoExamples/EJB3UserControlBean",
+port = 9081, 
+workingFolder = "UserServiceTest/getListUser/EJB3UserControlBean", 
+requestDataProtocol = {
+		@Protocol(ProtocolType.DPH_SOAP) })
+
+public class VSClazzScopeSimpleDemo {
+	static final Log logger = LogFactory.getLog(VSClazzScopeSimpleDemo.class);
+	@Autowired
+	private BankService bankServices;
+
+	// handle VS with Class scope
+	@ClassRule
+	public static VirtualServiceClassScopeRule clazzRule = new VirtualServiceClassScopeRule();
+
+	@Test
+	public void getListUser() {
+		User[] users = bankServices.getListUser();
+		assertNotNull(users);
+		printUsers(users);
+		assertEquals(9, users.length);
+	}
+
+	private void printUsers(User[] users) {
+		for (User user : users) {
+			logger.info(user.getFname() + " " + user.getLname() + " " + user.getLogin());
+		}
+
+	}
+}
+
+----
+
+== Contributors
+Pascal Gasp *Sr Architect Devops @ CA Technologies* +
+Vincent Mazot *Sr Consultant Devops @ CA Technologies* +
+Olivier Laplace  *Sr Presales Devops @ CA Technologies* +
+Benoit Boulc'h *Developer* +
+

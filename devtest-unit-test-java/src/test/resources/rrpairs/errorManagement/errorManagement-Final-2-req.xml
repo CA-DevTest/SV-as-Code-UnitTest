@@ -1,0 +1,8 @@
+POST /oms2/directService/router?extTID=20&extAction=errorServiceUI&extMethod=getErrorList&extType=rpc&extUpload=false&errorOrigin=1&errorId=&errorType=&errorStatus=ALL&errorCode=&orderId=1432330&shortCutOff=&orderStatus=&orderType=AL&externalRef=&receivedDateFrom=&receivedDateTo=&orderLifeCycle=BOTH&cnStatus=All&dossierId=&securitiesAccount=&transferorName=&networkId=&networkName=&fundType=&prePayment=2&isin=&combobox-1054-inputEl=&archived=Current HTTP/1.1
+ Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+Referer: http://localhost:8002/oms2/fds/home/index.jsp?&ID_UCITS=5207295&NM_LOGIN=suser_lux&NM_VIEW=error_management
+Accept-Language: fr-FR
+Accept-Encoding: gzip, deflate
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko
+Content-Length: 420
+Cookie: JSESSIONID=00005iRm92q9JZ1AUXuk1fKVD0B:14om1erdo

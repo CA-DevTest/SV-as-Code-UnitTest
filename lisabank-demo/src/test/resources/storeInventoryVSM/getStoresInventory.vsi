@@ -1,0 +1,110 @@
+<?xml version="1.0" ?>
+
+<serviceImage id="6" name="getStoresInventory" created="2019-05-12.23:57:36.784" lastModified="2019-05-12.23:57:36.816" version="10.5.0" buildNumber="10.5.0.497">
+<st>
+<t id="5" nd="true">
+<sp>
+<t id="9">
+<rq id="10" op="GET /v2/store/inventory/" tl="EXACT">
+<at>
+<p n="HTTP-Segment-Attr-0">v2</p>
+<p n="HTTP-Segment-Attr-1">store</p>
+<p n="HTTP-Segment-Attr-2">inventory</p>
+</at>
+<m>
+<p n="HTTP-Method">GET</p>
+<p n="HTTP-URI">/v2/store/inventory</p>
+<p n="HTTP-Version">HTTP/1.1</p>
+<p n="Accept">application/json</p>
+<p n="User-Agent">DevTest</p>
+<p n="Host">:0</p>
+<p n="Content-Type">application/json</p>
+<p n="Content-Length">155</p>
+<p n="matchedRule">GET /v2/store/inventory/</p>
+</m>
+</rq>
+<rs>
+<rp id="11" t="8">
+<m>
+<p n="HTTP-Version">HTTP/1.1</p>
+<p n="HTTP-Response-Code">200</p>
+<p n="HTTP-Response-Code-Text">OK</p>
+<p n="Cache-Control">public, max-age=36000</p>
+<p n="Server">LISA/Virtual-Environment-Server</p>
+<p n="Access-Control-Allow-Origin">*</p>
+<p n="Connection">keep-alive</p>
+<p n="Content-Length">222</p>
+<p n="Content-Type">application/json</p>
+<p n="Date">{{=httpNow()}}</p>
+<p n="X-Powered-By">LISA/{{=lisaVersionString()}}</p>
+</m>
+<bd chs="UTF-8">{&#10;    &quot;integer_0&quot;: {{=[:IntegerProperty:1]}},&#10;    &quot;integer_3&quot;: {{=[:IntegerProperty:1]}},&#10;    &quot;integer_4&quot;: {{=[:IntegerProperty:1]}},&#10;    &quot;integer_1&quot;: {{=[:IntegerProperty:1]}},&#10;    &quot;integer_2&quot;: {{=[:IntegerProperty:1]}}&#10;}</bd>
+</rp>
+</rs>
+</t>
+</sp>
+<rq id="12" op="GET /v2/store/inventory/" tl="SIGNATURE">
+<at>
+<p n="HTTP-Segment-Attr-0">v2</p>
+<p n="HTTP-Segment-Attr-1">store</p>
+<p n="HTTP-Segment-Attr-2">inventory</p>
+</at>
+<m>
+<p n="HTTP-Method">GET</p>
+<p n="HTTP-URI">/v2/store/inventory</p>
+<p n="HTTP-Version">HTTP/1.1</p>
+<p n="Accept">application/json</p>
+<p n="User-Agent">DevTest</p>
+<p n="Host">:0</p>
+<p n="Content-Type">application/json</p>
+<p n="Content-Length">155</p>
+<p n="matchedRule">GET /v2/store/inventory/</p>
+</m>
+</rq>
+<rs>
+<rp id="13" t="8">
+<m>
+<p n="HTTP-Version">HTTP/1.1</p>
+<p n="HTTP-Response-Code">200</p>
+<p n="HTTP-Response-Code-Text">OK</p>
+<p n="Cache-Control">public, max-age=36000</p>
+<p n="Server">LISA/Virtual-Environment-Server</p>
+<p n="Access-Control-Allow-Origin">*</p>
+<p n="Connection">keep-alive</p>
+<p n="Content-Length">222</p>
+<p n="Content-Type">application/json</p>
+<p n="Date">{{=httpNow()}}</p>
+<p n="X-Powered-By">LISA/{{=lisaVersionString()}}</p>
+</m>
+<bd chs="UTF-8">{&#10;    &quot;integer_0&quot;: {{=[:IntegerProperty:1]}},&#10;    &quot;integer_3&quot;: {{=[:IntegerProperty:1]}},&#10;    &quot;integer_4&quot;: {{=[:IntegerProperty:1]}},&#10;    &quot;integer_1&quot;: {{=[:IntegerProperty:1]}},&#10;    &quot;integer_2&quot;: {{=[:IntegerProperty:1]}}&#10;}</bd>
+</rp>
+</rs>
+</t>
+</st>
+<ucrr>
+<rp id="8" t="0">
+<m>
+<p n="HTTP-Response-Code">404</p>
+<p n="HTTP-Response-Code-Text">Not Found</p>
+<p n="Server">LISA/Virtual-Environment-Server</p>
+<p n="Date">{{=httpNow()}}</p>
+<p n="X-Powered-By">LISA/{{=lisaVersionString()}}</p>
+<p n="Content-Type">text/html</p>
+</m>
+<bd chs="UTF-8">&lt;html&gt;&#10;    &lt;head&gt;&lt;title&gt;404 Not Found&lt;/title&gt;&lt;/head&gt;&#10;    &lt;body&gt;&#10;        &lt;h1&gt;Not Found&lt;/h1&gt;&#10;        &lt;p&gt;The requested URL was not found on this server.&lt;/p&gt;&#10;        &lt;hr/&gt;&#10;        &lt;p&gt;&lt;i&gt;The DevTest VSE service could not match your request to a recorded request.&amp;nbsp; Consider expanding your service image.&lt;/i&gt;&lt;/p&gt;&#10;        &lt;br/&gt;&lt;font size=&quot;-2&quot;&gt;Produced by a DevTest virtualized web server.&lt;/font&gt;&#10;    &lt;/body&gt;&#10;&lt;/html&gt;&#10;</bd>
+</rp>
+</ucrr>
+<usrr>
+<rp id="7" t="0">
+<m>
+<p n="HTTP-Response-Code">404</p>
+<p n="HTTP-Response-Code-Text">Not Found</p>
+<p n="Server">LISA/Virtual-Environment-Server</p>
+<p n="Date">{{=httpNow()}}</p>
+<p n="X-Powered-By">LISA/{{=lisaVersionString()}}</p>
+<p n="Content-Type">text/html</p>
+</m>
+<bd chs="UTF-8">&lt;html&gt;&#10;    &lt;head&gt;&lt;title&gt;404 Not Found&lt;/title&gt;&lt;/head&gt;&#10;    &lt;body&gt;&#10;        &lt;h1&gt;Not Found&lt;/h1&gt;&#10;        &lt;p&gt;The requested URL was not found on this server.&lt;/p&gt;&#10;        &lt;hr/&gt;&#10;        &lt;p&gt;&lt;i&gt;The DevTest VSE service could not match your request to a recorded request.&amp;nbsp; Consider expanding your service image.&lt;/i&gt;&lt;/p&gt;&#10;        &lt;br/&gt;&lt;font size=&quot;-2&quot;&gt;Produced by a DevTest virtualized web server.&lt;/font&gt;&#10;    &lt;/body&gt;&#10;&lt;/html&gt;&#10;</bd>
+</rp>
+</usrr>
+</serviceImage>

@@ -1,0 +1,69 @@
+<?xml version="1.0" ?>
+
+<RecordingSession nonLeaf="WIDE" leaf="LOOSE" asObject="true">
+<Protocol type="com.itko.lisa.vse.stateful.protocol.http.HttpProtocolHandler">
+<Transport allAreStateless="true" asObject="true" desensitize="false" duptxns="false">
+<exportFile></exportFile>
+<RequestSide>
+<Protocol type="com.itko.lisa.vse.stateful.protocol.json.JSONDataProtocolHandler">
+</Protocol>
+<Protocol type="com.itko.lisa.vse.stateful.common.datahandler.RequestDataManagerProtocolHandler">
+<actions>
+<action>move meta_data &quot;Content-Type&quot; to operation</action>
+<action>move argument &quot;extMethod&quot; to operation matching &quot;\Qapplication/x-www-form-urlencoded; charset=UTF-8\E&quot;</action>
+<action>move argument &quot;method&quot; to operation matching &quot;\Qapplication/json\E&quot;</action>
+</actions>
+</Protocol>
+<Protocol type="com.itko.lisa.vse.stateful.common.datahandler.XMLPayloadParserDataProtocolHandler">
+<source set="request_body"/><actions>
+<action set="operation">
+<query>/root/element[2]/method/text()</query>
+<map>
+<entry name=""></entry>
+</map>
+</action>
+</actions>
+</Protocol>
+<Protocol type="com.ca.devtest.custom.proxy.dph.ProxyDataHandler">
+<excludedOperations>
+<operation>byPass</operation>
+<operation>updateErrorDetail</operation>
+<operation>getOrderList</operation>
+<operation>getErrorDetail</operation>
+<operation>getErrorList</operation>
+</excludedOperations>
+</Protocol>
+<Protocol type="com.itko.lisa.vse.stateful.common.datahandler.RequestDataManagerProtocolHandler">
+<actions>
+<action>keep argument &quot;orderId&quot; matching &quot;\QgetErrorList\E&quot;</action>
+<action>keep argument &quot;data_errorId&quot; matching &quot;\QisErrorHandled\E&quot;</action>
+<action>keep argument &quot;data_element_errorId&quot; matching &quot;\QgetErrorDetail\E&quot;</action>
+<action>keep argument &quot;data_errorId&quot; matching &quot;\QresetCurrentUser\E&quot;</action>
+<action>copy argument &quot;extTID&quot; to attribute &quot;transacID&quot; matching &quot;\QgetErrorList\E&quot;</action>
+<action>copy argument &quot;tid&quot; to attribute &quot;transacID&quot; matching &quot;\QisErrorHandled\E&quot;</action>
+<action>copy argument &quot;tid&quot; to attribute &quot;transacID&quot; matching &quot;\QgetErrorDetail\E&quot;</action>
+<action>copy argument &quot;tid&quot; to attribute &quot;transacID&quot; matching &quot;\QresetCurrentUser\E&quot;</action>
+<action>copy argument &quot;extTID&quot; to attribute &quot;transacID&quot; matching &quot;\QgetErrorList\E&quot;</action>
+<action>copy argument &quot;tid&quot; to attribute &quot;transacID&quot; matching &quot;\QbyPass\E&quot;</action>
+<action>keep argument &quot;data_orderInError_errorId&quot; matching &quot;\QbyPass\E&quot;</action>
+<action>copy argument &quot;element_tid_1&quot; to attribute &quot;transacID1&quot; matching &quot;\QupdateErrorDetail\E&quot;</action>
+<action>copy argument &quot;element_tid_2&quot; to attribute &quot;transacID2&quot; matching &quot;\QupdateErrorDetail\E&quot;</action>
+<action>keep argument &quot;element_data_orderInError_errorId_1&quot; matching &quot;\QupdateErrorDetail\E&quot;</action>
+<action>keep argument &quot;element_data_orderInError_errorId_2&quot; matching &quot;\QupdateErrorDetail\E&quot;</action>
+<action>copy argument &quot;extTID&quot; to attribute &quot;transacID&quot; matching &quot;\QgetOrderList\E&quot;</action>
+<action>keep argument &quot;idDisposition&quot; matching &quot;\QgetOrderList\E&quot;</action>
+<action>keep argument &quot;externalReference&quot; matching &quot;\QgetOrderList\E&quot;</action>
+<action>keep argument &quot;status&quot; matching &quot;\QgetOrderList\E&quot;</action>
+<action>keep argument &quot;idNetwork&quot; matching &quot;\QgetOrderList\E&quot;</action>
+</actions>
+</Protocol>
+</RequestSide>
+</Transport>
+<listenPort>$port</listenPort>
+<targetHost>localhost</targetHost>
+<targetPort>8080</targetPort>
+<useGateway>true</useGateway>
+<hostHeaderPassThrough>false</hostHeaderPassThrough>
+<ssl toClient="false" sslClientAuthType="none" toServer="false"/><basePath>$basePath</basePath>
+</Protocol>
+</RecordingSession>

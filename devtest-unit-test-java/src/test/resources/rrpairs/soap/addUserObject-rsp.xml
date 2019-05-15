@@ -1,0 +1,32 @@
+<env:Envelope xmlns:env='http://schemas.xmlsoap.org/soap/envelope/'>
+	<env:Header></env:Header>
+	<env:Body>
+		<ns2:addUserObjectResponse xmlns:ns2="http://ejb3.examples.itko.com/">
+			<return>
+				<accounts>
+					<balance>100.00</balance>
+					<id>BtpL8LlI5kApho</id>
+					<name>6Cl7p3ZG</name>
+					<type>STUDENT_LOAN</type>
+				</accounts>
+				<addresses>
+					<city>Larchmont</city>
+					<id>3IF8aICw</id>
+					<line1>4 Forest Park Ave</line1>
+					<line2></line2>
+					<state>NY</state>
+					<zip>10538</zip>
+				</addresses>
+				<email>luther@itko.com</email>
+				<fname>Luther</fname>
+				<lname>Birdzell</lname>
+				<login>looth</login>
+				<newFlag></newFlag>
+				<phone>3035551212</phone>
+				<pwd>loothpass=</pwd>
+				<roleKey>GUEST</roleKey>
+				<ssn>111111111</ssn>
+			</return>
+		</ns2:addUserObjectResponse>
+	</env:Body>
+</env:Envelope>

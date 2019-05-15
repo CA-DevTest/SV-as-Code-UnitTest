@@ -1,0 +1,255 @@
+<?xml version="1.0" ?>
+
+<VSModel name="LisaBank" version="5">
+
+<meta>
+   <create version="10.1.0" buildNumber="10.1.0.283" author="admin" date="06/26/2017" host="gaspa03mac" />
+   <lastEdited version="10.1.0" buildNumber="10.1.0.283" author="admin" date="06/26/2017" host="gaspa03mac" />
+</meta>
+
+<id>E9A4798C5AB511E79866A45E60EBCF33</id>
+<Documentation>Demo Lisa bank</Documentation>
+<IsInProject>true</IsInProject>
+<sig>ZWQ9NSZ0Y3Y9NSZsaXNhdj0xMC4xLjAgKDEwLjEuMC4yODMpJm5vZGVzPTY4ODU3MzY4</sig>
+<subprocess>false</subprocess>
+
+<initState>
+</initState>
+
+<resultState>
+</resultState>
+
+<deletedProps>
+</deletedProps>
+
+<associatedResources>
+<file type="rawTransactionStore">{{LISA_RELATIVE_PROJ_ROOT}}/Data/LisaBank.vts</file>
+<file type="session">{{LISA_RELATIVE_PROJ_ROOT}}/VirtualServices/VRScenarios/LisaBank.vr2</file>
+</associatedResources>
+    <Node name="Virtual HTTPS Listener $port" log=""
+          type="com.itko.lisa.vse.stateful.protocol.http.HttpListenStep" 
+          version="1" 
+          uid="null" 
+          think="0" 
+          useFilters="true" 
+          quiet="true" 
+          next="Virtual Service Router" > 
+
+
+      <!-- Filters -->
+      <Filter type="com.itko.lisa.vse.stateful.common.DataProtocolFilter">
+        <valueToFilterKey>lisa.vse.request</valueToFilterKey>
+<dataProtocol>com.itko.lisa.vse.stateful.protocol.ws.WSSOAPProtocolHandler</dataProtocol>
+<processRequests>true</processRequests>
+<processResponses>false</processResponses>
+<CustomFilterData>
+</CustomFilterData>
+      </Filter>
+
+
+      <!-- Assertions -->
+<CheckResult assertTrue="true" name="If being efficient" type="com.itko.lisa.vse.stateful.AssertOnExecutionMode">
+<log>Current execution mode is Most Efficient, branching to VS Image Response Selection</log>
+<then>VS Image Response Selection</then>
+        <executionMode>EFFICIENT</executionMode>
+</CheckResult>
+
+<outputAsObject>true</outputAsObject>
+<onExceptionStep>abort</onExceptionStep>
+<listenPort>$port</listenPort>
+<basePath>/</basePath>
+<bindOnly>false</bindOnly>
+<useSSL>false</useSSL>
+<sslClientAuthType>none</sslClientAuthType>
+    </Node>
+
+
+    <Node name="Virtual Service Router" log=""
+          type="com.itko.lisa.vse.stateful.VSRouterStep" 
+          version="1" 
+          uid="null" 
+          think="0" 
+          useFilters="true" 
+          quiet="true" 
+          next="VS Image Response Selection" > 
+
+<onerror>abort</onerror>
+<script>// This script must return either an enum entry from ExecutionMode or&#10;// a string that is the name of an enum entry.  The DYNAMIC entry may&#10;// not be returned.  It will be executed for DYNAMIC execution mode&#10;// only.&#10;import com.itko.lisa.vse.ExecutionMode;&#10;&#10;return ExecutionMode.EFFICIENT;&#10;&#10;&#10;/* other values: &#10;&#9;ExecutionMode.TRACK;&#10;&#9;ExecutionMode.STAND_IN;&#10;&#9;ExecutionMode.LIVE;&#10;&#9;ExecutionMode.FAILOVER;&#10;&#9;ExecutionMode.VALIDATION;&#10;&#9;ExecutionMode.LEARNING;&#10;*/&#10;</script>
+<supportedModes>
+<mode>DYNAMIC</mode>
+<mode>EFFICIENT</mode>
+<mode>TRACK</mode>
+<mode>LEARNING</mode>
+<mode>STAND_IN</mode>
+<mode>LIVE</mode>
+<mode>FAILOVER</mode>
+<mode>VALIDATION</mode>
+</supportedModes>
+<liveInvocationStep>Virtual HTTPS Live Invocation {{LIVE_INVOCATION_PORT}}</liveInvocationStep>
+    </Node>
+
+
+    <Node name="VS Image Response Selection" log=""
+          type="com.itko.lisa.vse.stateful.ConversationalStep" 
+          version="1" 
+          uid="null" 
+          think="0" 
+          useFilters="true" 
+          quiet="true" 
+          next="Virtual HTTPS Responder" > 
+
+
+      <!-- Assertions -->
+<CheckResult assertTrue="true" name="If validating" type="com.itko.lisa.vse.stateful.AssertOnExecutionMode">
+<log>Current execution mode is Image Validation, branching to Virtual HTTPS Live Invocation {{LIVE_INVOCATION_PORT}}</log>
+<then>Virtual HTTPS Live Invocation {{LIVE_INVOCATION_PORT}}</then>
+        <executionMode>VALIDATION</executionMode>
+</CheckResult>
+
+<CheckResult assertTrue="true" name="If learning" type="com.itko.lisa.vse.stateful.AssertOnExecutionMode">
+<log>Current execution mode is Learning, branching to Virtual HTTPS Live Invocation {{LIVE_INVOCATION_PORT}}</log>
+<then>Virtual HTTPS Live Invocation {{LIVE_INVOCATION_PORT}}</then>
+        <executionMode>LEARNING</executionMode>
+</CheckResult>
+
+<CheckResult assertTrue="true" name="If tracking" type="com.itko.lisa.vse.stateful.AssertOnExecutionMode">
+<log>Current execution mode is Transaction Tracking, branching to Virtual Service Tracking</log>
+<then>Virtual Service Tracking</then>
+        <executionMode>TRACK</executionMode>
+</CheckResult>
+
+<vsiSource>{{LISA_RELATIVE_PROJ_ROOT}}/LisaBank.vsi</vsiSource>
+<requestPropertyName>lisa.vse.request</requestPropertyName>
+<outputAsObject>true</outputAsObject>
+<liveInvocationStep>Virtual HTTPS Live Invocation {{LIVE_INVOCATION_PORT}}</liveInvocationStep>
+<onExceptionStep>abort</onExceptionStep>
+    </Node>
+
+
+    <Node name="Virtual HTTPS Responder" log=""
+          type="com.itko.lisa.vse.stateful.protocol.http.HttpRespondStep" 
+          version="1" 
+          uid="null" 
+          think="0" 
+          useFilters="true" 
+          quiet="false" 
+          next="Virtual HTTPS Listener 9081" > 
+
+<responseList>lisa.vse.response</responseList>
+<onExceptionStep>abort</onExceptionStep>
+    </Node>
+
+
+    <Node name="Virtual Service Tracking" log=""
+          type="com.itko.lisa.vse.stateful.VSTrackingStep" 
+          version="1" 
+          uid="null" 
+          think="0" 
+          useFilters="true" 
+          quiet="true" 
+          next="Virtual HTTPS Responder" > 
+
+<imageResponseProperty>lisa.vse.image.response</imageResponseProperty>
+<liveResponseProperty>lisa.vse.live.response</liveResponseProperty>
+<onExceptionStep>abort</onExceptionStep>
+    </Node>
+
+
+    <Node name="Virtual HTTPS Live Invocation {{LIVE_INVOCATION_PORT}}" log=""
+          type="com.itko.lisa.vse.stateful.protocol.http.HttpLiveInvocationStep" 
+          version="1" 
+          uid="null" 
+          think="0" 
+          useFilters="true" 
+          quiet="true" 
+          next="Virtual HTTPS Responder" > 
+
+
+      <!-- Assertions -->
+<CheckResult assertTrue="true" name="If validating" type="com.itko.lisa.vse.stateful.AssertOnExecutionMode">
+<log>Current execution mode is Image Validation, branching to Virtual Service Tracking</log>
+<then>Virtual Service Tracking</then>
+        <executionMode>VALIDATION</executionMode>
+</CheckResult>
+
+<CheckResult assertTrue="true" name="If learning" type="com.itko.lisa.vse.stateful.AssertOnExecutionMode">
+<log>Current execution mode is Learning, branching to Virtual Service Tracking</log>
+<then>Virtual Service Tracking</then>
+        <executionMode>LEARNING</executionMode>
+</CheckResult>
+
+<outputAsObject>true</outputAsObject>
+<onExceptionStep>Live System Failure</onExceptionStep>
+<requestPropertyName>lisa.vse.request</requestPropertyName>
+<vseLookupStep>VS Image Response Selection</vseLookupStep>
+<targetServer>{{LIVE_INVOCATION_SERVER}}</targetServer>
+<targetPort>{{LIVE_INVOCATION_PORT}}</targetPort>
+<hostHeaderPassThrough>false</hostHeaderPassThrough>
+<useSSLToServer>false</useSSLToServer>
+<useSSL>false</useSSL>
+    </Node>
+
+
+    <Node name="Live System Failure" log=""
+          type="com.itko.lisa.test.NoTransNode" 
+          version="1" 
+          uid="null" 
+          think="0" 
+          useFilters="true" 
+          quiet="true" 
+          next="abort" > 
+
+
+      <!-- Assertions -->
+<CheckResult assertTrue="true" name="If failover" type="com.itko.lisa.vse.stateful.AssertOnExecutionMode">
+<log>Current execution mode is Failover, branching to VS Image Response Selection</log>
+<then>VS Image Response Selection</then>
+        <executionMode>FAILOVER</executionMode>
+</CheckResult>
+
+<CheckResult assertTrue="true" name="If standing in" type="com.itko.lisa.vse.stateful.AssertOnExecutionMode">
+<log>Current execution mode is Stand In, branching to Virtual HTTPS Responder</log>
+<then>Virtual HTTPS Responder</then>
+        <executionMode>STAND_IN</executionMode>
+</CheckResult>
+
+    </Node>
+
+
+    <Node name="end" log=""
+          type="com.itko.lisa.test.NormalEnd" 
+          version="1" 
+          uid="E9A4798E5AB511E79866A45E60EBCF33" 
+          think="0h" 
+          useFilters="true" 
+          quiet="true" 
+          next="fail" > 
+
+    </Node>
+
+
+    <Node name="fail" log=""
+          type="com.itko.lisa.test.Abend" 
+          version="1" 
+          uid="E9A479905AB511E79866A45E60EBCF33" 
+          think="0h" 
+          useFilters="true" 
+          quiet="true" 
+          next="fail" > 
+
+    </Node>
+
+
+    <Node name="abort" log="The test was aborted"
+          type="com.itko.lisa.test.AbortStep" 
+          version="1" 
+          uid="E9A479925AB511E79866A45E60EBCF33" 
+          think="0h" 
+          useFilters="true" 
+          quiet="true" 
+          next="fail" > 
+
+    </Node>
+
+
+</VSModel>

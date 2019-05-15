@@ -1,0 +1,18 @@
+<env:Envelope xmlns:env='http://schemas.xmlsoap.org/soap/envelope/'>
+	<env:Header></env:Header>
+	<env:Body>
+		<ns2:listUsersResponse xmlns:ns2="http://ejb3.examples.itko.com/">
+			<return>
+				<email>vrsuser@mycompany.com</email>
+				<fname>vrs</fname>
+				<lname>user</lname>
+				<login>vrsuser</login>
+				<newFlag>true</newFlag>
+				<phone>455-3232</phone>
+				<pwd>/UuJ0MeQFuRNHog0H0hR+Y82B5w=</pwd>
+				<roleKey>REGULAR</roleKey>
+				<ssn>546-71-4973</ssn>
+			</return>
+		</ns2:listUsersResponse>
+	</env:Body>
+</env:Envelope>

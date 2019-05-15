@@ -1,0 +1,23 @@
+<env:Envelope xmlns:env='http://schemas.xmlsoap.org/soap/envelope/'>
+	<env:Header></env:Header>
+	<env:Body>
+		<ns2:getUserResponse xmlns:ns2="http://ejb3.examples.itko.com/">
+			<return>
+				<accounts>
+					<balance>1000.00</balance>
+					<id>206353177301</id>
+					<type>CHECKING</type>
+				</accounts>
+				<email></email>
+				<fname></fname>
+				<lname></lname>
+				<login>pascal</login>
+				<newFlag>true</newFlag>
+				<phone></phone>
+				<pwd>W6ph5Mm5Pz8GgiULbPgzG37mj9g=</pwd>
+				<roleKey>REGULAR</roleKey>
+				<ssn></ssn>
+			</return>
+		</ns2:getUserResponse>
+	</env:Body>
+</env:Envelope>

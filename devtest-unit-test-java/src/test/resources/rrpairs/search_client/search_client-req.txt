@@ -1,0 +1,6 @@
+POST /$basePath/gtieben_rcli1.1.0.recup_client HTTP/1.1
+accept: application/json
+content-Type: application/json
+Connection: Keep-Alive
+
+{"no_version_1":1,"fonc_in1":{"fonc_in101":{"c_bic_in":""}},"fonc_in_out1":{"fonc_in_out101":{"g_pagin_client_ben":{"n_page_affichee":1,"q_pages_totales":1}}}}

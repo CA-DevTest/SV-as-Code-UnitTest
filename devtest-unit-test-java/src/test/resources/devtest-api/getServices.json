@@ -1,0 +1,158 @@
+{
+    "vseList": [
+        {
+            "host": "127.0.0.1",
+            "lifetimeTransactionCount": 602736,
+            "rollingTransactionCount": 594298,
+            "name": "vse-perf",
+            "links": [
+                {
+                    "href": "http://localhost:1505/api/Dcm/VSEs/vse-perf/actions",
+                    "rel": "down"
+                },
+                {
+                    "href": "http://localhost:1505/api/Dcm/VSEs/vse-perf/actions/deployMar",
+                    "rel": "start"
+                }
+            ],
+            "consoleURL": "http://127.0.0.1:1505",
+            "virtualServiceList": {
+                "virtualServiceList": [
+                    {
+                        "modelName": "cars",
+                        "endTime": "1970-01-01 01:00:00",
+                        "capacity": 20,
+                        "upTime": "5:42:37",
+                        "transactionsPerSecond": 0,
+                        "transactionCount": 587689,
+                        "peakTransactionsPerSecond": 1156,
+                        "thinkScale": 500,
+                        "errorCount": 0,
+                        "autoRestartEnabled": true,
+                        "status": "2",
+                        "lastStartTime": "2018-09-26 12:56:22",
+                        "executionMode": "Most Efficient",
+                        "configName": "Configs/project.config",
+                        "name": "cars",
+                        "groupTag": "",
+                        "resourceName": "7901 : http :  : /",
+                        "links": [
+                            {
+                                "href": "http://localhost:1505/api/Dcm/VSEs/vse-perf/cars/actions",
+                                "rel": "down"
+                            },
+                            {
+                                "href": "http://localhost:1505/api/Dcm/VSEs/vse-perf/cars/actions/start",
+                                "rel": "start"
+                            },
+                            {
+                                "href": "http://localhost:1505/api/Dcm/VSEs/vse-perf/cars/actions/stop",
+                                "rel": "stop"
+                            },
+                            {
+                                "href": "http://localhost:1505/api/Dcm/VSEs/vse-perf/cars/actions/resetCounts",
+                                "rel": "resetCounts"
+                            }
+                        ]
+                    },
+                    {
+                        "modelName": "cars",
+                        "endTime": "1970-01-01 01:00:00",
+                        "capacity": 20,
+                        "upTime": "5:42:37",
+                        "transactionsPerSecond": 0,
+                        "transactionCount": 587689,
+                        "peakTransactionsPerSecond": 1156,
+                        "thinkScale": 500,
+                        "errorCount": 0,
+                        "autoRestartEnabled": true,
+                        "status": "2",
+                        "lastStartTime": "2018-09-26 12:56:22",
+                        "executionMode": "Most Efficient",
+                        "configName": "Configs/project.config",
+                        "name": "cars2",
+                        "groupTag": "",
+                        "resourceName": "7901 : http :  : /",
+                        "links": [
+                            {
+                                "href": "http://localhost:1505/api/Dcm/VSEs/vse-perf/cars/actions",
+                                "rel": "down"
+                            },
+                            {
+                                "href": "http://localhost:1505/api/Dcm/VSEs/vse-perf/cars/actions/start",
+                                "rel": "start"
+                            },
+                            {
+                                "href": "http://localhost:1505/api/Dcm/VSEs/vse-perf/cars/actions/stop",
+                                "rel": "stop"
+                            },
+                            {
+                                "href": "http://localhost:1505/api/Dcm/VSEs/vse-perf/cars/actions/resetCounts",
+                                "rel": "resetCounts"
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "host": "127.0.0.1",
+            "lifetimeTransactionCount": 602736,
+            "rollingTransactionCount": 594298,
+            "name": "vse",
+            "links": [
+                {
+                    "href": "http://localhost:1505/api/Dcm/VSEs/vse-perf/actions",
+                    "rel": "down"
+                },
+                {
+                    "href": "http://localhost:1505/api/Dcm/VSEs/vse-perf/actions/deployMar",
+                    "rel": "start"
+                }
+            ],
+            "consoleURL": "http://127.0.0.1:1505",
+            "virtualServiceList": {
+                "virtualServiceList": [
+                    {
+                        "modelName": "cars",
+                        "endTime": "1970-01-01 01:00:00",
+                        "capacity": 20,
+                        "upTime": "5:42:37",
+                        "transactionsPerSecond": 0,
+                        "transactionCount": 587689,
+                        "peakTransactionsPerSecond": 1156,
+                        "thinkScale": 500,
+                        "errorCount": 0,
+                        "autoRestartEnabled": true,
+                        "status": "2",
+                        "lastStartTime": "2018-09-26 12:56:22",
+                        "executionMode": "Most Efficient",
+                        "configName": "Configs/project.config",
+                        "name": "cars",
+                        "groupTag": "",
+                        "resourceName": "7901 : http :  : /",
+                        "links": [
+                            {
+                                "href": "http://localhost:1505/api/Dcm/VSEs/vse-perf/cars/actions",
+                                "rel": "down"
+                            },
+                            {
+                                "href": "http://localhost:1505/api/Dcm/VSEs/vse-perf/cars/actions/start",
+                                "rel": "start"
+                            },
+                            {
+                                "href": "http://localhost:1505/api/Dcm/VSEs/vse-perf/cars/actions/stop",
+                                "rel": "stop"
+                            },
+                            {
+                                "href": "http://localhost:1505/api/Dcm/VSEs/vse-perf/cars/actions/resetCounts",
+                                "rel": "resetCounts"
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+
+    ]
+}

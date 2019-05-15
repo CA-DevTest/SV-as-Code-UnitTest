@@ -1,0 +1,1 @@
+[{"email":"lisaUser@mycompany.com","fname":"Lisa","lname":"User","login":"lisauser","newFlag":true,"phone":"455-3232","pwd":"UuJ0MeQFuRNHog0H0hR+Y82B5w=","ssn":"546-71-4973"}]

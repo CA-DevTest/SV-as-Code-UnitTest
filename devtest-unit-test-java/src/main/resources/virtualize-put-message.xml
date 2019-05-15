@@ -1,0 +1,9 @@
+<VirtualService xmlns="http://www.ca.com/lisa/invoke/v2.0"
+	name="${virtualService.deployedName}" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.ca.com/lisa/invoke/v2.0 VirtualService.xsd"
+	type="application/vnd.ca.lisaInvoke.virtualService+xml">
+	<Capacity>${virtualService.executionMode.capacity}</Capacity>
+	<ThinkScale>${virtualService.executionMode.thinkScale}</ThinkScale>
+	<AutoRestartEnabled>${virtualService.executionMode.autoRestartEnabled}</AutoRestartEnabled>
+	<ExecutionMode>${virtualService.executionMode.executionMode}</ExecutionMode>
+</VirtualService>

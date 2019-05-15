@@ -1,0 +1,15 @@
+<RecordingSession nonLeaf="WIDE" leaf="LOOSE" asObject="true">
+	<Protocol
+		type="com.itko.lisa.vse.stateful.protocol.http.HttpProtocolHandler">
+		<basePath>$basePath</basePath>
+		<listenPort>$port</listenPort>
+		<Transport allAreStateless="true" asObject="true"
+			desensitize="false" duptxns="true">
+			<RequestSide>
+				<Protocol
+					type="com.itko.lisa.vse.stateful.protocol.ws.WSSOAPProtocolHandler"></Protocol>
+			</RequestSide>
+			<ResponseSide></ResponseSide>
+		</Transport>
+	</Protocol>
+</RecordingSession>

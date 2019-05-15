@@ -1,0 +1,14 @@
+<payloads>
+  <payload name="SOCC07" type="request"  key="SOCC07" headerBytes="0" footerBytes="0" saveHeaderFooter="false" definesResponse="true">
+	     <section name="Body">
+			<copybook name="SOCC07" max="1">SOCC07-IN.cbl</copybook>
+		</section>
+  </payload>
+  <payload name="SOCC07" type="response" key="SOCC07" headerBytes="0" footerBytes="0" saveHeaderFooter="false">
+
+	     <section name="Body">
+			<copybook name="SOCC07" max="1">SOCC07-OUT.cbl</copybook>
+		</section>
+  </payload>
+</payloads>
+

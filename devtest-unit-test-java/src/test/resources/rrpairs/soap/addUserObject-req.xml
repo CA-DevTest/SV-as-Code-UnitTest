@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <soapenv:Body>
+    <addUserObject xmlns="http://ejb3.examples.itko.com/">
+      <!--userObject is optional-->
+      <userObject xmlns="">
+        <!--accounts is nillable and  optional, but can have an unlimited number of instances-->
+        <accounts>
+          <!--balance is optional-->
+          <balance>100.00</balance>
+          <!--id is optional-->
+          <id>BtpL8LlI5kApho</id>
+          <!--name is optional-->
+          <name>6Cl7p3ZG</name>
+          <!--type is optional-->
+          <!--type supports enumerated values: CHECKING, SAVINGS, CREDIT, AUTO_LOAN, STUDENT_LOAN, MORTGAGE-->
+          <type>STUDENT_LOAN</type>
+        </accounts>
+        <!--addresses is nillable and  optional, but can have an unlimited number of instances-->
+        <addresses>
+          <!--city is optional-->
+          <city>Larchmont</city>
+          <!--id is optional-->
+          <id>3IF8aICw</id>
+          <!--line1 is optional-->
+          <line1>4 Forest Park Ave</line1>
+          <!--line2 is optional-->
+          <line2></line2>
+          <!--state is optional-->
+          <state>NY</state>
+          <zip>10538</zip>
+        </addresses>
+        <!--email is optional-->
+        <email>luther@itko.com</email>
+        <!--fname is optional-->
+        <fname>Luther</fname>
+        <!--lname is optional-->
+        <lname>Birdzell</lname>
+        <!--login is optional-->
+        <login>looth</login>
+        <!--newFlag is optional-->
+        <newFlag></newFlag>
+        <!--phone is optional-->
+        <phone>3035551212</phone>
+        <!--pwd is optional-->
+        <pwd>loothpass</pwd>
+        <!--roleKey is optional-->
+        <!--roleKey supports enumerated values: GUEST, REGULAR, ADMIN-->
+        <roleKey>GUEST</roleKey>
+        <!--ssn is optional-->
+        <ssn>111111111</ssn>
+      </userObject>
+    </addUserObject>
+  </soapenv:Body>
+</soapenv:Envelope>

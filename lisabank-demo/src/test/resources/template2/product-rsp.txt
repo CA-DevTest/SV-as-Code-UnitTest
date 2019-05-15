@@ -1,0 +1,6 @@
+<?xml version = "1.0" encoding = "UTF-8" standalone = "no" ?>
+<product>
+<description>CA Product</description>
+<price>2000000</price>
+<createdBy>Priyanka </createdBy>
+</product>
