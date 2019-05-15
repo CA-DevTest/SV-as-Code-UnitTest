@@ -20,11 +20,11 @@ In  the **pom file** of your maven project  add a new repository to get the libr
 [source,xml]
 ----
 	<repositories>
-		<repository>
-			<id>git-devtest</id>
-			<name>DevTest's Git based repo</name>
-			<url>https://raw.github.com/helpingdev/maven/master/</url>
-		</repository>
+         <repository>
+                <id>bintray-ca-sv</id>
+                <name>bintray-ca</name>
+                <url>http://ca.bintray.com/sv</url>
+	  </repository>
 	</repositories>
 ----
 
@@ -32,9 +32,9 @@ Add below dependency with scope test in your **pom file** :
 [source,xml]
 ----
 	<dependency>
-			<groupId>com.ca.devtest.sv.devtools</groupId>
-			<artifactId>devtest-unit-test-java</artifactId>
-			<version>1.1.11</version>
+		<groupId>com.ca.devtest.sv.devtools</groupId>
+		<artifactId>devtest-unit-test-java</artifactId>
+		<version>1.3.2</version>
 	</dependency>
 
 ----
