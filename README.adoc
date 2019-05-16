@@ -12,7 +12,7 @@ With this approach, using **CA Virtual Services** from your Continuous Integrati
 
 You should have **CA DevTest Server ** up and running. This server could be installed on your machine or on remote server. You will setup registry url and VSE name through Java Annotation *@DevTestVirtualServer* . 
 This both parameters will be used to build and deploy your virtual services.
-This annotations will use ***CA DevTest Rest API (CA DevTest Invoke 2)*** and it's compatible **from CA DevTest 8.0 to 10.1**. 
+This annotations will use ***CA DevTest Rest API (CA DevTest Invoke 2)*** and it's compatible **from CA DevTest 8.0 to 10.5**. 
 
 == Getting started
 
