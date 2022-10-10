@@ -42,7 +42,7 @@ public class RegistryRestAPI {
 		HttpGet get = new HttpGet(urlGet);
 
 		get.setHeader("Authorization", String.format("Basic %s", new String(Base64.encodeBase64(
-				new String(SvAsCodeConfigUtil.login(null) + ":" + SvAsCodeConfigUtil.password(null)).getBytes()))));
+				(SvAsCodeConfigUtil.login(null) + ":" + SvAsCodeConfigUtil.password(null)).getBytes()))));
 
 		HttpResponse response = httpClient.execute(get);
 
@@ -72,7 +72,7 @@ public class RegistryRestAPI {
 		HttpDelete delete = new HttpDelete(urlGet);
 
 		delete.setHeader("Authorization", String.format("Basic %s", new String(Base64.encodeBase64(
-				new String(SvAsCodeConfigUtil.login(null) + ":" + SvAsCodeConfigUtil.password(null)).getBytes()))));
+				(SvAsCodeConfigUtil.login(null) + ":" + SvAsCodeConfigUtil.password(null)).getBytes()))));
 
 		HttpResponse response = httpClient.execute(delete);
 

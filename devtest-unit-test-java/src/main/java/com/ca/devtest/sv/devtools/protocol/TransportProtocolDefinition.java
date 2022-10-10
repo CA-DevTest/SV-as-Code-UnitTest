@@ -16,21 +16,21 @@ public interface TransportProtocolDefinition {
 	/**
 	 * @return
 	 */
-	public Map<String, String> getParameters();
+    Map<String, String> getParameters();
 	/**
 	 * @return
 	 */
-	public String toVrsContent();
+    String toVrsContent();
 	
 	/**
 	 * @return
 	 */
-	public List<DataProtocolDefinition> getRequestSide();
+    List<DataProtocolDefinition> getRequestSide();
 	
 	/**
 	 * @return
 	 */
-	public List<DataProtocolDefinition> getResponseSide();
+    List<DataProtocolDefinition> getResponseSide();
 
 
 }

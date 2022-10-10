@@ -3,6 +3,8 @@ package com.ca.devtest.lisabank.demo.sv.http;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import com.ca.devtest.sv.devtools.annotation.v3.DataProtocolConfig;
+import com.ca.devtest.sv.devtools.annotation.v3.DevTestVirtualServiceV3;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.ClassRule;
@@ -53,9 +55,33 @@ public class UserServiceIntegrationTest {
 		assertEquals(9, users.length);
 		User user = getUser("Admin", users);
 		assertEquals("Admin", user.getLname());
-
 	}
 
+	@DevTestVirtualServiceV3(serviceName = "UserServiceTest-EJB3UserControlBean",
+			port = "9081",
+			basePath = "/itkoExamples/EJB3UserControlBean",
+			workingFolder = "UserServiceTest/getListUser/EJB3UserControlBeanV3",
+			inputFile1 = "listUsers-req.xml",
+			inputFile2 = "listUsers-rsp.xml",
+			dataProtocolsConfig = {
+				@DataProtocolConfig(
+						typeId = "SOAPDPH"
+				)
+			}
+	)
+	@Test
+	public void getListUserV3() {
+		// Given
+
+		// When
+		User[] users = bankServices.getListUser();
+		// Then
+		printUsers(users);
+		assertNotNull(users);
+		assertEquals(9, users.length);
+		User user = getUser("Admin", users);
+		assertEquals("Admin", user.getLname());
+	}
 
 
 	/**

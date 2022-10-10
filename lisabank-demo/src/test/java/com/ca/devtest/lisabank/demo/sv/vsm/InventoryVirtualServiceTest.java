@@ -4,6 +4,7 @@ import com.ca.devtest.lisabank.demo.LisaBankClientApplication;
 import com.ca.devtest.lisabank.demo.business.StoreServiceImp;
 import com.ca.devtest.lisabank.demo.model.StoreInventory;
 import com.ca.devtest.sv.devtools.annotation.*;
+import com.ca.devtest.sv.devtools.annotation.v3.DevTestVirtualServiceV3;
 import com.ca.devtest.sv.devtools.junit.VirtualServicesRule;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -39,7 +40,6 @@ public class InventoryVirtualServiceTest {
             responseDataProtocol = {@Protocol(ProtocolType.DPH_JSON)})
     @Test
     public void getStoresInventory() {
-
         try {
             StoreInventory store = storeService.getStoreInventory();
             assertNotNull(store);
@@ -48,14 +48,31 @@ public class InventoryVirtualServiceTest {
         } finally {
 
         }
+    }
 
+    @DevTestVirtualServiceV3(serviceName = "getStoresInventoryV3",
+            workingFolder = "storeInventoryVSM",
+            basePath = "/",
+            port = "19804",
+            inputFile2 = "getStoresInventory.vsm",
+            inputFile1 = "getStoresInventory.vsi"
+    )
+    @Test
+    public void getStoresInventoryV3() {
+        try {
+            StoreInventory store = storeService.getStoreInventory();
+            assertNotNull(store);
+            printUsers(store);
+            assertEquals(new Integer(1), store.getInteger_0());
+        } finally {
+
+        }
     }
 
     private void printUsers(StoreInventory store) {
        // for (StoreInventory inv : stores) {
             logger.info(store.getInteger_0());
        // }
-
     }
 
 }

@@ -7,5 +7,5 @@ public interface ParamatrizedBuilder {
 	 * @param key
 	 * @param value
 	 */
-	public void addKeyValue(String key, String value) ;
+    void addKeyValue(String key, String value) ;
 }

@@ -26,7 +26,7 @@ import com.ca.devtest.sv.devtools.junit.VirtualServicesRule;
 @DevTestVirtualServer(registryHost = "localhost", deployServiceToVse = "VSE", groupName = "AP10534")
 public class SearchClientTest {
 
-	private String END_POINT = "http://%s:%s%s";
+	private final String END_POINT = "http://%s:%s%s";
 
 	@Rule
 	public VirtualServicesRule rules = new VirtualServicesRule();

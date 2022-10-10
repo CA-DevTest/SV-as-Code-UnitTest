@@ -4,6 +4,7 @@
 	type="application/vnd.ca.lisaInvoke.virtualService+xml">
 	<Capacity>${virtualService.executionMode.capacity}</Capacity>
 	<ThinkScale>${virtualService.executionMode.thinkScale}</ThinkScale>
+	<GroupTag>${virtualService.executionMode.groupTag}</GroupTag>
 	<AutoRestartEnabled>${virtualService.executionMode.autoRestartEnabled}</AutoRestartEnabled>
 	<ExecutionMode>${virtualService.executionMode.executionMode}</ExecutionMode>
 </VirtualService>

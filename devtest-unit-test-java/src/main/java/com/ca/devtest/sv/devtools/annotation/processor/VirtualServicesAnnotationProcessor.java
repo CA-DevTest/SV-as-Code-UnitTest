@@ -11,8 +11,7 @@ import java.util.List;
 import com.ca.devtest.sv.devtools.DevTestClient;
 import com.ca.devtest.sv.devtools.annotation.DevTestVirtualService;
 import com.ca.devtest.sv.devtools.annotation.DevTestVirtualServices;
-import com.ca.devtest.sv.devtools.exception.VirtualServiceProcessorException;
-import com.ca.devtest.sv.devtools.services.VirtualService;
+import com.ca.devtest.sv.devtools.services.AbstractVirtualService;
 
 /**
  * @author gaspa03
@@ -24,23 +23,23 @@ public class VirtualServicesAnnotationProcessor implements AnnotationProcessor {
 	 * @see com.ca.devtest.sv.devtools.annotation.processor.MethodProcessorAnnotation#process(com.ca.devtest.sv.devtools.DevTestClient, java.lang.annotation.Annotation)
 	 */
 	@Override
-	public List<VirtualService> process(DevTestClient devTestClient, Annotation annotation)
-			throws VirtualServiceProcessorException {
-		 List<VirtualService>  result=new ArrayList<VirtualService>(1);
+	public List<AbstractVirtualService> process(DevTestClient devTestClient, Annotation annotation)
+			throws Exception {
+		 List<AbstractVirtualService>  result=new ArrayList<AbstractVirtualService>(1);
 		 result.addAll(buildVirtualService(devTestClient, (DevTestVirtualServices) annotation));
 		
 		return result;
 	}
 
-	private Collection<? extends VirtualService> buildVirtualService(DevTestClient devTestClient,
-			DevTestVirtualServices annotation) throws VirtualServiceProcessorException {
+	private Collection<? extends AbstractVirtualService> buildVirtualService(DevTestClient devTestClient,
+			DevTestVirtualServices annotation) throws Exception {
 		DevTestVirtualService[] virtualServicesAnnotation=annotation.value();
-		List<VirtualService> virtualServices = new ArrayList<VirtualService>();
+		List<AbstractVirtualService> virtualServices = new ArrayList<AbstractVirtualService>();
 		
 		for (DevTestVirtualService vsAnnotation : virtualServicesAnnotation) {
 			// get Annotation processor 
 			AnnotationProcessor processor = AnnotationProcessorFactory.getInstance().getProcessor(vsAnnotation);
-			List<VirtualService> services=processor.process(devTestClient,vsAnnotation);
+			List<AbstractVirtualService> services=processor.process(devTestClient,vsAnnotation);
 			if( null!=services)
 			virtualServices.addAll(services);
 		}

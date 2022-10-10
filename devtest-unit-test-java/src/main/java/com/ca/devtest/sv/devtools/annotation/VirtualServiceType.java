@@ -2,15 +2,15 @@ package com.ca.devtest.sv.devtools.annotation;
 
 public enum VirtualServiceType {
 	// Objets directement construits
-	RRPAIRS("RRPairs", "http://%s:%s/api/Dcm/VSEs/%s/actions/createService"), VSM("MARFile",
-			"http://%s:%s/api/Dcm/VSEs/%s/actions/deployMar");
+	RRPAIRS(Constants.DCM_API_RRPAIRS, Constants.DCM_API_RRPAIRS_URL),
+	VSM(Constants.DCM_API_VSM, Constants.DCM_API_VSM_URL);
 
-	private String name = "";
+	private String type = "";
 	private String urlPattern = "";
 
 	// Constructeur
-	VirtualServiceType(String name, String url) {
-		this.name = name;
+	VirtualServiceType(String type, String url) {
+		this.type = type;
 		this.urlPattern = url;
 	}
 
@@ -20,8 +20,10 @@ public enum VirtualServiceType {
 	public String geturlPattern(){
 		return urlPattern;
 	}
-	public String toString() {
-		return name;
+	public String getType() { return type;}
+
+    public String toString() {
+		return type;
 	}
 
 }

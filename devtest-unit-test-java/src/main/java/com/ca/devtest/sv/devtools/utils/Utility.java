@@ -4,6 +4,7 @@
 package com.ca.devtest.sv.devtools.utils;
 
 import java.net.InetAddress;
+import java.net.URL;
 import java.net.UnknownHostException;
 
 import com.ca.devtest.sv.devtools.annotation.Parameter;
@@ -64,5 +65,14 @@ public class Utility {
 
 		return OS.indexOf("win") >= 0 ? ";" : ":";
 
+	}
+
+	public static boolean isUrl(String str){
+		try {
+			new URL(str).toURI();
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 }

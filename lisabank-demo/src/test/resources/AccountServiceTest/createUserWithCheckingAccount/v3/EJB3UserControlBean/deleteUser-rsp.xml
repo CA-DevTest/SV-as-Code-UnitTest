@@ -1,0 +1,8 @@
+<env:Envelope xmlns:env='http://schemas.xmlsoap.org/soap/envelope/'>
+	<env:Header></env:Header>
+	<env:Body>
+		<ns2:deleteUserResponse xmlns:ns2="http://ejb3.examples.itko.com/">
+			<return>true</return>
+		</ns2:deleteUserResponse>
+	</env:Body>
+</env:Envelope>

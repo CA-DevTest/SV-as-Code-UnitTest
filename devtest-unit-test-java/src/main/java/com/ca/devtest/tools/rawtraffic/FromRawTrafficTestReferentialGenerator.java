@@ -121,10 +121,10 @@ public class FromRawTrafficTestReferentialGenerator {
 					String endpoint = null;
 					for (int i = 0; i < nodes.getLength(); i++) {
 
-						Node item = (Node) nodes.item(i);
+						Node item = nodes.item(i);
 						Object request = exprRequest.evaluate(item, XPathConstants.NODESET);
 						Object response = itemResponseExpr.evaluate(item, XPathConstants.NODESET);
-						Node requestItem = (Node) ((NodeList) request).item(0);
+						Node requestItem = ((NodeList) request).item(0);
 
 						folderName = getOperationName(item);
 
@@ -152,11 +152,11 @@ public class FromRawTrafficTestReferentialGenerator {
 						 * "meta-req", folderStore);
 						 */
 						// treat the response Node
-						Node itemResponse = (Node) ((NodeList) response).item(0);
+						Node itemResponse = ((NodeList) response).item(0);
 
 						// treat meta-data of response
 						Object responseMeta = exprResponsetmeta.evaluate(item, XPathConstants.NODESET);
-						Node responseMetaItem = (Node) ((NodeList) responseMeta).item(0);
+						Node responseMetaItem = ((NodeList) responseMeta).item(0);
 						reqorres = "rsp";
 						if (isBinary(itemResponse)) {
 
@@ -223,7 +223,7 @@ public class FromRawTrafficTestReferentialGenerator {
 		StringBuilder metaProperties = new StringBuilder();
 		for (int i = 0; i < parameters.getLength(); i++) {
 
-			Node item = (Node) parameters.item(i);
+			Node item = parameters.item(i);
 			String name = XPATH.evaluate("@name", item);
 			String value = XPATH.evaluate("text()", item);
 			if (!StringUtils.isBlank(name) && !listofMetaToRejet.contains(name.trim()))
@@ -281,7 +281,7 @@ public class FromRawTrafficTestReferentialGenerator {
 		String contentType = "";
 		for (int i = 0; i < parameters.getLength(); i++) {
 
-			Node item = (Node) parameters.item(i);
+			Node item = parameters.item(i);
 			String name = XPATH.evaluate("@name", item);
 			String value = XPATH.evaluate("text()", item);
 			if (!StringUtils.isBlank(name)) {
@@ -313,10 +313,10 @@ public class FromRawTrafficTestReferentialGenerator {
 		
 		if(contentType.contains("x-www-form-urlencoded")){
 			meta.append(method).append(" ").append(uri).append("?%s ").append(version).append("\n")
-			.append(metaProperties.toString());
+			.append(metaProperties);
 		}else{
 			meta.append(method).append(" ").append(uri).append(" ").append(version).append("\n")
-			.append(metaProperties.toString()).append("\n%s");
+			.append(metaProperties).append("\n%s");
 		}
 		
 				
@@ -400,7 +400,7 @@ public class FromRawTrafficTestReferentialGenerator {
 
 		for (int i = 0; i < parameters.getLength(); i++) {
 
-			Node item = (Node) parameters.item(i);
+			Node item = parameters.item(i);
 			String name = XPATH.evaluate("@name", item);
 			String value = XPATH.evaluate("text()", item);
 			if ("HTTP-URI".equalsIgnoreCase(name)) {
@@ -417,7 +417,7 @@ public class FromRawTrafficTestReferentialGenerator {
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < parameters.getLength(); i++) {
 
-			Node item = (Node) parameters.item(i);
+			Node item = parameters.item(i);
 			String name = XPATH.evaluate("@name", item);
 			String value = XPATH.evaluate("text()", item);
 			if (sb.length() > 0) {
@@ -440,7 +440,7 @@ public class FromRawTrafficTestReferentialGenerator {
 
 		for (int i = 0; i < parameters.getLength(); i++) {
 
-			Node item = (Node) parameters.item(i);
+			Node item = parameters.item(i);
 			String name = XPATH.evaluate("@name", item);
 			String value = XPATH.evaluate("text()", item);
 			if ("Host".equalsIgnoreCase(name)) {

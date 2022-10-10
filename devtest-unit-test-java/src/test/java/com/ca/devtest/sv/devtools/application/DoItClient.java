@@ -22,10 +22,10 @@ import org.junit.Test;
  * @author gaspa03
  *
  */
-public class DoItClient {
+public class 	DoItClient {
 
-	private String DOIT_REQUEST= "ressource=instance&fonction=ref_instance&ID=%3As00va9930281%3A%5Bs00va9930281.sa-sm-prez-04.HMHVUW9YdZA%5D++%3A01062016%3A17%3A20%3A29%23089%3A&TYPE_Q=SB&TYPE_R=IB&arg0=LECTURE_INSTANCE&arg1=b0b0b7b4b0b0b5b0b0b0b1b0b0b8b1b5b4b0b0b0b0b1b0b5b2b1b0b1b3c3c5d4c5ccc5cdcfceccc9cec5b0b5b2b8b0b0b1b0b0b7b5b2b0b1b6ccc5c3d4d5d2c5dfc9ced3d4c1cec3c5b3b6b3b7b0b0b1b0";
-	private String DOIT_SERVICE= "http://%s:%s/cgi-bin/GatewayJavaDoIt.cgi";
+	private final String DOIT_REQUEST= "ressource=instance&fonction=ref_instance&ID=%3As00va9930281%3A%5Bs00va9930281.sa-sm-prez-04.HMHVUW9YdZA%5D++%3A01062016%3A17%3A20%3A29%23089%3A&TYPE_Q=SB&TYPE_R=IB&arg0=LECTURE_INSTANCE&arg1=b0b0b7b4b0b0b5b0b0b0b1b0b0b8b1b5b4b0b0b0b0b1b0b5b2b1b0b1b3c3c5d4c5ccc5cdcfceccc9cec5b0b5b2b8b0b0b1b0b0b7b5b2b0b1b6ccc5c3d4d5d2c5dfc9ced3d4c1cec3c5b3b6b3b7b0b0b1b0";
+	private final String DOIT_SERVICE= "http://%s:%s/cgi-bin/GatewayJavaDoIt.cgi";
 	
 	private String server="";
 	private String port="";

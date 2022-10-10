@@ -3,11 +3,17 @@
  */
 package com.ca.devtest.sv.devtools.junit;
 
+import java.io.IOException;
 import java.lang.reflect.Method;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.CertificateException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import com.ca.devtest.sv.devtools.services.AbstractVirtualService;
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
@@ -16,7 +22,6 @@ import org.slf4j.LoggerFactory;
 
 import com.ca.devtest.sv.devtools.annotation.DevTestVirtualServer;
 import com.ca.devtest.sv.devtools.annotation.processor.DevTestVirtualServerAnnotationProcessor;
-import com.ca.devtest.sv.devtools.services.VirtualService;
 
 /**
  * Extend JUnit behaviour for using virtual services. <br/>
@@ -29,7 +34,6 @@ import com.ca.devtest.sv.devtools.services.VirtualService;
 public class VirtualServicesRule implements TestRule {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(VirtualServicesRule.class);
-
 	
 	public  VirtualServicesRule() {
 		
@@ -42,30 +46,34 @@ public class VirtualServicesRule implements TestRule {
 	 */
 	public Statement apply(final Statement base, final Description description) {
 
-		
-		
 		return new Statement() {
 
 			@Override
 			public void evaluate() throws Throwable {
+				List<AbstractVirtualService> deployedServices = new ArrayList<>();
+				boolean evaluate = true;
 				if (!clazzNeedVirtualServices(description.getTestClass())) {
 					LOGGER.info(description.getTestClass() + "is not annoted by DevTestVirtualServer");
 					base.evaluate();
 				} else {
-					
-					List<VirtualService> virtualServices = null;
+					List<AbstractVirtualService> virtualServices = null;
 					try {
-						
-						LOGGER.info("deploying VS for method "+ description.getMethodName()+"......");
+						LOGGER.info("deploying VS for method " + description.getMethodName() + "......");
 						virtualServices = processMethodAnnotations(description);
-						deployVirtualServices(virtualServices);
-						base.evaluate();
-					} finally {
-						Thread.sleep(500);
-						LOGGER.info(".... undeploying VS for method "+ description.getMethodName());
-						unDeployVirtualServices(virtualServices);
+						deployedServices = deployVirtualServices(virtualServices);
+					} catch (RuntimeException e){
+						evaluate = false;
+						throw e;
 					}
-
+					try{
+						if(evaluate) {
+							base.evaluate();
+						}
+					}finally{
+						 Thread.sleep(500);
+						 LOGGER.info(".... undeploying VS for method " + description.getMethodName());
+						 unDeployVirtualServices(deployedServices);
+					}
 				}
 			}
 
@@ -76,41 +84,39 @@ public class VirtualServicesRule implements TestRule {
 	/**
 	 * @param virtualServices list of virtual services to deploy
 	 */
-	private void deployVirtualServices(List<VirtualService> virtualServices) {
-
+	private List<AbstractVirtualService> deployVirtualServices(List<AbstractVirtualService> virtualServices) throws
+			 CertificateException, IOException, NoSuchAlgorithmException, KeyStoreException,
+			KeyManagementException {
+		List<AbstractVirtualService> deployedVirtualServices = new ArrayList<>();
 		if (null != virtualServices) {
-			for (VirtualService virtualService : virtualServices) {
-				try {
+			for (AbstractVirtualService virtualService : virtualServices) {
 					LOGGER.debug("Deploy virtual service " + virtualService.getName() + ".....");
 					virtualService.deploy();
+					deployedVirtualServices.add(virtualService);
 					LOGGER.debug("Virtual service " + virtualService.getName() + " deployed!");
-				} catch (Exception error) {
-				   throw new RuntimeException("Error when try to deploy Virtual Service  " + virtualService.getName(), error);
-				}
 			}
 		}
-
+		return deployedVirtualServices;
 	}
 
 	/**
 	 * 
 	 * @param virtualServices list of virtual services to undeployy
 	 */
-	private void unDeployVirtualServices(Collection<VirtualService> virtualServices) {
+	private void unDeployVirtualServices(Collection<AbstractVirtualService> virtualServices) throws
+			CertificateException, IOException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
 
 		if (null != virtualServices) {
-			for (VirtualService virtualService : virtualServices) {
-				try {
+			List<String> undeployedServices = new ArrayList<>();
+			for (AbstractVirtualService virtualService : virtualServices) {
+					if(undeployedServices.contains(virtualService.getDeployedName())){
+						LOGGER.info("Virtual service is already undeployed "+virtualService.getName());
+						continue;
+					}
 					LOGGER.debug("unDeploy virtual service " + virtualService.getName() + ".....");
 					virtualService.unDeploy();
 					LOGGER.debug("Virtual service " + virtualService.getName() + " unDeployed!");
-
-				} catch (Exception error) {
-
-					throw new RuntimeException(
-							"Error when try to unDeploy Virtual Service  " + virtualService.getName(), error);
-
-				}
+					undeployedServices.add(virtualService.getDeployedName());
 			}
 		}
 
@@ -118,40 +124,27 @@ public class VirtualServicesRule implements TestRule {
 
 	/**
 	 *  Find out SV annotation on method level
-	 * @param testClass
+	 * @param description
 	 * @throws SecurityException
 	 * @throws NoSuchMethodException
 	 */
-	private List<VirtualService> processMethodAnnotations(Description description) {
-		List<VirtualService> virtualServices = new ArrayList<VirtualService>();
-		try {
-			 LOGGER.debug("Process annotation for method "+description.getMethodName());
-			Class<?> testClazz = description.getTestClass();
-			DevTestVirtualServerAnnotationProcessor devtestProcessor=new DevTestVirtualServerAnnotationProcessor(testClazz);
-			Method method = testClazz.getMethod(description.getMethodName(), new Class[] {});
-			virtualServices.addAll(devtestProcessor.process(method));
-			
-			
-			
-		} catch (Exception error) {
-
-			throw new RuntimeException("Error when try to build Virtual Service over " + description.getDisplayName(),
-					error);
-		}
-
+	private List<AbstractVirtualService> processMethodAnnotations(Description description) throws Exception {
+		List<AbstractVirtualService> virtualServices = new ArrayList<AbstractVirtualService>();
+		 LOGGER.debug("Process annotation for method "+description.getMethodName());
+		Class<?> testClazz = description.getTestClass();
+		DevTestVirtualServerAnnotationProcessor devtestProcessor=new DevTestVirtualServerAnnotationProcessor(testClazz);
+		Method method = testClazz.getMethod(description.getMethodName());
+		virtualServices.addAll(devtestProcessor.process(method));
 		return virtualServices;
-
 	}
 
 	
 	/**
-	 * @param testClass
+	 * @param clazz
 	 * @return
 	 */
 	private boolean clazzNeedVirtualServices(Class<?> clazz) {
-
 		return null != clazz.getAnnotation(DevTestVirtualServer.class);
-
 	}
 	
 	@Override
@@ -159,8 +152,6 @@ public class VirtualServicesRule implements TestRule {
 	 * Undeploy Virtual service with scope classes
 	 * */
 	protected void finalize() throws Throwable {
-		
-		
 		super.finalize();
 	}
 }

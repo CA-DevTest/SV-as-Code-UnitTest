@@ -4,6 +4,7 @@ package com.ca.devtest.lisabank.demo.sv.vsm;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import com.ca.devtest.sv.devtools.annotation.v3.DevTestVirtualServiceV3;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.ClassRule;
@@ -56,7 +57,6 @@ public class ExistingVirtualServiceTest {
 		} finally {
 			
 		}
-
 	}
 
 	private void printUsers(User[] users) {

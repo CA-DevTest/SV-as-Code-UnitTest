@@ -16,6 +16,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface ProtocolFragment {
-	public String value() ;
+	String value() ;
 	Parameter[] parameters() default {};
 }

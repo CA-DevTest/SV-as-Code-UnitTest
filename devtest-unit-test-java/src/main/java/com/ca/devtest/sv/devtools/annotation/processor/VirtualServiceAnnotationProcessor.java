@@ -20,7 +20,7 @@ import com.ca.devtest.sv.devtools.exception.VirtualServiceProcessorException;
 import com.ca.devtest.sv.devtools.protocol.builder.DataProtocolBuilder;
 import com.ca.devtest.sv.devtools.protocol.builder.ParamatrizedBuilder;
 import com.ca.devtest.sv.devtools.protocol.builder.TransportProtocolBuilderImpl;
-import com.ca.devtest.sv.devtools.services.VirtualService;
+import com.ca.devtest.sv.devtools.services.AbstractVirtualService;
 import com.ca.devtest.sv.devtools.services.builder.VirtualServiceBuilder;
 import com.ca.devtest.sv.devtools.utils.Utility;
 
@@ -37,14 +37,14 @@ public class VirtualServiceAnnotationProcessor implements AnnotationProcessor {
 	 * com.ca.devtest.sv.devtools.processor.MethodProcessorAnnotation#process()
 	 */
 	@Override
-	public List<VirtualService> process(DevTestClient devTestClient, Annotation annotation)
+	public List<AbstractVirtualService> process(DevTestClient devTestClient, Annotation annotation)
 			throws VirtualServiceProcessorException {
-		List<VirtualService> result = new ArrayList<VirtualService>(1);
+		List<AbstractVirtualService> result = new ArrayList<AbstractVirtualService>(1);
 		result.add(buildVirtualService(devTestClient, (DevTestVirtualService) annotation));
 		return result;
 	}
 
-	private VirtualService buildVirtualService(DevTestClient devTestClient, DevTestVirtualService virtualService)
+	private AbstractVirtualService buildVirtualService(DevTestClient devTestClient, DevTestVirtualService virtualService)
 			throws VirtualServiceProcessorException {
 
 		try {
@@ -60,11 +60,11 @@ public class VirtualServiceAnnotationProcessor implements AnnotationProcessor {
 			}
 			// handle Parameters
 			Utility.addParamsToBuilder(virtualServiceBuilder, virtualService.parameters());
-		virtualServiceBuilder.setCapacity(virtualService.capacity());
-		virtualServiceBuilder.setAutoRestartEnabled(virtualService.autoRestartEnabled());
-		virtualServiceBuilder.setExecutionMode(virtualService.executionMode());
-		virtualServiceBuilder.setThinkScale(virtualService.thinkScale());
-		
+			virtualServiceBuilder.setCapacity(virtualService.capacity());
+			virtualServiceBuilder.setAutoRestartEnabled(virtualService.autoRestartEnabled());
+			virtualServiceBuilder.setExecutionMode(virtualService.executionMode());
+			virtualServiceBuilder.setThinkScale(virtualService.thinkScale());
+			virtualServiceBuilder.setGroupTag(virtualService.groupTag());
 			return virtualServiceBuilder.build();
 		} catch (Exception error) {
 			throw new VirtualServiceProcessorException("Error during building virtual service : ", error);

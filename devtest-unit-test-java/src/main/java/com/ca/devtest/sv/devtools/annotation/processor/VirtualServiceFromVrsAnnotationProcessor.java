@@ -11,6 +11,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.ca.devtest.sv.devtools.services.AbstractVirtualService;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 
@@ -19,7 +20,6 @@ import com.ca.devtest.sv.devtools.annotation.DevTestVirtualServiceFromVrs;
 import com.ca.devtest.sv.devtools.annotation.Parameter;
 import com.ca.devtest.sv.devtools.exception.VirtualServiceProcessorException;
 import com.ca.devtest.sv.devtools.protocol.builder.TransportProtocolFromVrsBuilder;
-import com.ca.devtest.sv.devtools.services.VirtualService;
 import com.ca.devtest.sv.devtools.services.builder.VirtualServiceBuilder;
 import com.ca.devtest.sv.devtools.utils.Utility;
 
@@ -33,9 +33,9 @@ public class VirtualServiceFromVrsAnnotationProcessor implements AnnotationProce
 	 * @see com.ca.devtest.sv.devtools.annotation.processor.MethodProcessorAnnotation#process(com.ca.devtest.sv.devtools.DevTestClient, java.lang.annotation.Annotation)
 	 */
 	@Override
-	public List<VirtualService> process(DevTestClient devTestClient, Annotation annotation)
+	public List<AbstractVirtualService> process(DevTestClient devTestClient, Annotation annotation)
 			throws VirtualServiceProcessorException {
-		 List<VirtualService>  result=new ArrayList<VirtualService>(1);
+		 List<AbstractVirtualService>  result=new ArrayList<AbstractVirtualService>(1);
 		 result.add( buildVirtualService(devTestClient,(DevTestVirtualServiceFromVrs)annotation));
 		return result;
 
@@ -47,7 +47,7 @@ public class VirtualServiceFromVrsAnnotationProcessor implements AnnotationProce
 	 * @return
 	 * @throws VirtualServiceProcessorException
 	 */
-	private VirtualService buildVirtualService(DevTestClient devTestClient, DevTestVirtualServiceFromVrs virtualService)
+	private AbstractVirtualService buildVirtualService(DevTestClient devTestClient, DevTestVirtualServiceFromVrs virtualService)
 			throws VirtualServiceProcessorException {
 		try {
 			URL url = getClass().getClassLoader().getResource(virtualService.workingFolder());
@@ -92,6 +92,7 @@ public class VirtualServiceFromVrsAnnotationProcessor implements AnnotationProce
 				virtualServiceBuilder.setAutoRestartEnabled(virtualService.autoRestartEnabled());
 				virtualServiceBuilder.setExecutionMode(virtualService.executionMode());
 				virtualServiceBuilder.setThinkScale(virtualService.thinkScale());
+				virtualServiceBuilder.setGroupTag(virtualService.groupTag());
 			return virtualServiceBuilder.build();
 		} catch (Exception error) {
          throw new VirtualServiceProcessorException("Error during building virtual service : ", error);

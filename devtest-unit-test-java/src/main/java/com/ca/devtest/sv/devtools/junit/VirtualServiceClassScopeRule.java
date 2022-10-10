@@ -1,10 +1,15 @@
 package com.ca.devtest.sv.devtools.junit;
 
 import java.io.IOException;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.CertificateException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import com.ca.devtest.sv.devtools.services.AbstractVirtualService;
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
@@ -13,7 +18,6 @@ import org.slf4j.LoggerFactory;
 
 import com.ca.devtest.sv.devtools.annotation.DevTestVirtualServer;
 import com.ca.devtest.sv.devtools.annotation.processor.DevTestVirtualServerAnnotationProcessor;
-import com.ca.devtest.sv.devtools.services.VirtualService;
 import com.ca.devtest.sv.devtools.vse.VirtualServerEnvironment;
 
 /**
@@ -42,7 +46,7 @@ public class VirtualServiceClassScopeRule implements TestRule {
 
 		private final Statement statement;
 		private final Class testClazz;
-		private List<VirtualService> listVirtualServicesDeployed = new ArrayList<VirtualService>();
+		private List<AbstractVirtualService> listVirtualServicesDeployed = new ArrayList<AbstractVirtualService>();
 
 		public VirtualServiceClassStatement(Statement aStatement, @SuppressWarnings("rawtypes") Class aName) {
 			statement = aStatement;
@@ -75,7 +79,7 @@ public class VirtualServiceClassScopeRule implements TestRule {
 			}
 		}
 
-		private void afterClass(Class clazz) {
+		private void afterClass(Class clazz) throws CertificateException, IOException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
 
 			LOGGER.info("undeploying VS for clazz ");
 			try {
@@ -124,21 +128,13 @@ public class VirtualServiceClassScopeRule implements TestRule {
 	 * @param virtualServices
 	 *            list of virtual services to undeployy
 	 */
-	private void unDeployVirtualServices(Collection<VirtualService> virtualServices) {
+	private void unDeployVirtualServices(Collection<AbstractVirtualService> virtualServices) throws CertificateException, IOException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
 
 		if (null != virtualServices) {
-			for (VirtualService virtualService : virtualServices) {
-				try {
+			for (AbstractVirtualService virtualService : virtualServices) {
 					LOGGER.debug("unDeploy virtual service " + virtualService.getDeployedName() + ".....");
 					virtualService.unDeploy();
 					LOGGER.debug("Virtual service " + virtualService.getDeployedName() + " unDeployed!");
-
-				} catch (Exception error) {
-
-					throw new RuntimeException(
-							"Error when try to unDeploy Virtual Service  " + virtualService.getDeployedName(), error);
-
-				}
 			}
 		}
 
@@ -148,10 +144,10 @@ public class VirtualServiceClassScopeRule implements TestRule {
 	 * @param virtualServices
 	 *            list of virtual services to deploy
 	 */
-	private void deployVirtualServices(List<VirtualService> virtualServices) {
+	private void deployVirtualServices(List<AbstractVirtualService> virtualServices) {
 
 		if (null != virtualServices) {
-			for (VirtualService virtualService : virtualServices) {
+			for (AbstractVirtualService virtualService : virtualServices) {
 				try {
 					LOGGER.debug("Deploy virtual service " + virtualService.getDeployedName() + ".....");
 					virtualService.deploy();
@@ -168,12 +164,12 @@ public class VirtualServiceClassScopeRule implements TestRule {
 	/**
 	 * Find out SV annotation on class level
 	 * 
-	 * @param testClass
+	 * @param testClazz
 	 * @throws SecurityException
 	 * @throws NoSuchMethodException
 	 */
-	protected List<VirtualService> processClazzAnnotations(Class<?> testClazz) {
-		List<VirtualService> virtualServices = new ArrayList<VirtualService>();
+	protected List<AbstractVirtualService> processClazzAnnotations(Class<?> testClazz) {
+		List<AbstractVirtualService> virtualServices = new ArrayList<AbstractVirtualService>();
 		try {
 			LOGGER.debug("Process Clazzz annotation  " + testClazz);
 
@@ -192,7 +188,7 @@ public class VirtualServiceClassScopeRule implements TestRule {
 	}
 
 	/**
-	 * @param testClass
+	 * @param clazz
 	 * @return
 	 */
 	private boolean clazzNeedVirtualServices(Class<?> clazz) {
