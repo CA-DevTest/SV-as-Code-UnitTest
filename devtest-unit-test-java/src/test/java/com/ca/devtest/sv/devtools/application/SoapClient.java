@@ -24,13 +24,14 @@ import org.apache.http.impl.client.HttpClients;
 public class SoapClient {
 	private String server="";
 	private String port="";
-	private String END_POINT= "http://%s:%s%s";
+	private final String END_POINT= "http://%s:%s%s";
 	
 	public SoapClient(String server, String port) {
 		super(); 
 		this.server=server;
 		this.port=port;
 	}
+
 	public String callService(String path,String request) throws  IOException {
 		HttpClient client = HttpClients.createDefault();
 		HttpPost post = new HttpPost(String.format(END_POINT, server, port,path));

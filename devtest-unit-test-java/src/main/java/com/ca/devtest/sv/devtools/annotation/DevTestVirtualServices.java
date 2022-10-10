@@ -18,6 +18,4 @@ public @interface DevTestVirtualServices {
 	
 	DevTestVirtualService[] value() default{ } ;
 	
-	
-	
 }

@@ -1,0 +1,7 @@
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+	<soap:Body>
+		<ns2:getUser xmlns:ns2="http://ejb3.examples.itko.com/">
+			<username>pascal</username>
+		</ns2:getUser>
+	</soap:Body>
+</soap:Envelope>

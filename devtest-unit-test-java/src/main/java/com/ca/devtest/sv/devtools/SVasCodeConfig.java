@@ -1,11 +1,14 @@
 package com.ca.devtest.sv.devtools;
+import com.ca.devtest.sv.devtools.utils.CryptUtil;
 import org.aeonbits.owner.Config;
 import org.aeonbits.owner.Config.LoadPolicy;
 import org.aeonbits.owner.Config.LoadType;
 import org.aeonbits.owner.Config.Sources;
 
+@Config.HotReload(1)
 @LoadPolicy(LoadType.MERGE)
 @Sources({"classpath:local-svascode.properties","classpath:svascode.properties"})
+@Config.DecryptorClass( CryptUtil.class )
 public interface SVasCodeConfig extends Config {
 
 	
@@ -52,6 +55,7 @@ public interface SVasCodeConfig extends Config {
 	 * @return devtest password
 	 */
 	@Key("devtest.password")
+	@EncryptedValue
 	String password();
 	
 	/**
@@ -76,6 +80,28 @@ public interface SVasCodeConfig extends Config {
 	 */
 	@Key("devtest.embeddedVse")
 	boolean embeddedVse();
-	
 
+	/**
+	 * Keystore
+	 *
+	 * @return return keystore
+	 */
+	@Key("devtest.keystore")
+	String keystore();
+
+	/**
+	 * Keystore password
+	 *
+	 * @return return keystore password
+	 */
+	@Key("devtest.keystorePassword")
+	@EncryptedValue
+	String keystorePassword();
+
+	/**
+	 * Undeploy existing Virtual Service
+	 * @return true if existing Virtual Service should be undeplopyed
+	 */
+	@Key("devtest.undeploy.ifexists")
+	String undeployIfExist();
 }

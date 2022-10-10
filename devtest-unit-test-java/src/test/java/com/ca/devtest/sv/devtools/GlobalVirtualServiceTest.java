@@ -34,7 +34,6 @@ public class GlobalVirtualServiceTest {
 
 	@Test
 	public void test1() {
-	
 	}
 
 	@DevTestVirtualServiceFromVrs(serviceName = "demo", workingFolder = "rrpairs/soapWithVrs", vrsConfig = @Config(value = "transport.vrs", parameters = {

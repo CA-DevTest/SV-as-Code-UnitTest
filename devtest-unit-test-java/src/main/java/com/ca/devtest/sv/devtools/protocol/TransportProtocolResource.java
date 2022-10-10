@@ -21,8 +21,8 @@ import com.ca.devtest.sv.devtools.utils.VelocityRender;
  */
 public class TransportProtocolResource implements TransportProtocolDefinition {
 	
-	private File resource;
-	private   Map<String, String> parameters = new HashMap<String,String>();
+	private final File resource;
+	private final Map<String, String> parameters = new HashMap<String,String>();
 	private static final Logger LOGGING= LoggerFactory.getLogger(TransportProtocolResource.class);
 
 	/**

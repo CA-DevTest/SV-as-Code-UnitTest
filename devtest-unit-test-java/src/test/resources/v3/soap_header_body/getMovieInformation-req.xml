@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+	<soap:Header>
+		<ns4:headerContext xmlns:ns4="http://service.moviedatabase.com/movie/message/2007/">
+			<studio>Studio</studio>
+			<movie>
+				<movieId>Movie Id</movieId>
+				<movieSequenceNumber>Movie 3</movieSequenceNumber>
+			</movie>
+			<releaseYear>Release Year</releaseYear>
+			<writer>writer</writer>
+			<music>music</music>
+		</ns4:headerContext>
+	</soap:Header>
+	<soap:Body>
+		<ns214:getMovieInformation xmlns:ns2="http://service.moviedatabase.com/movie/message/2003/" xmlns:ns3="http://service.moviedatabase.com/movie/movie/2008/" xmlns:ns4="http://service.moviedatabase.com/provider/studio/2011/11/" xmlns:ns5="http://service.moviedatabase.com/movie/outlet/2009/" xmlns:ns6="http://service.moviedatabase.com/movie/message/2007/" xmlns:ns7="http://service.moviedatabase.com/movie/2008/" xmlns:ns8="http://service.moviedatabase.com/movie/party/2003/" xmlns:ns9="http://service.moviedatabase.com/provider/movieProfile/inquiry/getmovieSummaryInformationListCommon/2015/" xmlns:ns214="http://service.moviedatabase.com/provider/movieProfile/inquiry/getMovieInformation/2012/05/">
+			<ns4:bodyInformation>
+				<ns4:movieDetails>
+					<ns2:name>Movie Name Goes Here</ns2:name>
+					<ns3:sequel>Sequel no 4</ns3:sequel>
+					<ns4:details>
+						<ns4:director>Director</ns4:director>
+						<ns4:writer>Writer</ns4:writer>
+						<ns4:music>Music</ns4:music>
+					</ns4:details>
+				</ns4:movieDetails>
+			</ns4:bodyInformation>
+			<ns8:cast>Actor 1, Actor 2, Actor 3</ns8:cast>
+		</ns214:getMovieInformation>
+	</soap:Body>
+</soap:Envelope>

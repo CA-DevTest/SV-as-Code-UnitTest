@@ -1,0 +1,3 @@
+HTTP/1.1 200
+
+{"TCEntry":[{"content":"Terms and Conditions","description":"Terms and Conditions","termsKey":"f0a6f2aa-8e68-45ae-a875-84444ef113e9","termsType":"Operation 9 terms","termsVersion":1}]}

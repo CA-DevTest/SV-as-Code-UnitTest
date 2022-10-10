@@ -67,7 +67,7 @@ public class ZipUsingJavaUtil {
 		/*
 		 * if the folder is empty add empty folder to the Zip file
 		 */
-		if (flag == true) {
+		if (flag) {
 			zip.putNextEntry(new ZipEntry(path + "/" + folder.getName() + "/"));
 		} else { /*
 					 * if the current name is directory, recursively traverse it

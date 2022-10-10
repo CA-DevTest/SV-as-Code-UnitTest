@@ -2,10 +2,15 @@ package com.ca.devtest.expe.svasacode;
 
 import java.io.File;
 import java.io.IOException;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.CertificateException;
+
+import com.ca.devtest.sv.devtools.services.VirtualServiceInterface;
 import org.junit.Test;
 import com.ca.devtest.sv.devtools.DevTestClient;
 import com.ca.devtest.sv.devtools.protocol.builder.TransportProtocolFromVrsBuilder;
-import com.ca.devtest.sv.devtools.services.VirtualService;
 import com.ca.devtest.sv.devtools.services.builder.VirtualServiceBuilder;
 
 /**
@@ -19,7 +24,7 @@ import com.ca.devtest.sv.devtools.services.builder.VirtualServiceBuilder;
 public class SvAsCodeAPI {
 
   @Test
-  public void testAPI() throws IOException {
+  public void testAPI() throws Exception {
 
 
 
@@ -29,7 +34,7 @@ public class SvAsCodeAPI {
 
     // Create
     DevTestClient devtest =
-        new DevTestClient("localhost", "VSE", "svpower", "svpower", "demo");
+        new DevTestClient( "http", "localhost", "VSE", "svpower", "svpower", "demo", "", "");
 
     // build Transport Protocol
     TransportProtocolFromVrsBuilder transportBuilder = new TransportProtocolFromVrsBuilder(vrsFile);
@@ -44,7 +49,7 @@ public class SvAsCodeAPI {
     vsbuilder.addKeyValue("clientID", "12345");
 
     // Virtual Service
-    VirtualService sv = vsbuilder.build();
+    VirtualServiceInterface sv = vsbuilder.build();
     // Deploy VS
     sv.deploy();
 

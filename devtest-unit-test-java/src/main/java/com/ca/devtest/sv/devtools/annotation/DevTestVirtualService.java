@@ -8,7 +8,6 @@ import java.lang.annotation.Repeatable;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-
 import com.ca.devtest.sv.devtools.services.ExecutionModeType;
 
 /**
@@ -42,7 +41,6 @@ public @interface DevTestVirtualService {
 	int thinkScale() default 100;
 	boolean autoRestartEnabled() default true;
 	ExecutionModeType executionMode() default ExecutionModeType.EFFICIENT;
-	
 	VirtualServiceType type() default VirtualServiceType.RRPAIRS;
 	Protocol transport() default @Protocol(ProtocolType.TPH_HTTP );
 	Protocol[] requestDataProtocol() default{ } ;
@@ -50,6 +48,7 @@ public @interface DevTestVirtualService {
 	Class preDeployClass() default Object.class;
 	String workingFolder();
 	Parameter[] parameters() default{};
+	String groupTag() default "";
 }
 
 

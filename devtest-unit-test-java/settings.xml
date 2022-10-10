@@ -1,0 +1,35 @@
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
+                      https://maven.apache.org/xsd/settings-1.0.0.xsd">
+    <servers>
+        <server>
+            <id>photon-releases</id>
+            <username>${ARTIFACTORY_USER}</username>
+            <password>${ARTIFACTORY_APIKEY}</password>
+            <filePermissions>664</filePermissions>
+            <directoryPermissions>775</directoryPermissions>
+            <configuration></configuration>
+        </server>
+        <server>
+            <id>plugin-dependencies</id>
+            <username>${ARTIFACTORY_USER}</username>
+            <password>${ARTIFACTORY_APIKEY}</password>
+            <filePermissions>664</filePermissions>
+            <directoryPermissions>775</directoryPermissions>
+            <configuration></configuration>
+        </server>
+        <!-- To publish a snapshot of your project -->
+        <server>
+            <id>snapshot-local</id>
+            <username>${ARTIFACTORY_USER}</username>
+            <password>${ARTIFACTORY_APIKEY}</password>
+        </server>
+        <!-- To stage a release of your project -->
+        <server>
+            <id>release-local</id>
+            <username>${ARTIFACTORY_USER}</username>
+            <password>${ARTIFACTORY_APIKEY}</password>
+        </server>
+    </servers>
+</settings>

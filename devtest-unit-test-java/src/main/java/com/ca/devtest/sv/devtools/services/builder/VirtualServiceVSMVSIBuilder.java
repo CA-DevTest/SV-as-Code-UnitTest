@@ -29,7 +29,8 @@ public final class VirtualServiceVSMVSIBuilder extends VirtualServiceBuilder {
 	public VirtualServiceVSMVSIBuilder(String name, VirtualServiceEnvironment vse,File workingFolder) {
 		super(name, vse);
 		this.workingFolder=workingFolder;
-		setType(VirtualServiceType.VSM);
+		setUrl(VirtualServiceType.VSM.geturlPattern());
+		setType(VirtualServiceType.VSM.toString());
 	}
 
 	protected File packVirtualService() throws IOException {
@@ -71,14 +72,14 @@ public final class VirtualServiceVSMVSIBuilder extends VirtualServiceBuilder {
 	/**
 	 * @return the workingFolder
 	 */
-	protected File getWorkingFolder() {
+	private File getWorkingFolder() {
 		return workingFolder;
 	}
 
 	/**
 	 * @param workingFolder the workingFolder to set
 	 */
-	protected void setWorkingFolder(File workingFolder) {
+	private void setWorkingFolder(File workingFolder) {
 		this.workingFolder = workingFolder;
 	}
 }

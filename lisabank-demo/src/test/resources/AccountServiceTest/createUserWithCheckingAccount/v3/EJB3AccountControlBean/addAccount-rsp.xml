@@ -1,0 +1,8 @@
+<env:Envelope xmlns:env='http://schemas.xmlsoap.org/soap/envelope/'>
+	<env:Header></env:Header>
+	<env:Body>
+		<ns2:addAccountResponse xmlns:ns2="http://ejb3.examples.itko.com/">
+			<return>206403687921</return>
+		</ns2:addAccountResponse>
+	</env:Body>
+</env:Envelope>

@@ -13,6 +13,7 @@ import com.ca.devtest.sv.devtools.services.VirtualService;
 import com.ca.devtest.sv.devtools.services.builder.VirtualServiceBuilder;
 import com.ca.devtest.sv.devtools.services.builder.VirtualServiceRRPairsBuilder;
 import com.ca.devtest.sv.devtools.services.builder.VirtualServiceVSMVSIBuilder;
+import com.ca.devtest.sv.devtools.services.builder.v3.VirtualServiceV3Builder;
 
 /**
  * @author gaspa03
@@ -26,20 +27,20 @@ public class DevTestClient {
 	private File rrPairsFolder;
 	private TransportProtocolDefinitionImpl transportProtocol;
 	
-	private VirtualServiceBuilder virtualServiceBuilder= null;
+	private final VirtualServiceBuilder virtualServiceBuilder= null;
 	
 	
 	// private File zipFile
 
 	/**
-	 * @param registryHostName
-	 * @param vseName
 	 * @param userName
 	 * @param password
 	 * @param group
 	 */
-	public DevTestClient(String registryHostName, String vseNname, String userName, String password, String group) {
-		this.vse = new VirtualServiceEnvironment(registryHostName, vseNname,userName,password, group);
+	public DevTestClient(String proptocol, String registryHostName, String vseNname, String userName, String password,
+						 String group, String keystore, String keystorePassword) {
+		this.vse = new VirtualServiceEnvironment( proptocol ,registryHostName, vseNname,userName,password,
+				group, keystore, keystorePassword);
 		this.virtualServices = new HashMap<String, VirtualService>();
 	}
 
@@ -57,13 +58,16 @@ public class DevTestClient {
 	
 	/**
 	 * @param serviceName
-	 * @param rrPairsFolder
 	 * @return
 	 * @throws IOException
 	 */
 	public VirtualServiceBuilder fromVSMVSI(String serviceName, File workingFolder) throws IOException {
 		
 		return new VirtualServiceVSMVSIBuilder(serviceName, getVse(), workingFolder);
+	}
+
+	public VirtualServiceV3Builder withV3API(String serviceName, File workingDir){
+		return new VirtualServiceV3Builder(serviceName, getVse(), workingDir);
 	}
 
 	protected VirtualServiceEnvironment getVse() {

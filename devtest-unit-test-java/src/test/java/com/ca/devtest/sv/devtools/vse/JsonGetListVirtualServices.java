@@ -7,15 +7,19 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.CertificateException;
 import java.util.List;
 
+import com.ca.devtest.sv.devtools.services.VirtualServiceInterface;
 import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.ca.devtest.sv.devtools.VirtualServiceEnvironment;
-import com.ca.devtest.sv.devtools.services.VirtualService;
 import com.jayway.jsonpath.JsonPath;
 import com.jayway.jsonpath.ReadContext;
 
@@ -36,10 +40,11 @@ public class JsonGetListVirtualServices {
 	}
 	
 	@Test
-	public void listVirtualServiceFromVSE() throws URISyntaxException, IOException {
-		VirtualServiceEnvironment vse=new VirtualServiceEnvironment("localhost","vse-perf","admin","admin","");
-		List<VirtualService> services=vse.listVirtualServices();		
-		assertEquals(1, services.size());
+	public void listVirtualServiceFromVSE() throws URISyntaxException, IOException, CertificateException,
+			NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
+		VirtualServiceEnvironment vse=new VirtualServiceEnvironment("http", "localhost","VSE","admin","admin","","","");
+		List<VirtualServiceInterface> services=vse.listVirtualServices();
+		assertEquals(0, services.size());
 	}
 
 }

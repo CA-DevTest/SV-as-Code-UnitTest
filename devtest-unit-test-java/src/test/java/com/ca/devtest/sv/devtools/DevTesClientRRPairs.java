@@ -6,8 +6,8 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 
+import com.ca.devtest.sv.devtools.annotation.v3.DevTestVirtualServiceV3;
 import org.apache.commons.io.FileUtils;
-import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -19,20 +19,15 @@ import com.ca.devtest.sv.devtools.annotation.Parameter;
 import com.ca.devtest.sv.devtools.annotation.Protocol;
 import com.ca.devtest.sv.devtools.annotation.ProtocolType;
 import com.ca.devtest.sv.devtools.application.SoapClient;
-import com.ca.devtest.sv.devtools.junit.VirtualServiceClassScopeRule;
 import com.ca.devtest.sv.devtools.junit.VirtualServicesRule;
 
 /**
  * @author gaspa03
  *
  */
-@DevTestVirtualServer(deployServiceToVse = "vse-perf")
+@DevTestVirtualServer(deployServiceToVse = "VSE")
 public class DevTesClientRRPairs {
 	
-
-	// handle VS with Class scope
-	@ClassRule
-	public static VirtualServiceClassScopeRule clazzRule = new VirtualServiceClassScopeRule();
 	@Rule
 	public VirtualServicesRule rules = new VirtualServicesRule();
 	
@@ -59,7 +54,25 @@ public class DevTesClientRRPairs {
 		File requestFile = new File(getClass().getClassLoader().getResource("rrpairs/soap/getUser-req.xml").toURI());
 		String request = FileUtils.readFileToString(requestFile, "UTF-8");
 		String response = soapclient.callService(path, request);
+	}
 
+	@DevTestVirtualServiceV3(serviceName = "lisa",
+			port = "9001",
+			basePath = "/lisa",
+			workingFolder = "rrpairs/soap",
+			inputFile2 = "getUser-req.xml",
+			inputFile1 = "getUser-rsp.xml"
+	)
+	@Test
+	public void createSoapServiceV3() throws IOException, URISyntaxException {
+		int port = 9001;
+		String path = "/lisa";
+		/* Test */
+		SoapClient soapclient = new SoapClient("localhost", String.valueOf(port));
+		URL url = getClass().getClassLoader().getResource("rrpairs/soap/getUser-req.xml");
+		File requestFile = new File(getClass().getClassLoader().getResource("rrpairs/soap/getUser-req.xml").toURI());
+		String request = FileUtils.readFileToString(requestFile, "UTF-8");
+		String response = soapclient.callService(path, request);
 	}
 
 	@DevTestVirtualServiceFromVrs(serviceName = "demo", workingFolder = "rrpairs/soapWithVrs", vrsConfig = @Config(value = "transport.vrs", parameters = {

@@ -6,6 +6,8 @@ package com.ca.devtest.lisabank.demo.sv.http;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import com.ca.devtest.sv.devtools.annotation.v3.DataProtocolConfig;
+import com.ca.devtest.sv.devtools.annotation.v3.DevTestVirtualServiceV3;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -72,7 +74,44 @@ public class AccountServiceTest {
 		assertEquals("Le balance du compte n'est pas conforme", amount, account.getBalance().intValue());
 	}
 
-	
-	
-	
+	@DevTestVirtualServiceV3(serviceName = "UserServiceTest-EJB3UserControlBean",
+			port = "9081",
+			basePath = "/itkoExamples/EJB3UserControlBean",
+			workingFolder = "AccountServiceTest/createUserWithCheckingAccount/v3/EJB3UserControlBean",
+			inputFile1 = "rrpair.zip",
+			dataProtocolsConfig = {
+				@DataProtocolConfig(
+					typeId = "SOAPDPH"
+				)
+			}
+	)
+
+	@DevTestVirtualServiceV3(serviceName = "UserServiceTest-EJB3AccountControlBean",
+			port = "9081",
+			basePath = "/itkoExamples/EJB3AccountControlBean",
+			workingFolder = "AccountServiceTest/createUserWithCheckingAccount/v3/EJB3AccountControlBean",
+			inputFile1 = "rrpair.zip",
+			dataProtocolsConfig = {
+				@DataProtocolConfig(
+					typeId = "SOAPDPH"
+				)
+			}
+	)
+
+
+	@Test
+	public void createUserWithCheckingAccountV3() {
+
+		// Given
+		String user = "pascal";
+		String password = "password";
+		int amount = 1000;
+		// prepare context
+		// bankServices.deleteUser(user);
+		// When
+		Account account = bankServices.createUserWithCheckingAccount(user, password, amount);
+		// Then
+		assertNotNull(account);
+		assertEquals("Le balance du compte n'est pas conforme", amount, account.getBalance().intValue());
+	}
 }

@@ -6,6 +6,7 @@ import com.ca.devtest.sv.devtools.annotation.DevTestVirtualServer;
 import com.ca.devtest.sv.devtools.annotation.DevTestVirtualService;
 import com.ca.devtest.sv.devtools.annotation.Protocol;
 import com.ca.devtest.sv.devtools.annotation.ProtocolType;
+import com.ca.devtest.sv.devtools.annotation.v3.DevTestVirtualServiceV3;
 import com.ca.devtest.sv.devtools.junit.VirtualServicesRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -50,6 +51,18 @@ public class ProductTest {
         logger.info(product.toString());
     }
 
+    @DevTestVirtualServiceV3(serviceName = "getProductByXML",
+            basePath = "/",
+            port = "9956",
+            workingFolder = "template2",
+            inputFile1 = "product-req.txt",
+            inputFile2 = "product-rsp.txt"
+    )
+    @Test
+    public void getProductByXMLV3() throws JAXBException {
 
-
+        com.ca.devtest.lisabank.demo.business.Product  product = productService.getProduct(productServiceUrl);
+        assertNotNull(product);
+        logger.info(product.toString());
+    }
 }

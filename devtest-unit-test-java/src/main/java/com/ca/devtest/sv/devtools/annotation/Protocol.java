@@ -16,6 +16,6 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 public @interface Protocol {
 	
-	public String value() ;
+	String value() ;
 	Parameter[] parameters() default {};
 }

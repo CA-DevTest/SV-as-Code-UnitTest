@@ -5,6 +5,7 @@ import static org.junit.Assert.assertNotNull;
 
 import java.util.List;
 
+import com.ca.devtest.sv.devtools.annotation.v3.DevTestVirtualServiceV3;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.Rule;
@@ -49,6 +50,21 @@ public class LisaUserServiceTest {
 		assertEquals(1, users.size());
 	}
 
+	@DevTestVirtualServiceV3(serviceName = "getLisaUserV3",
+			basePath = "/",
+			port = "9904",
+			workingFolder = "rrpairs/rest",
+			inputFile1 = "1-req.txt",
+			inputFile2 = "1-rsp.txt"
+	)
+	@Test
+	public void getLisaUserV3() {
+		List<LisaUser> users = lisaUserService.getListUsers();
+		assertNotNull(users);
+		printUsers(users);
+		assertEquals(1, users.size());
+	}
+
 	private void printUsers(List<LisaUser> users) {
 		for (LisaUser user : users) {
 			logger.info(user.getFname() + " " + user.getLname() + " " + user.getLogin());
@@ -65,6 +81,20 @@ public class LisaUserServiceTest {
 	@Test
 	public void getUserByJSON() {
 
+		List<LisaUser> users = lisaUserService.getListUsers();
+		assertNotNull(users);
+		printUsers(users);
+		assertEquals(1, users.size());
+	}
+	@DevTestVirtualServiceV3(serviceName = "getUserByJSON",
+			basePath = "/",
+			port = "9904",
+			workingFolder = "rrpairs/rest",
+			inputFile1 = "1-req.txt",
+			inputFile2 = "1-rsp.txt"
+	)
+	@Test
+	public void getUserByJSONV3() {
 		List<LisaUser> users = lisaUserService.getListUsers();
 		assertNotNull(users);
 		printUsers(users);

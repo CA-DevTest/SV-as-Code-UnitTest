@@ -1,0 +1,7 @@
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+	<soap:Body>
+		<ns2:getAccount xmlns:ns2="http://ejb3.examples.itko.com/">
+			<accountId>206403687921</accountId>
+		</ns2:getAccount>
+	</soap:Body>
+</soap:Envelope>

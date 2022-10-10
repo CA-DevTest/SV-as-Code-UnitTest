@@ -31,9 +31,9 @@ public final class VirtualServerEnvironmentLocal implements VirtualServerEnviron
 
 	private Process vseProcess = null;
 
-	private String registry;
-	private String vseName;
-	private String registryHostName;
+	private final String registry;
+	private final String vseName;
+	private final String registryHostName;
 	private static final Logger LOG = LoggerFactory.getLogger(VirtualServerEnvironmentLocal.class);
 
 	private static final Map<String, VirtualServerEnvironment> dicoVSE = new Hashtable<String, VirtualServerEnvironment>();
@@ -202,7 +202,7 @@ public final class VirtualServerEnvironmentLocal implements VirtualServerEnviron
 							File newDir = new File(file.getAbsolutePath());
 							if (!newDir.exists()) {
 								boolean success = newDir.mkdirs();
-								if (success == false) {
+								if (!success) {
 									System.out.println("Problem creating Folder");
 								}
 							}
@@ -297,6 +297,6 @@ public final class VirtualServerEnvironmentLocal implements VirtualServerEnviron
 	@Override
 	public boolean isRunning() throws RuntimeException {
 
-		return vseProcess != null ? vseProcess.isAlive() : false;
+		return vseProcess != null && vseProcess.isAlive();
 	}
 }
