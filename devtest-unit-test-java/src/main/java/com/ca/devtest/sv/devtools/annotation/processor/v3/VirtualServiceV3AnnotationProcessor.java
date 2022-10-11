@@ -6,7 +6,7 @@ import com.ca.devtest.sv.devtools.annotation.processor.AnnotationProcessor;
 import com.ca.devtest.sv.devtools.annotation.v3.DevTestVirtualServiceV3;
 import com.ca.devtest.sv.devtools.annotation.v3.VirtualServiceV3Type;
 import com.ca.devtest.sv.devtools.protocol.builder.ParamatrizedBuilder;
-import com.ca.devtest.sv.devtools.services.AbstractVirtualService;
+import com.ca.devtest.sv.devtools.services.VirtualServiceInterface;
 import com.ca.devtest.sv.devtools.services.builder.v3.VirtualServiceV3Builder;
 import com.ca.devtest.sv.devtools.services.v3.ConfigObjectBuilder;
 import com.ca.devtest.sv.devtools.utils.Utility;
@@ -23,13 +23,13 @@ import java.util.List;
  */
 public class VirtualServiceV3AnnotationProcessor  implements AnnotationProcessor {
     @Override
-    public List<AbstractVirtualService> process(DevTestClient devTestClient, Annotation annotation) throws Exception {
-        List<AbstractVirtualService>  result=new ArrayList<AbstractVirtualService>(1);
+    public List<VirtualServiceInterface> process(DevTestClient devTestClient, Annotation annotation) throws Exception {
+        List<VirtualServiceInterface>  result=new ArrayList<VirtualServiceInterface>(1);
         result.add(buildVirtualService(devTestClient, (DevTestVirtualServiceV3) annotation));
         return result;
     }
 
-    private AbstractVirtualService buildVirtualService(DevTestClient devTestClient, DevTestVirtualServiceV3 virtualService)
+    private VirtualServiceInterface buildVirtualService(DevTestClient devTestClient, DevTestVirtualServiceV3 virtualService)
             throws Exception {
 
             VirtualServiceV3Builder virtualServiceBuilder = null;

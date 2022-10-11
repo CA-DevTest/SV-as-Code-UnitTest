@@ -12,3 +12,7 @@ devtest.registry=localhost
 devtest.registryUrl=tcp://${devtest.registry}:2010/Registry
 devtest.login=svpower
 devtest.password=svpower
+devtest.protocol=http
+devtest.keystore=/Applications/CA/DevTest/webserver.ks
+devtest.keystorePassword=changeit
+devtest.undeploy.ifexists=true

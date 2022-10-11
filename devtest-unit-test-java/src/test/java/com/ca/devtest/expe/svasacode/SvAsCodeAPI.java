@@ -7,7 +7,7 @@ import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 
-import com.ca.devtest.sv.devtools.services.AbstractVirtualService;
+import com.ca.devtest.sv.devtools.services.VirtualServiceInterface;
 import org.junit.Test;
 import com.ca.devtest.sv.devtools.DevTestClient;
 import com.ca.devtest.sv.devtools.protocol.builder.TransportProtocolFromVrsBuilder;
@@ -24,7 +24,7 @@ import com.ca.devtest.sv.devtools.services.builder.VirtualServiceBuilder;
 public class SvAsCodeAPI {
 
   @Test
-  public void testAPI() throws IOException, NoSuchAlgorithmException, KeyManagementException, CertificateException, KeyStoreException {
+  public void testAPI() throws Exception {
 
 
 
@@ -49,7 +49,7 @@ public class SvAsCodeAPI {
     vsbuilder.addKeyValue("clientID", "12345");
 
     // Virtual Service
-    AbstractVirtualService sv = vsbuilder.build();
+    VirtualServiceInterface sv = vsbuilder.build();
     // Deploy VS
     sv.deploy();
 

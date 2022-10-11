@@ -8,7 +8,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.ca.devtest.sv.devtools.services.AbstractVirtualService;
+import com.ca.devtest.sv.devtools.services.VirtualServiceInterface;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -60,14 +60,14 @@ public class DevTestVirtualServerAnnotationProcessor {
 				virtualServer.keystorePassword());
 	}
 
-	public List<AbstractVirtualService> process(Class<?> clazz) throws Exception {
+	public List<VirtualServiceInterface> process(Class<?> clazz) throws Exception {
 
 		Annotation[] annotations = clazz.getDeclaredAnnotations();
-		List<AbstractVirtualService> virtualServices = new ArrayList<AbstractVirtualService>();
+		List<VirtualServiceInterface> virtualServices = new ArrayList<VirtualServiceInterface>();
 		for (Annotation annotation : annotations) {
 			// get Annotation processor
 			AnnotationProcessor processor = AnnotationProcessorFactory.getInstance().getProcessor(annotation);
-			List<AbstractVirtualService> services = processor.process(devtestClient, annotation);
+			List<VirtualServiceInterface> services = processor.process(devtestClient, annotation);
 			if (null != services)
 				virtualServices.addAll(services);
 		}
@@ -75,14 +75,14 @@ public class DevTestVirtualServerAnnotationProcessor {
 		return virtualServices;
 	}
 
-	public List<AbstractVirtualService> process(Method method) throws Exception {
+	public List<VirtualServiceInterface> process(Method method) throws Exception {
 
 		Annotation[] annotations = method.getDeclaredAnnotations();
-		List<AbstractVirtualService> virtualServices = new ArrayList<AbstractVirtualService>();
+		List<VirtualServiceInterface> virtualServices = new ArrayList<VirtualServiceInterface>();
 		for (Annotation annotation : annotations) {
 			// get Annotation processor
 			AnnotationProcessor processor = AnnotationProcessorFactory.getInstance().getProcessor(annotation);
-			List<AbstractVirtualService> services = processor.process(devtestClient, annotation);
+			List<VirtualServiceInterface> services = processor.process(devtestClient, annotation);
 			if (null != services)
 				virtualServices.addAll(services);
 		}

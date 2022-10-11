@@ -11,7 +11,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.ca.devtest.sv.devtools.services.AbstractVirtualService;
+import com.ca.devtest.sv.devtools.services.VirtualServiceInterface;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 
@@ -33,9 +33,9 @@ public class VirtualServiceFromVrsAnnotationProcessor implements AnnotationProce
 	 * @see com.ca.devtest.sv.devtools.annotation.processor.MethodProcessorAnnotation#process(com.ca.devtest.sv.devtools.DevTestClient, java.lang.annotation.Annotation)
 	 */
 	@Override
-	public List<AbstractVirtualService> process(DevTestClient devTestClient, Annotation annotation)
+	public List<VirtualServiceInterface> process(DevTestClient devTestClient, Annotation annotation)
 			throws VirtualServiceProcessorException {
-		 List<AbstractVirtualService>  result=new ArrayList<AbstractVirtualService>(1);
+		 List<VirtualServiceInterface>  result=new ArrayList<VirtualServiceInterface>(1);
 		 result.add( buildVirtualService(devTestClient,(DevTestVirtualServiceFromVrs)annotation));
 		return result;
 
@@ -47,7 +47,7 @@ public class VirtualServiceFromVrsAnnotationProcessor implements AnnotationProce
 	 * @return
 	 * @throws VirtualServiceProcessorException
 	 */
-	private AbstractVirtualService buildVirtualService(DevTestClient devTestClient, DevTestVirtualServiceFromVrs virtualService)
+	private VirtualServiceInterface buildVirtualService(DevTestClient devTestClient, DevTestVirtualServiceFromVrs virtualService)
 			throws VirtualServiceProcessorException {
 		try {
 			URL url = getClass().getClassLoader().getResource(virtualService.workingFolder());

@@ -13,7 +13,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 import java.util.List;
 
-import com.ca.devtest.sv.devtools.services.AbstractVirtualService;
+import com.ca.devtest.sv.devtools.services.VirtualServiceInterface;
 import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -43,8 +43,8 @@ public class JsonGetListVirtualServices {
 	public void listVirtualServiceFromVSE() throws URISyntaxException, IOException, CertificateException,
 			NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
 		VirtualServiceEnvironment vse=new VirtualServiceEnvironment("http", "localhost","VSE","admin","admin","","","");
-		List<AbstractVirtualService> services=vse.listVirtualServices();
-		assertEquals(1, services.size());
+		List<VirtualServiceInterface> services=vse.listVirtualServices();
+		assertEquals(0, services.size());
 	}
 
 }

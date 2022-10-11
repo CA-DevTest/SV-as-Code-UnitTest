@@ -20,7 +20,7 @@ import com.ca.devtest.sv.devtools.exception.VirtualServiceProcessorException;
 import com.ca.devtest.sv.devtools.protocol.builder.DataProtocolBuilder;
 import com.ca.devtest.sv.devtools.protocol.builder.ParamatrizedBuilder;
 import com.ca.devtest.sv.devtools.protocol.builder.TransportProtocolBuilderImpl;
-import com.ca.devtest.sv.devtools.services.AbstractVirtualService;
+import com.ca.devtest.sv.devtools.services.VirtualServiceInterface;
 import com.ca.devtest.sv.devtools.services.builder.VirtualServiceBuilder;
 import com.ca.devtest.sv.devtools.utils.Utility;
 
@@ -37,19 +37,18 @@ public class VirtualServiceAnnotationProcessor implements AnnotationProcessor {
 	 * com.ca.devtest.sv.devtools.processor.MethodProcessorAnnotation#process()
 	 */
 	@Override
-	public List<AbstractVirtualService> process(DevTestClient devTestClient, Annotation annotation)
+	public List<VirtualServiceInterface> process(DevTestClient devTestClient, Annotation annotation)
 			throws VirtualServiceProcessorException {
-		List<AbstractVirtualService> result = new ArrayList<AbstractVirtualService>(1);
+		List<VirtualServiceInterface> result = new ArrayList<VirtualServiceInterface>(1);
 		result.add(buildVirtualService(devTestClient, (DevTestVirtualService) annotation));
 		return result;
 	}
 
-	private AbstractVirtualService buildVirtualService(DevTestClient devTestClient, DevTestVirtualService virtualService)
+	private VirtualServiceInterface buildVirtualService(DevTestClient devTestClient, DevTestVirtualService virtualService)
 			throws VirtualServiceProcessorException {
 
 		try {
 			VirtualServiceBuilder virtualServiceBuilder = null;
-			System.out.println(virtualService.workingFolder());
 			URL url = getClass().getClassLoader().getResource(virtualService.workingFolder());
 			File workingFolder = new File(url.toURI());
 			// TODO - move this branch to factory processor

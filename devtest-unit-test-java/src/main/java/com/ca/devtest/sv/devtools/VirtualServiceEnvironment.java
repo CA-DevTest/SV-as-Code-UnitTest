@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.ca.devtest.sv.devtools.annotation.v3.VirtualServiceV3Type;
-import com.ca.devtest.sv.devtools.services.AbstractVirtualService;
+import com.ca.devtest.sv.devtools.services.VirtualServiceInterface;
 import com.ca.devtest.sv.devtools.services.v3.VirtualServiceV3;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.http.HttpEntity;
@@ -135,26 +135,26 @@ public class VirtualServiceEnvironment {
 	}
 
 	/**
-	 * @param abstractVirtualService
+	 * @param virtualService
 	 * @throws IOException
 	 */
-	public void deployService(AbstractVirtualService abstractVirtualService) throws IOException, NoSuchAlgorithmException,
+	public void deployService(VirtualServiceInterface virtualService) throws IOException, NoSuchAlgorithmException,
 			KeyManagementException, CertificateException, KeyStoreException {
 
 		if(SvAsCodeConfigUtil.undeployIfExist()
-				&& abstractVirtualService.getType().equals(VirtualServiceV3Type.CREATE.getType())
-				&& exist(abstractVirtualService)){
-			unDeployService(abstractVirtualService);
+				&& virtualService.getType().equals(VirtualServiceV3Type.CREATE.getType())
+				&& exist(virtualService)){
+			unDeployService(virtualService);
 		}
 		HttpClient httpClient = createHttpClient();
 
-		String urlPost = String.format(abstractVirtualService.getUrl(),getProtocol(), getRegistryHostName(),
-				SvAsCodeConfigUtil.registryPort(), getName(), abstractVirtualService.getDeployedName());
+		String urlPost = String.format(virtualService.getUrl(),getProtocol(), getRegistryHostName(),
+				SvAsCodeConfigUtil.registryPort(), getName(), virtualService.getDeployedName());
 
 		HttpPost post = new HttpPost(urlPost);
 		MultipartEntityBuilder builder = MultipartEntityBuilder.create();
-		if(abstractVirtualService instanceof VirtualServiceV3) {
-			VirtualServiceV3 service = (VirtualServiceV3)abstractVirtualService;
+		if(virtualService instanceof VirtualServiceV3) {
+			VirtualServiceV3 service = (VirtualServiceV3)virtualService;
 			addParam(builder, "inputFile1", service.getInputFile1(),true);
 			addParam(builder, "inputFile2", service.getInputFile2(),true);
 			addParam(builder, "dataFile", service.getDataFile(),true);
@@ -168,7 +168,7 @@ public class VirtualServiceEnvironment {
 			builder.addPart("deploy", deploy);
 			post.setHeader("Accept", "application/json");
 		}else {
-			VirtualService service = (VirtualService) abstractVirtualService;
+			VirtualService service = (VirtualService) virtualService;
 			FileBody contentBody = new FileBody(service.getPackedVirtualService(), ContentType.APPLICATION_JSON);
 			builder.addPart("file", contentBody);
 		}
@@ -179,7 +179,7 @@ public class VirtualServiceEnvironment {
 
 		HttpResponse response = httpClient.execute(post);
 
-		LOG.info("Deploying service " + abstractVirtualService.getDeployedName() + "....");
+		LOG.info("Deploying service " + virtualService.getDeployedName() + "....");
 		HttpEntity entity = response.getEntity();
 
 		LOG.info("Server Response Code :" + response.getStatusLine().getStatusCode());
@@ -187,24 +187,24 @@ public class VirtualServiceEnvironment {
 			String responseString = EntityUtils.toString(entity, "UTF-8");
 			LOG.debug("Server respond :" + responseString);
 		}
-		if (response.getStatusLine().getStatusCode() != HttpStatus.SC_CREATED && !(abstractVirtualService instanceof VirtualServiceV3)) {
+		if (response.getStatusLine().getStatusCode() != HttpStatus.SC_CREATED && !(virtualService instanceof VirtualServiceV3)) {
 
-			LOG.error("Error deploying service :" + abstractVirtualService.getDeployedName());
+			LOG.error("Error deploying service :" + virtualService.getDeployedName());
 			throw new HttpResponseException(response.getStatusLine().getStatusCode(),
 					"VS creation did not complete normally");
-		}else if(response.getStatusLine().getStatusCode() != HttpStatus.SC_OK &&  abstractVirtualService instanceof VirtualServiceV3){
-			LOG.error("Error deploying service :" + abstractVirtualService.getDeployedName());
+		}else if(response.getStatusLine().getStatusCode() != HttpStatus.SC_OK &&  virtualService instanceof VirtualServiceV3){
+			LOG.error("Error deploying service :" + virtualService.getDeployedName());
 			throw new HttpResponseException(response.getStatusLine().getStatusCode(),
 					"VS creation did not complete normally");
 		}
-		abstractVirtualService.clean();
+		virtualService.clean();
 	}
 
 	/**
 	 * @param service
 	 * @throws IOException
 	 */
-	public void unDeployService(AbstractVirtualService service) throws IOException, CertificateException,
+	public void unDeployService(VirtualServiceInterface service) throws IOException, CertificateException,
 			NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
 
 		HttpClient httpClient = createHttpClient();
@@ -273,10 +273,10 @@ public class VirtualServiceEnvironment {
 	 * 
 	 * @throws IOException
 	 */
-	public List<AbstractVirtualService> listVirtualServices() throws IOException, CertificateException,
+	public List<VirtualServiceInterface> listVirtualServices() throws IOException, CertificateException,
 			NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
 		HttpClient httpClient = createHttpClient();
-		List<AbstractVirtualService> virtualServices = new ArrayList<AbstractVirtualService>();
+		List<VirtualServiceInterface> virtualServices = new ArrayList<VirtualServiceInterface>();
 		HttpGet get = new HttpGet(
 				String.format(GET_SERVICES_URI, getProtocol(), getRegistryHostName(), SvAsCodeConfigUtil.registryPort()));
 		get.setHeader("Authorization", String.format("Basic %s",
@@ -290,7 +290,7 @@ public class VirtualServiceEnvironment {
 			ReadContext ctx = JsonPath.parse(responseString);
 			String expression = String.format(GET_SERVICE_PATH, getName());
 			List<String> services = ctx.read(expression);
-			AbstractVirtualService vs = null;
+			VirtualServiceInterface vs = null;
 			for (String service : services) {
 				vs = new VirtualService(service, this);
 				vs.setDeployedName(service);
@@ -304,12 +304,11 @@ public class VirtualServiceEnvironment {
 	/**
 	 * @throws IOException
 	 */
-	public void cleanServer() throws IOException, CertificateException, NoSuchAlgorithmException,
-			KeyStoreException, KeyManagementException {
+	public void cleanServer() throws Exception {
 		
-		List<AbstractVirtualService> virtualServices = listVirtualServices();
+		List<VirtualServiceInterface> virtualServices = listVirtualServices();
 		LOG.info("Cleaning VSE <"+getName()+">..."+virtualServices.size()+" services found...");
-		for (AbstractVirtualService virtualService : virtualServices) {
+		for (VirtualServiceInterface virtualService : virtualServices) {
 			virtualService.unDeploy();
 		}
 		LOG.info("VSE <"+getName()+"> cleaned up!");
@@ -319,7 +318,7 @@ public class VirtualServiceEnvironment {
 	 * @param service
 	 * @throws IOException
 	 */
-	public boolean exist(AbstractVirtualService service) throws IOException, CertificateException,
+	public boolean exist(VirtualServiceInterface service) throws IOException, CertificateException,
 			NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
 		HttpClient httpClient = createHttpClient();
 		HttpGet get = new HttpGet(String.format(GET_DELETE_PUT_VS_URI, getProtocol(), getRegistryHostName(),

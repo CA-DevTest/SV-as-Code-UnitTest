@@ -2,7 +2,7 @@ package com.ca.devtest.sv.devtools.services.builder.v3;
 
 import com.ca.devtest.sv.devtools.VirtualServiceEnvironment;
 import com.ca.devtest.sv.devtools.annotation.Constants;
-import com.ca.devtest.sv.devtools.services.AbstractVirtualService;
+import com.ca.devtest.sv.devtools.services.VirtualServiceInterface;
 import com.ca.devtest.sv.devtools.services.builder.VirtualServiceBuilder;
 import com.ca.devtest.sv.devtools.services.v3.VirtualServiceV3;
 import com.ca.devtest.sv.devtools.utils.FileUtils;
@@ -43,7 +43,7 @@ public class VirtualServiceV3Builder extends VirtualServiceBuilder {
      * @return
      * @throws IOException
      */
-    public final AbstractVirtualService build() throws IOException {
+    public final VirtualServiceInterface build() throws IOException {
         VirtualServiceV3 virtualService = new VirtualServiceV3(getServiceName(), getType(), getUrl(),getVse());
         virtualService.setInputFile1(updateFileWithParameters(virtualService,getAbsolutePath(getInputFile1())));
         virtualService.setInputFile2(updateFileWithParameters(virtualService,getAbsolutePath(getInputFile2())));

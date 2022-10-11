@@ -49,12 +49,12 @@ public class ConfigObjectBuilder {
 
         return Config.ConfigBuilder.builder()
                 .withVirtualService(virtualServiceConfig)
-                .withDataProtocols(buildDatprotocols(virtualService.dataProtocolsConfig()))
+                .withDataProtocols(buildDataProtocols(virtualService.dataProtocolsConfig()))
                 .withTransportProtocol(transportProtocolConfig)
                 .build();
     }
 
-    private static DataProtocol[] buildDatprotocols(DataProtocolConfig[] dataProtocolsConfig){
+    private static DataProtocol[] buildDataProtocols(DataProtocolConfig[] dataProtocolsConfig){
         DataProtocol[] dataProtocols = new DataProtocol[dataProtocolsConfig.length];
         for(int index=0;index<dataProtocolsConfig.length;index++){
             dataProtocols[index] = buildDataProtocol(dataProtocolsConfig[index]);

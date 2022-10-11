@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import com.ca.devtest.sv.devtools.services.AbstractVirtualService;
+import com.ca.devtest.sv.devtools.services.VirtualServiceInterface;
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
@@ -50,13 +50,13 @@ public class VirtualServicesRule implements TestRule {
 
 			@Override
 			public void evaluate() throws Throwable {
-				List<AbstractVirtualService> deployedServices = new ArrayList<>();
+				List<VirtualServiceInterface> deployedServices = new ArrayList<>();
 				boolean evaluate = true;
 				if (!clazzNeedVirtualServices(description.getTestClass())) {
 					LOGGER.info(description.getTestClass() + "is not annoted by DevTestVirtualServer");
 					base.evaluate();
 				} else {
-					List<AbstractVirtualService> virtualServices = null;
+					List<VirtualServiceInterface> virtualServices = null;
 					try {
 						LOGGER.info("deploying VS for method " + description.getMethodName() + "......");
 						virtualServices = processMethodAnnotations(description);
@@ -84,12 +84,11 @@ public class VirtualServicesRule implements TestRule {
 	/**
 	 * @param virtualServices list of virtual services to deploy
 	 */
-	private List<AbstractVirtualService> deployVirtualServices(List<AbstractVirtualService> virtualServices) throws
-			 CertificateException, IOException, NoSuchAlgorithmException, KeyStoreException,
-			KeyManagementException {
-		List<AbstractVirtualService> deployedVirtualServices = new ArrayList<>();
+	private List<VirtualServiceInterface> deployVirtualServices(List<VirtualServiceInterface> virtualServices) throws
+			Exception {
+		List<VirtualServiceInterface> deployedVirtualServices = new ArrayList<>();
 		if (null != virtualServices) {
-			for (AbstractVirtualService virtualService : virtualServices) {
+			for (VirtualServiceInterface virtualService : virtualServices) {
 					LOGGER.debug("Deploy virtual service " + virtualService.getName() + ".....");
 					virtualService.deploy();
 					deployedVirtualServices.add(virtualService);
@@ -103,12 +102,12 @@ public class VirtualServicesRule implements TestRule {
 	 * 
 	 * @param virtualServices list of virtual services to undeployy
 	 */
-	private void unDeployVirtualServices(Collection<AbstractVirtualService> virtualServices) throws
-			CertificateException, IOException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
+	private void unDeployVirtualServices(Collection<VirtualServiceInterface> virtualServices) throws
+			Exception {
 
 		if (null != virtualServices) {
 			List<String> undeployedServices = new ArrayList<>();
-			for (AbstractVirtualService virtualService : virtualServices) {
+			for (VirtualServiceInterface virtualService : virtualServices) {
 					if(undeployedServices.contains(virtualService.getDeployedName())){
 						LOGGER.info("Virtual service is already undeployed "+virtualService.getName());
 						continue;
@@ -128,8 +127,8 @@ public class VirtualServicesRule implements TestRule {
 	 * @throws SecurityException
 	 * @throws NoSuchMethodException
 	 */
-	private List<AbstractVirtualService> processMethodAnnotations(Description description) throws Exception {
-		List<AbstractVirtualService> virtualServices = new ArrayList<AbstractVirtualService>();
+	private List<VirtualServiceInterface> processMethodAnnotations(Description description) throws Exception {
+		List<VirtualServiceInterface> virtualServices = new ArrayList<VirtualServiceInterface>();
 		 LOGGER.debug("Process annotation for method "+description.getMethodName());
 		Class<?> testClazz = description.getTestClass();
 		DevTestVirtualServerAnnotationProcessor devtestProcessor=new DevTestVirtualServerAnnotationProcessor(testClazz);

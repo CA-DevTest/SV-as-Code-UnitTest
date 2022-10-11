@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import com.ca.devtest.sv.devtools.services.AbstractVirtualService;
+import com.ca.devtest.sv.devtools.services.VirtualServiceInterface;
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
@@ -46,7 +46,7 @@ public class VirtualServiceClassScopeRule implements TestRule {
 
 		private final Statement statement;
 		private final Class testClazz;
-		private List<AbstractVirtualService> listVirtualServicesDeployed = new ArrayList<AbstractVirtualService>();
+		private List<VirtualServiceInterface> listVirtualServicesDeployed = new ArrayList<VirtualServiceInterface>();
 
 		public VirtualServiceClassStatement(Statement aStatement, @SuppressWarnings("rawtypes") Class aName) {
 			statement = aStatement;
@@ -79,7 +79,7 @@ public class VirtualServiceClassScopeRule implements TestRule {
 			}
 		}
 
-		private void afterClass(Class clazz) throws CertificateException, IOException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
+		private void afterClass(Class clazz) throws Exception {
 
 			LOGGER.info("undeploying VS for clazz ");
 			try {
@@ -128,10 +128,10 @@ public class VirtualServiceClassScopeRule implements TestRule {
 	 * @param virtualServices
 	 *            list of virtual services to undeployy
 	 */
-	private void unDeployVirtualServices(Collection<AbstractVirtualService> virtualServices) throws CertificateException, IOException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
+	private void unDeployVirtualServices(Collection<VirtualServiceInterface> virtualServices) throws Exception {
 
 		if (null != virtualServices) {
-			for (AbstractVirtualService virtualService : virtualServices) {
+			for (VirtualServiceInterface virtualService : virtualServices) {
 					LOGGER.debug("unDeploy virtual service " + virtualService.getDeployedName() + ".....");
 					virtualService.unDeploy();
 					LOGGER.debug("Virtual service " + virtualService.getDeployedName() + " unDeployed!");
@@ -144,10 +144,10 @@ public class VirtualServiceClassScopeRule implements TestRule {
 	 * @param virtualServices
 	 *            list of virtual services to deploy
 	 */
-	private void deployVirtualServices(List<AbstractVirtualService> virtualServices) {
+	private void deployVirtualServices(List<VirtualServiceInterface> virtualServices) {
 
 		if (null != virtualServices) {
-			for (AbstractVirtualService virtualService : virtualServices) {
+			for (VirtualServiceInterface virtualService : virtualServices) {
 				try {
 					LOGGER.debug("Deploy virtual service " + virtualService.getDeployedName() + ".....");
 					virtualService.deploy();
@@ -168,8 +168,8 @@ public class VirtualServiceClassScopeRule implements TestRule {
 	 * @throws SecurityException
 	 * @throws NoSuchMethodException
 	 */
-	protected List<AbstractVirtualService> processClazzAnnotations(Class<?> testClazz) {
-		List<AbstractVirtualService> virtualServices = new ArrayList<AbstractVirtualService>();
+	protected List<VirtualServiceInterface> processClazzAnnotations(Class<?> testClazz) {
+		List<VirtualServiceInterface> virtualServices = new ArrayList<VirtualServiceInterface>();
 		try {
 			LOGGER.debug("Process Clazzz annotation  " + testClazz);
 

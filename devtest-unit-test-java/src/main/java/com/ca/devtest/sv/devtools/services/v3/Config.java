@@ -17,12 +17,6 @@ class Config {
     private Config(){
     }
 
-    private Config(VirtualService virtualService, TransportProtocol transportProtocol, DataProtocol dataProtocol) {
-        this.virtualService = virtualService;
-        this.transportProtocol = transportProtocol;
-        this.dataProtocol = dataProtocol;
-    }
-
     public VirtualService getVirtualService() {
         return virtualService;
     }
@@ -75,9 +69,7 @@ class Config {
         }
 
         public ConfigBuilder withDataProtocols(DataProtocol[] dataProtocols) {
-            //for backward compatibility with version < 10.8 or 10.7.2 multiple DPH support patch
-            // generate single dataprotocol object
-            if (dataProtocols != null && dataProtocols != null && dataProtocols.length == 1) {
+            if (dataProtocols != null && dataProtocols.length == 1) {
                 configInstance.setDataProtocol(dataProtocols[0]);
             } else {
                 configInstance.setDataProtocols(dataProtocols);

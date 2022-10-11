@@ -14,7 +14,7 @@ import com.ca.devtest.sv.devtools.protocol.DataProtocolDefinition;
 import com.ca.devtest.sv.devtools.protocol.TransportProtocolDefinition;
 import com.ca.devtest.sv.devtools.protocol.builder.ParamatrizedBuilder;
 import com.ca.devtest.sv.devtools.protocol.builder.TransportProtocolBuilderImpl;
-import com.ca.devtest.sv.devtools.services.AbstractVirtualService;
+import com.ca.devtest.sv.devtools.services.VirtualServiceInterface;
 import com.ca.devtest.sv.devtools.services.ExecutionModeType;
 import com.ca.devtest.sv.devtools.services.VirtualService;
 import com.ca.devtest.sv.devtools.type.TransportProtocolType;
@@ -84,7 +84,7 @@ public abstract class VirtualServiceBuilder implements ParamatrizedBuilder {
 	 * @return
 	 * @throws IOException
 	 */
-	public AbstractVirtualService build() throws IOException {
+	public VirtualServiceInterface build() throws IOException {
 		VirtualService virtualService = new VirtualService(getServiceName(), getType(), getUrl(), getVse());
 		virtualService.setDeployedName(getDeployedName());
 		virtualService.setPackedVirtualService(packVirtualService());
