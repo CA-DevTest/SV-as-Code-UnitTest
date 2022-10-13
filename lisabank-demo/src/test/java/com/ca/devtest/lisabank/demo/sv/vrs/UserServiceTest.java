@@ -66,6 +66,26 @@ public class UserServiceTest {
 		assertEquals(9, users.length);
 	}
 
+	@DevTestVirtualServiceV3(serviceName = "getUserV3",
+			port ="9081",
+			basePath = "/itkoExamples/EJB3UserControlBean",
+			workingFolder = "soapWithVrs",
+			inputFile2 = "getUser-req.xml",
+			inputFile1 = "getUser-rsp.xml",
+			dataProtocolsConfig = {
+				@DataProtocolConfig(
+					typeId = "SOAPDPH"
+				)
+			}
+	)
+	@Test
+	public void getUserV3() {
+		User[] users = bankServices.getListUser();
+		assertNotNull(users);
+		printUsers(users);
+		assertEquals(1, users.length);
+	}
+
 	private void printUsers(User[] users) {
 		for (User user : users) {
 			logger.info(user.getFname() + " " + user.getLname() + " " + user.getLogin());

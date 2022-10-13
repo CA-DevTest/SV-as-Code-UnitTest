@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.util.Properties;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -24,9 +25,9 @@ public class SVasCodeConfigHandler {
      * @return boolean value
      */
     public boolean encryptProperties(){
-       boolean retVal =  modifyPropertyFile(LOCAL_PROPERTY_FILE);
-       retVal =  modifyPropertyFile(DEFAULT_PROPERTY_FILE);
-       return retVal;
+       boolean localFileModified =  modifyPropertyFile(LOCAL_PROPERTY_FILE);
+       boolean defaultFileModified = modifyPropertyFile(DEFAULT_PROPERTY_FILE);
+       return localFileModified || defaultFileModified;
     }
 
     /***
@@ -41,10 +42,12 @@ public class SVasCodeConfigHandler {
             return false;
         }
         AtomicBoolean needUpdate= new AtomicBoolean(false);
+        FileInputStream fis = null;
+        OutputStream fos = null;
         try {
             File file = new File(url.toURI());
             Properties properties = new Properties();
-            FileInputStream fis=new FileInputStream(file);
+            fis=new FileInputStream(file);
             properties.load(fis);
             fis.close();
             properties.forEach((key, value)-> {
@@ -59,11 +62,25 @@ public class SVasCodeConfigHandler {
             if(!needUpdate.get()){
                 return false;
             }
-            OutputStream fos = new FileOutputStream(file);
+            fos = new FileOutputStream(file);
             properties.store(fos,"encrypt properties");
-            fos.close();
         }catch (Exception e){
             return false;
+        }finally {
+            if(fis !=null) {
+                try {
+                    fis.close();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            if(fos != null) {
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
         }
         return true;
     }

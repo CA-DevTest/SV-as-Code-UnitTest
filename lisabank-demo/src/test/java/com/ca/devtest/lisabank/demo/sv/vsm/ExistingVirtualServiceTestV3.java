@@ -29,7 +29,7 @@ import static org.junit.Assert.assertNotNull;
 @DevTestVirtualServer()
 @DevTestVirtualServiceV3(serviceName = "Proxy",
 		port = "9081",
-		workingFolder = "vsm.lisabank.vv3",
+		workingFolder = "vsm.lisabank.v3",
 		inputFile1 = "LisaBank.vsm",
 		inputFile2 = "LisaBank.vsi",
 		activeConfig = "project.config"
