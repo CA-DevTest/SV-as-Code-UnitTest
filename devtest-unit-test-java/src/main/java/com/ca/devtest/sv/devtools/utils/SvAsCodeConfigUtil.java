@@ -114,7 +114,7 @@ public final class SvAsCodeConfigUtil {
 	}
 	
 	public static boolean undeployIfExist() {
-		return CONFIG.undeployIfExist() != null && CONFIG.undeployIfExist().equals("true") ? true : false;
+		return CONFIG.undeployIfExist() != null && CONFIG.undeployIfExist().equals("true");
 	}
 	/**
 	 * DevTest home directory.
