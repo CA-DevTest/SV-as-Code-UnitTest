@@ -3,6 +3,8 @@ package com.ca.devtest.lisabank.demo.sv.vrs;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import com.ca.devtest.sv.devtools.annotation.v3.DataProtocolConfig;
+import com.ca.devtest.sv.devtools.annotation.v3.DevTestVirtualServiceV3;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.Rule;
@@ -38,6 +40,27 @@ public class UserServiceTest {
 			@Parameter(name = "basePath", value = "/itkoExamples/EJB3UserControlBean") }))
 	@Test
 	public void getUser() {
+		User[] users = bankServices.getListUser();
+		assertNotNull(users);
+		printUsers(users);
+		assertEquals(1, users.length);
+	}
+
+	@DevTestVirtualServiceV3(serviceName = "getUserV3",
+			port ="9081",
+			basePath = "/itkoExamples/EJB3UserControlBean",
+			workingFolder = "soapWithVrs",
+			inputFile2 = "getUser-req.xml",
+			inputFile1 = "getUser-rsp.xml",
+			dataProtocolsConfig = {
+				@DataProtocolConfig(
+					typeId = "SOAPDPH"
+				)
+			}
+	)
+
+	@Test
+	public void getUserV3() {
 		User[] users = bankServices.getListUser();
 		assertNotNull(users);
 		printUsers(users);

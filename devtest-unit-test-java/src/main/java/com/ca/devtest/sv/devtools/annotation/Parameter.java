@@ -16,7 +16,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 public @interface Parameter {
 	
-	public String name();
-	public String value();
+	String name();
+	String value();
 
 }

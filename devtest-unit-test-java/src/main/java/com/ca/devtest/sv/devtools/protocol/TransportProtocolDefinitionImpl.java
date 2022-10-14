@@ -22,7 +22,7 @@ public class TransportProtocolDefinitionImpl implements TransportProtocolDefinit
 
 	private List<DataProtocolDefinition> requestSide = new ArrayList<DataProtocolDefinition>();
 	private List<DataProtocolDefinition> responseSide = new ArrayList<DataProtocolDefinition>();
-	private String TRANSPORT_TPL = "<Transport allAreStateless=\"%b\" asObject=\"%b\" desensitize=\"%b\" duptxns=\"%b\"><RequestSide>%s</RequestSide><ResponseSide>%s</ResponseSide></Transport>";
+	private final String TRANSPORT_TPL = "<Transport allAreStateless=\"%b\" asObject=\"%b\" desensitize=\"%b\" duptxns=\"%b\"><RequestSide>%s</RequestSide><ResponseSide>%s</ResponseSide></Transport>";
 	private final String type;
 	private final HashMap<String, String> parameters = new HashMap<String, String>();
 

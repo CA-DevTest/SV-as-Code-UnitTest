@@ -1,0 +1,145 @@
+<?xml version="1.0" ?>
+
+<serviceImage id="2287" name="ServiceImage" created="2022-09-15.18:10:21.500" lastModified="2022-09-15.18:10:21.531" version="10.6.0" buildNumber="10.6.0.23">
+<st>
+<t id="2284" nd="true" ads="true">
+<sp>
+<t id="2290">
+<rq id="2291" op="GET /import/test/{URLPARAM0}/" tl="EXACT">
+<ag>
+<p n="URLPARAM0" t="arg:EQUALS;false;;;;">operation-8</p>
+</ag>
+<at>
+<p n="HTTP-Segment-Attr-0">import</p>
+<p n="HTTP-Segment-Attr-1">test</p>
+<p n="HTTP-Segment-Attr-2">operation-8</p>
+</at>
+<m>
+<p n="HTTP-Method">GET</p>
+<p n="HTTP-URI">/import/test/operation-8</p>
+<p n="HTTP-Version">HTTP/1.1</p>
+<p n="Content-Type">application/json</p>
+<p n="X-Api-Key">89ba4c3d-3373-40ad-8a46-aec33f944fae</p>
+<p n="Content-Type">application/json</p>
+<p n="User-Agent">LISA</p>
+<p n="lisa.vse.private.allow.dups">true</p>
+<p n="matchedRule">GET /import/test/{URLPARAM0}/</p>
+<p n="matchedRule">not found</p>
+</m>
+</rq>
+<rs>
+<rp id="2292" t="0">
+<m>
+<p n="HTTP-Version">HTTP/1.1</p>
+<p n="HTTP-Response-Code">200</p>
+<p n="Server">LISA/Virtual-Environment-Server</p>
+<p n="Date">{{=httpNow()}}</p>
+<p n="X-Powered-By">LISA/{{=lisaVersionString()}}</p>
+<p n="HTTP-Response-Code-Text">OK</p>
+</m>
+<bd chs="UTF-8">{&quot;TCEntry&quot;:[{&quot;content&quot;:&quot;Terms and Conditions&quot;,&quot;description&quot;:&quot;Terms and Conditions&quot;,&quot;termsKey&quot;:&quot;f0a6f2aa-8e68-45ae-a875-84444ef113e9&quot;,&quot;termsType&quot;:&quot;Operation 8 terms&quot;,&quot;termsVersion&quot;:1}]}</bd>
+</rp>
+</rs>
+</t>
+<t id="2286">
+<rq id="2293" op="GET /import/test/{URLPARAM0}/" tl="EXACT">
+<ag>
+<p n="URLPARAM0" t="arg:EQUALS;false;;;;">operation-9</p>
+</ag>
+<at>
+<p n="HTTP-Segment-Attr-0">import</p>
+<p n="HTTP-Segment-Attr-1">test</p>
+<p n="HTTP-Segment-Attr-2">operation-9</p>
+</at>
+<m>
+<p n="HTTP-Method">GET</p>
+<p n="HTTP-URI">/import/test/operation-9</p>
+<p n="HTTP-Version">HTTP/1.1</p>
+<p n="Content-Type">application/json</p>
+<p n="X-Api-Key">89ba4c3d-3373-40ad-8a46-aec33f944fae</p>
+<p n="Content-Type">application/json</p>
+<p n="User-Agent">LISA</p>
+<p n="lisa.vse.private.allow.dups">true</p>
+<p n="matchedRule">GET /import/test/{URLPARAM0}/</p>
+<p n="matchedRule">not found</p>
+</m>
+</rq>
+<rs>
+<rp id="2294" t="0">
+<m>
+<p n="HTTP-Version">HTTP/1.1</p>
+<p n="HTTP-Response-Code">200</p>
+<p n="Server">LISA/Virtual-Environment-Server</p>
+<p n="Date">{{=httpNow()}}</p>
+<p n="X-Powered-By">LISA/{{=lisaVersionString()}}</p>
+<p n="HTTP-Response-Code-Text">OK</p>
+</m>
+<bd chs="UTF-8">{&quot;TCEntry&quot;:[{&quot;content&quot;:&quot;Terms and Conditions&quot;,&quot;description&quot;:&quot;Terms and Conditions&quot;,&quot;termsKey&quot;:&quot;f0a6f2aa-8e68-45ae-a875-84444ef113e9&quot;,&quot;termsType&quot;:&quot;Operation 9 terms&quot;,&quot;termsVersion&quot;:1}]}</bd>
+</rp>
+</rs>
+</t>
+</sp>
+<rq id="2295" op="GET /import/test/{URLPARAM0}/" tl="SIGNATURE">
+<ag>
+<p n="URLPARAM0" t="arg:EQUALS;false;;;;">operation-8</p>
+</ag>
+<at>
+<p n="HTTP-Segment-Attr-0">import</p>
+<p n="HTTP-Segment-Attr-1">test</p>
+<p n="HTTP-Segment-Attr-2">operation-8</p>
+</at>
+<m>
+<p n="HTTP-Method">GET</p>
+<p n="HTTP-URI">/import/test/operation-8</p>
+<p n="HTTP-Version">HTTP/1.1</p>
+<p n="Content-Type">application/json</p>
+<p n="X-Api-Key">89ba4c3d-3373-40ad-8a46-aec33f944fae</p>
+<p n="Content-Type">application/json</p>
+<p n="User-Agent">LISA</p>
+<p n="lisa.vse.private.allow.dups">true</p>
+<p n="matchedRule">GET /import/test/{URLPARAM0}/</p>
+<p n="matchedRule">not found</p>
+</m>
+</rq>
+<rs>
+<rp id="2296" t="0">
+<m>
+<p n="HTTP-Version">HTTP/1.1</p>
+<p n="HTTP-Response-Code">200</p>
+<p n="Server">LISA/Virtual-Environment-Server</p>
+<p n="Date">{{=httpNow()}}</p>
+<p n="X-Powered-By">LISA/{{=lisaVersionString()}}</p>
+<p n="HTTP-Response-Code-Text">OK</p>
+</m>
+<bd chs="UTF-8">{&quot;TCEntry&quot;:[{&quot;content&quot;:&quot;Terms and Conditions&quot;,&quot;description&quot;:&quot;Terms and Conditions&quot;,&quot;termsKey&quot;:&quot;f0a6f2aa-8e68-45ae-a875-84444ef113e9&quot;,&quot;termsType&quot;:&quot;Operation 8 terms&quot;,&quot;termsVersion&quot;:1}]}</bd>
+</rp>
+</rs>
+</t>
+</st>
+<ucrr>
+<rp id="2289" t="0">
+<m>
+<p n="HTTP-Response-Code">200</p>
+<p n="HTTP-Response-Code-Text">OK</p>
+<p n="Server">LISA/Virtual-Environment-Server</p>
+<p n="Date">{{=httpNow()}}</p>
+<p n="X-Powered-By">LISA/{{=lisaVersionString()}}</p>
+<p n="Content-Type">text/xml</p>
+</m>
+<bd chs="UTF-8">&lt;html&gt;&#10;    &lt;head&gt;&lt;title&gt;404 Not Found&lt;/title&gt;&lt;/head&gt;&#10;    &lt;body&gt;&#10;        &lt;h1&gt;Not Found&lt;/h1&gt;&#10;        &lt;p&gt;The requested URL was not found on this server.&lt;/p&gt;&#10;        &lt;hr/&gt;&#10;        &lt;p&gt;&lt;i&gt;The DevTest VSE service could not match your request to a recorded request.&amp;nbsp; Consider expanding your service image.&lt;/i&gt;&lt;/p&gt;&#10;        &lt;br/&gt;&lt;font size=&quot;-2&quot;&gt;Produced by a DevTest virtualized web server.&lt;/font&gt;&#10;    &lt;/body&gt;&#10;&lt;/html&gt;&#10;</bd>
+</rp>
+</ucrr>
+<usrr>
+<rp id="2288" t="0">
+<m>
+<p n="HTTP-Response-Code">200</p>
+<p n="HTTP-Response-Code-Text">OK</p>
+<p n="Server">LISA/Virtual-Environment-Server</p>
+<p n="Date">{{=httpNow()}}</p>
+<p n="X-Powered-By">LISA/{{=lisaVersionString()}}</p>
+<p n="Content-Type">text/xml</p>
+</m>
+<bd chs="UTF-8">&lt;html&gt;&#10;    &lt;head&gt;&lt;title&gt;404 Not Found&lt;/title&gt;&lt;/head&gt;&#10;    &lt;body&gt;&#10;        &lt;h1&gt;Not Found&lt;/h1&gt;&#10;        &lt;p&gt;The requested URL was not found on this server.&lt;/p&gt;&#10;        &lt;hr/&gt;&#10;        &lt;p&gt;&lt;i&gt;The DevTest VSE service could not match your request to a recorded request.&amp;nbsp; Consider expanding your service image.&lt;/i&gt;&lt;/p&gt;&#10;        &lt;br/&gt;&lt;font size=&quot;-2&quot;&gt;Produced by a DevTest virtualized web server.&lt;/font&gt;&#10;    &lt;/body&gt;&#10;&lt;/html&gt;&#10;</bd>
+</rp>
+</usrr>
+</serviceImage>

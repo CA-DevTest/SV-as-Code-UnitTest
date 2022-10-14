@@ -9,12 +9,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.ca.devtest.sv.devtools.VirtualServiceEnvironment;
-import com.ca.devtest.sv.devtools.annotation.VirtualServiceType;
+import com.ca.devtest.sv.devtools.annotation.Constants;
 import com.ca.devtest.sv.devtools.protocol.DataProtocolDefinition;
 import com.ca.devtest.sv.devtools.protocol.TransportProtocolDefinition;
 import com.ca.devtest.sv.devtools.protocol.builder.ParamatrizedBuilder;
 import com.ca.devtest.sv.devtools.protocol.builder.TransportProtocolBuilderImpl;
-import com.ca.devtest.sv.devtools.services.ExecutionMode;
+import com.ca.devtest.sv.devtools.services.VirtualServiceInterface;
 import com.ca.devtest.sv.devtools.services.ExecutionModeType;
 import com.ca.devtest.sv.devtools.services.VirtualService;
 import com.ca.devtest.sv.devtools.type.TransportProtocolType;
@@ -26,16 +26,23 @@ import com.ca.devtest.sv.devtools.utils.VelocityRender;
  */
 public abstract class VirtualServiceBuilder implements ParamatrizedBuilder {
 
-	private VirtualServiceEnvironment vse;
+	private final VirtualServiceEnvironment vse;
 	private String serviceName;
 	private TransportProtocolDefinition transportProtocol;
 	private final String DEFAULT_SERVICE_PROPERTIES_TPL = "<?xml version=\"1.0\" ?><recording><name>${virtualService.deployedName}</name><binary>false</binary><group>$virtualService.group</group></recording>";
 	private final Map<String, String> parameters = new HashMap<String, String>();
-	private VirtualServiceType type = VirtualServiceType.RRPAIRS;
+	private String url = Constants.DCM_API_RRPAIRS_URL;
+	private String type = Constants.DCM_API_RRPAIRS;
 	private int capacity=1;
     private int thinkScale=100;
     private boolean autoRestartEnabled=true;
     private ExecutionModeType executionMode=ExecutionModeType.EFFICIENT;
+	private String groupTag="";
+
+	public VirtualServiceBuilder(VirtualServiceEnvironment vse) {
+		super();
+		this.vse = vse;
+	}
 
 	public VirtualServiceBuilder(String name, VirtualServiceEnvironment vse) {
 		super();
@@ -46,7 +53,7 @@ public abstract class VirtualServiceBuilder implements ParamatrizedBuilder {
 	}
 
 	/**
-	 * @param transportProtocol
+	 * @param
 	 * @return
 	 */
 	public VirtualServiceBuilder overHttp(int port, String basePath) {
@@ -77,21 +84,29 @@ public abstract class VirtualServiceBuilder implements ParamatrizedBuilder {
 	 * @return
 	 * @throws IOException
 	 */
-	public final VirtualService build() throws IOException {
-		VirtualService virtualService = new VirtualService(getServiceName(), getType(), getVse());
+	public VirtualServiceInterface build() throws IOException {
+		VirtualService virtualService = new VirtualService(getServiceName(), getType(), getUrl(), getVse());
 		virtualService.setDeployedName(getDeployedName());
 		virtualService.setPackedVirtualService(packVirtualService());
 		virtualService.getExecutionMode().setCapacity(this.capacity);
 		virtualService.getExecutionMode().setAutoRestartEnabled(this.autoRestartEnabled);
 		virtualService.getExecutionMode().setThinkScale(this.thinkScale);
+		virtualService.getExecutionMode().setGroupTag(this.groupTag);
 		//TODO Handle ExecutionMode
 		return virtualService;
 	}
 
+	public String getUrl(){
+		return url;
+	}
+
+	public void setUrl(String url){
+		this.url = url;
+	}
 	/**
 	 * @return the type
 	 */
-	public final VirtualServiceType getType() {
+	public String getType() {
 		return type;
 	}
 
@@ -99,14 +114,14 @@ public abstract class VirtualServiceBuilder implements ParamatrizedBuilder {
 	 * @param type
 	 *            the type to set
 	 */
-	public final void setType(VirtualServiceType type) {
+	public void setType(String type) {
 		this.type = type;
 	}
 
 	/**
 	 * @return the vse
 	 */
-	protected final VirtualServiceEnvironment getVse() {
+	protected VirtualServiceEnvironment getVse() {
 		return vse;
 	}
 
@@ -216,6 +231,14 @@ public abstract class VirtualServiceBuilder implements ParamatrizedBuilder {
 	 */
 	public final void setExecutionMode(ExecutionModeType executionMode) {
 		this.executionMode = executionMode;
+	}
+
+	public String getGroupTag() {
+		return groupTag;
+	}
+
+	public void setGroupTag(String groupTag) {
+		this.groupTag = groupTag;
 	}
 
 	/**

@@ -36,7 +36,8 @@ public @interface DevTestVirtualServiceFromVrs {
 	String workingFolder();
 	Config vrsConfig();
 	Parameter[] parameters() default{};
-	
+
+	String groupTag() default "";
 }
 
 

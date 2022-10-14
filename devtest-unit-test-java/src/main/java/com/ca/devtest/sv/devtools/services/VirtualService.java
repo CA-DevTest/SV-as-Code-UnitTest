@@ -7,6 +7,10 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.CertificateException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,114 +24,46 @@ import com.ca.devtest.sv.devtools.utils.VelocityRender;
  * @author gaspa03
  *
  */
-public final class VirtualService {
-	private final String name;
-	private String deployedName;
-	private final VirtualServiceEnvironment vse;
+public final class VirtualService extends AbstractVirtualService{
 	private File packedVirtualService=null;
-	private final VirtualServiceType type;
 	private ExecutionMode executionMode=new ExecutionMode();
-	
-	public VirtualService( String name, VirtualServiceEnvironment vse) {
-		super();
-		if (name == null)
-			throw new IllegalArgumentException("Service Name cannot be null");
-		this.name = name;
-		this.vse = vse;
-		type=VirtualServiceType.RRPAIRS;
-	}
-	
-	public VirtualService( String name, VirtualServiceType type,VirtualServiceEnvironment vse) {
-		super();
-		if (name == null)
-			throw new IllegalArgumentException("Service Name cannot be null");
-		this.name = name;
-		this.type=type;
-		this.vse = vse;
-		
-	}
 
-	/**
-	 * @return the type
-	 */
-	public final VirtualServiceType getType() {
-		return type;
+	public VirtualService( String name, VirtualServiceEnvironment vse) {
+		super(name,VirtualServiceType.RRPAIRS.getType(),VirtualServiceType.RRPAIRS.geturlPattern(), vse);
+		this.type=VirtualServiceType.RRPAIRS.getType();
+	}
+	
+	public VirtualService( String name, String type, String url,VirtualServiceEnvironment vse) {
+		super(name, type, url, vse);
+		this.name = name;
+		this.vse = vse;
 	}
 
 	/**
 	 * @param packedVirtualService the packedVirtualService to set
 	 */
-	public final void setPackedVirtualService(File packedVirtualService) {
+	public void setPackedVirtualService(File packedVirtualService) {
 		this.packedVirtualService = packedVirtualService;
 	}
 
-
 	/**
 	 * @return
 	 */
-	protected VirtualServiceEnvironment getVse() {
-		return vse;
-	}
-
-	/**
-	 * @return
-	 */
-	public String getName() {
-		return name;
-	}
-	public String getGroup() {
-		return getVse().getGroup();
-	}
-
-	
-	/**
-	 * @return
-	 */
-	public final File getPackedVirtualService() {
+	public File getPackedVirtualService() {
 		return packedVirtualService;
-	}
-
-
-	/**
-	 * @throws IOException
-	 */
-	public void deploy() throws IOException {
-		getVse().deployService(this);
-		getVse().changeExecutionMode(this);
-		
-	}
-	/**
-	 * @throws IOException
-	 */
-	public void unDeploy() throws IOException {
-		
-		getVse().unDeployService(this);
-		
-	}
-
-	public String getDeployedName() {
-		
-		return deployedName;
-	}
-
-	/**
-	 * @param deployedName the deployedName to set
-	 */
-	public void setDeployedName(String deployedName) {
-		this.deployedName = deployedName;
 	}
 
 	/**
 	 * @return the mode
 	 */
-	public final ExecutionMode getExecutionMode() {
+	public ExecutionMode getExecutionMode() {
 		return executionMode;
 	}
 
 	/**
 	 * @param mode the mode to set
 	 */
-	public final void setExecutionMode(ExecutionMode mode) {
+	public void setExecutionMode(ExecutionMode mode) {
 		this.executionMode = mode;
 	}
 
@@ -135,13 +71,32 @@ public final class VirtualService {
 	 * @return Payload to change Service Execution mode
 	 * @throws IOException
 	 */
-	public final String buildExcusionModePayload() throws IOException{
+	public String buildExcusionModePayload() throws IOException{
 		InputStream inputStreamContent =getClass().getClassLoader().getResourceAsStream("virtualize-put-message.xml");
 		Map<String, VirtualService> config = new HashMap<String,VirtualService>();
 		config.put("virtualService", this);
 		return VelocityRender.render(IOUtils.toString(inputStreamContent, Charset.defaultCharset()), config);
-		
-		
 	}
 
+	/**
+	 * @throws IOException
+	 */
+	public void deploy() throws IOException, NoSuchAlgorithmException, KeyManagementException, CertificateException, KeyStoreException {
+		getVse().deployService(this);
+		getVse().changeExecutionMode(this);
+
+	}
+	/**
+	 * @throws IOException
+	 */
+	public void unDeploy() throws IOException, CertificateException, NoSuchAlgorithmException, KeyStoreException,
+			KeyManagementException {
+		getVse().unDeployService(this);
+	}
+
+	public void clean(){
+		if(packedVirtualService!=null && packedVirtualService.exists()){
+			packedVirtualService.deleteOnExit();
+		}
+	}
 }

@@ -1,0 +1,11 @@
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+	<soap:Body>
+		<ns2:addAccount xmlns:ns2="http://ejb3.examples.itko.com/">
+			<username>pascal</username>
+			<accountObj>
+				<balance>1000</balance>
+				<type>CHECKING</type>
+			</accountObj>
+		</ns2:addAccount>
+	</soap:Body>
+</soap:Envelope>

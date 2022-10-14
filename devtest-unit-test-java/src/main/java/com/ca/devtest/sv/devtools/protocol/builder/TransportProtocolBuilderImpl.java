@@ -20,8 +20,8 @@ public class TransportProtocolBuilderImpl implements TransportProtocolBuilder, P
 
 	protected final String typebuilder;
 	protected Map<String, String> parameters = new HashMap<String, String>();
-	private List<DataProtocolDefinition> requestDataProtocol = new ArrayList<DataProtocolDefinition>();
-	private List<DataProtocolDefinition> responseDataProtocol = new ArrayList<DataProtocolDefinition>();
+	private final List<DataProtocolDefinition> requestDataProtocol = new ArrayList<DataProtocolDefinition>();
+	private final List<DataProtocolDefinition> responseDataProtocol = new ArrayList<DataProtocolDefinition>();
 
 	public TransportProtocolBuilderImpl(String type) {
 		this.typebuilder = type;

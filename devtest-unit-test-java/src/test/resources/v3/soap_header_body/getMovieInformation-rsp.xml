@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Z2="http://service.broadcom.com/provider/ecpr/movie/communication/address/2008/" xmlns:Z27="http://service.broadcom.com/movie/party/2003/d1/" xmlns:Z28="http://service.broadcom.com/provider/ecpr/movie/party/preference/2008/" xmlns:Z32="http://service.broadcom.com/movie/message/2007/" xmlns:Z51="http://service.broadcom.com/provider/ecpr/movieProfile/inquiry/common/2012/05/" xmlns:Z69="http://service.broadcom.com/movie/communication/email/2003/" xmlns:Z71="http://service.broadcom.com/provider/ecpr/movieProfile/inquiry/common/2005/d1/" xmlns:Z85="http://service.broadcom.com/provider/ecpr/movie/communication/address/2005/" xmlns:Z91="http://service.broadcom.com/provider/ecpr/movieProfile/inquiry/common/2005/" xmlns:Z112="http://service.broadcom.com/provider/ecpr/movie/party/2005/" xmlns:Z135="http://service.broadcom.com/provider/ecpr/shared/common/2003/" xmlns:Z139="http://service.broadcom.com/provider/ecpr/movieProfile/inquiry/getmovieInformationCommon/2012/05/" xmlns:Z142="http://service.broadcom.com/provider/ecpr/movieProfile/inquiry/getmovieInformationCommon/2008/" xmlns:Z145="http://service.broadcom.com/provider/ecpr/movieProfile/inquiry/common/2010/11/" xmlns:Z160="http://service.broadcom.com/provider/ecpr/movie/party/2005/d1/" xmlns:Z162="http://service.broadcom.com/provider/ecpr/movie/communication/email/2008/" xmlns:Z163="http://service.broadcom.com/movie/communication/phone/2004/" xmlns:Z178="http://service.broadcom.com/provider/ecpr/movie/communication/phone/2008/11/" xmlns:Z179="http://service.broadcom.com/movie/party/2003/" xmlns:Z218="http://service.broadcom.com/movie/communication/address/2003/">
+  <soapenv:Header>
+    <Z32:headerContext soapenv:actor="http://schemas.xmlsoap.org/soap/actor/next" soapenv:mustUnderstand="0">
+     <studio>Studio</studio>
+			<movie>
+				<movieId>Movie Id</movieId>
+				<movieSequenceNumber>Movie 3</movieSequenceNumber>
+			</movie>
+			<releaseYear>Release Year</releaseYear>
+			<writer>writer</writer>
+			<music>music</music>
+    </Z32:headerContext>
+  </soapenv:Header>
+  <soapenv:Body>
+    <getMovieInformation xmlns="http://service.broadcom.com/provider/movieProfile/inquiry/getmovieInformation/2012/05/">
+      <info xmlns="">
+        <Z139:movieProfileInfo>
+          <Z139:movieInfo>
+            <movieDetails>
+            <name>Movie Name Goes Here</name>
+            <sequel>Sequel no 4</sequel>
+            <details>
+              <director>Director</director>
+              <writer>Writer</writer>
+              <music>Music</music>
+            </details>
+          </movieDetails>
+          </Z139:movieInfo>
+        </Z139:movieProfileInfo>
+      </info>
+    </getMovieInformation>
+  </soapenv:Body>
+</soapenv:Envelope>

@@ -1,0 +1,1138 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions name="UserData" targetNamespace="http://schemas.svc.kp.org/hlth_plan_admin/mbrshp_admin/v1/UserDataService" xmlns:ebizinfo="http://schemas.svc.kp.org/ebusiness/v1/info" xmlns:ebizstatus="http://schemas.svc.kp.org/info/v1/ServiceStatus" xmlns:execContext="http://schemas.svc.kp.org/info/v1/ExecutionContext" xmlns:kpinfo="http://svc.kp.org/info/PersonIdentifyingInfo/v4" xmlns:pinfo="http://schemas.svc.kp.org/info/PersonInfo/v1" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://schemas.svc.kp.org/hlth_plan_admin/mbrshp_admin/v1/UserDataService" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<wsdl:types>
+		<xsd:schema elementFormDefault="qualified" targetNamespace="http://schemas.svc.kp.org/info/v1/ExecutionContext" version="1.1.0" xmlns:tns="http://schemas.svc.kp.org/info/v1/ExecutionContext">
+			<xsd:simpleType name="MessageSeverityCode">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="ERROR"/>
+					<xsd:enumeration value="WARN"/>
+					<xsd:enumeration value="INFO"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="MessageTypeCode">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="BUSINESS"/>
+					<xsd:enumeration value="SYSTEM"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:complexType name="ExecutionMessage">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="severity" type="tns:MessageSeverityCode"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="type" type="tns:MessageTypeCode"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="code" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="description" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="sourceExceptionName" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="detail" type="tns:ExecutionMessage"/>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="ExecutionContextType">
+				<xsd:sequence>
+					<xsd:element maxOccurs="unbounded" minOccurs="0" name="errors" type="tns:ExecutionMessage"/>
+					<xsd:element maxOccurs="unbounded" minOccurs="0" name="warnings" type="tns:ExecutionMessage"/>
+					<xsd:element maxOccurs="unbounded" minOccurs="0" name="info" type="tns:ExecutionMessage"/>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:element name="businessException" type="tns:ExecutionMessage"/>
+			<xsd:element name="systemException" type="tns:ExecutionMessage"/>
+		</xsd:schema>
+		
+		
+		<xsd:schema elementFormDefault="qualified" targetNamespace="http://schemas.svc.kp.org/info/PersonInfo/v1" version="1.0.0">
+			<xsd:complexType name="PersonName">
+				<xsd:annotation>
+					<xsd:documentation> Name details of a Person.</xsd:documentation>
+				</xsd:annotation>
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="surname" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="firstName" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="middleName" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="fullName" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="preferredName" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="namePrefix" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="nameSuffix" type="xsd:string"/>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="PersonDetails">
+				<xsd:annotation>
+					<xsd:documentation> Additional details of a Person.
+					</xsd:documentation>
+				</xsd:annotation>
+				<xsd:sequence>
+					<xsd:element name="gender" type="pinfo:GenderCode"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="preferredLanguage" type="xsd:string"/>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:simpleType name="GenderCode">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="MALE"/>
+					<xsd:enumeration value="FEMALE"/>
+					<xsd:enumeration value="UNKNOWN"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="BusinessServicesAuthorizedType">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="MEMBERSHIP"/>
+					<xsd:enumeration value="CLINICAL"/>
+					<xsd:enumeration value="PLAN"/>
+					<xsd:enumeration value="PHARMACY"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="SourceSystem">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="KP_EBIZ"/>
+					<xsd:enumeration value="KP_MBR"/>
+					<xsd:enumeration value="EPIC"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:complexType name="AddressType">
+				<xsd:annotation>
+					<xsd:documentation> Postal Address.</xsd:documentation>
+				</xsd:annotation>
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="0" name="type" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="label" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="street1" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="street2" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="city" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="state" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="postalCode" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="country" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="businessServicesAuthorized" type="pinfo:BusinessServicesAuthorizedType"/>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="CommunicationDetails">
+				<xsd:sequence>
+					<xsd:element name="emails">
+						<xsd:complexType>
+							<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="type" type="xsd:string"/>
+								<xsd:element maxOccurs="5" minOccurs="0" name="email" type="pinfo:EmailType"/>
+							</xsd:sequence>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="phonenumbers">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element maxOccurs="5" minOccurs="0" name="phonenumber" type="pinfo:PhoneType"/>
+							</xsd:sequence>
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="EmailType">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="EmailAddress" type="pinfo:EmailAddress"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="type" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="primaryIndicator" type="xsd:boolean"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="businessServicesAuthorized" type="pinfo:BusinessServicesAuthorizedType"/>	
+				</xsd:sequence>
+			</xsd:complexType> 
+		<xsd:simpleType name="PhoneCountryCode">
+		    <xsd:annotation>
+		      <xsd:documentation>
+		        Telephone country code. Up to 3 digits long.
+		      </xsd:documentation>
+		    </xsd:annotation>
+		    <xsd:restriction base="xsd:unsignedShort">
+		      <xsd:minInclusive value="1"/>
+		      <xsd:maxInclusive value="999"/>
+		    </xsd:restriction>
+		</xsd:simpleType>
+			<xsd:simpleType name="PhoneAreaCode">
+				<xsd:annotation>
+					<xsd:documentation>
+				        Telephone area code. Up to 5 digits long.
+					</xsd:documentation>
+				    </xsd:annotation>
+				    <xsd:restriction base="xsd:unsignedInt">
+				      <xsd:minInclusive value="1"/>
+				      <xsd:maxInclusive value="99999"/>
+				    </xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="PhoneExchange">
+			  <xsd:annotation>
+			    <xsd:documentation>
+			      Telephone subscriber number. Up to 5 digits long.
+			    </xsd:documentation>
+			  </xsd:annotation>
+			  <xsd:restriction base="xsd:unsignedInt">
+			    <xsd:minInclusive value="1"/>
+			    <xsd:maxInclusive value="99999"/>
+			  </xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="PhoneSubscriberNumber">
+			  <xsd:annotation>
+			    <xsd:documentation>
+			      Telephone subscriber number. Up to 5 digits long.
+			    </xsd:documentation>
+			  </xsd:annotation>
+			  <xsd:restriction base="xsd:unsignedInt">
+			    <xsd:minInclusive value="1"/>
+			    <xsd:maxInclusive value="99999"/>
+			  </xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="PhoneExtensionNumber">
+			  <xsd:annotation>
+			    <xsd:documentation>
+			      Telephone extension number. Theoretically of arbitrary length but 5 for this release.
+			    </xsd:documentation>
+			  </xsd:annotation>
+			  <xsd:restriction base="xsd:unsignedLong">
+			    <xsd:minInclusive value="0"/>
+			    <xsd:maxInclusive value="99999"/>
+			   </xsd:restriction>
+			</xsd:simpleType>
+			<xsd:complexType name="PhoneNumber">
+			  <xsd:annotation>
+			    <xsd:documentation>
+			      Structured full international telephone number.
+			    </xsd:documentation>
+			  </xsd:annotation>
+			  <xsd:sequence>
+			    <xsd:element maxOccurs="1" minOccurs="0" name="country" type="pinfo:PhoneCountryCode"/>
+			    <xsd:element maxOccurs="1" minOccurs="0" name="area" type="pinfo:PhoneAreaCode"/>
+			    <xsd:element maxOccurs="1" minOccurs="0" name="exchange" type="pinfo:PhoneExchange"/>
+			    <xsd:element maxOccurs="1" minOccurs="1" name="subscriber" type="pinfo:PhoneSubscriberNumber"/>
+			    <xsd:element maxOccurs="1" minOccurs="0" name="extension" type="pinfo:PhoneExtensionNumber"/>
+			  </xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="PhoneType">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="0" name="type" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="phoneNumber" type="pinfo:PhoneNumber"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="label" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="prefferedContactTimeOfDay">
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:string">
+								<xsd:enumeration value="DAY"/>
+								<xsd:enumeration value="EVENING"/>
+								<xsd:enumeration value="ANYTIME"/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:element>
+					<xsd:element maxOccurs="1" minOccurs="1" name="primaryIndicator" type="xsd:boolean"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="businessServicesAuthorized" type="pinfo:BusinessServicesAuthorizedType"/>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="KeyValue">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="0" name="key"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="value"/>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="ArrayOfKeyValue">
+				<xsd:sequence>
+					<xsd:element form="unqualified" maxOccurs="unbounded" minOccurs="0" name="item" type="pinfo:KeyValue"/>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:simpleType name="EmailAddress">
+				<xsd:annotation>
+					<xsd:documentation> Email address.</xsd:documentation>
+				</xsd:annotation>
+				<xsd:restriction base="xsd:string">
+					<xsd:pattern value="([a-zA-Z0-9_\-])([a-zA-Z0-9_\-\.]*)@(\[((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])\.){3}|((([a-zA-Z0-9\-]+)\.)+))([a-zA-Z]{2,}|(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])\])"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:complexType name="ArrayOfEmailAddress">
+				<xsd:sequence>
+					<xsd:element form="unqualified" maxOccurs="unbounded" minOccurs="0" name="email" type="pinfo:EmailAddress"/>
+				</xsd:sequence>
+			</xsd:complexType>
+		</xsd:schema>
+		<xsd:schema elementFormDefault="qualified" targetNamespace="http://svc.kp.org/info/PersonIdentifyingInfo/v4">
+			<xsd:import namespace="http://schemas.svc.kp.org/info/PersonInfo/v1"/>
+			<xsd:element name="SubjectIdentifyingInfo" type="kpinfo:PersonIdentifyingInfo"/>
+			<xsd:element name="DelegateIdentifyingInfo" type="kpinfo:PersonIdentifyingInfo"/>
+			<xsd:complexType name="PersonIdentifyingInfo">
+				<xsd:sequence>
+					<xsd:annotation>
+						<xsd:documentation>This required id is for the KP MRN
+							identifier. Include an occurance of kp.org uuid in this otherIds
+							array. assigning OrganizaitonCode should be set to be "KP_EBIZ".
+							The following fields are optional. See the Service Specification
+							to determine their usage for this web service.
+						</xsd:documentation>
+					</xsd:annotation>
+					<xsd:element maxOccurs="1" minOccurs="0" name="personId" type="kpinfo:PersonIdentifyingInfoID"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="otherIds" type="kpinfo:ArrayOfPersonIdentifyingInfoPersonId"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="nameDetails" type="pinfo:PersonName"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="dateOfBirth" nillable="true" type="xsd:date"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="last4SSN" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="gender" type="pinfo:GenderCode"/>
+					<xsd:element form="unqualified" maxOccurs="1" minOccurs="0" name="preferredSpokenLanguage" type="xsd:string"/>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="ArrayOfPersonIdentifyingInfoPersonId">
+				<xsd:sequence>
+					<xsd:element maxOccurs="unbounded" minOccurs="0" name="personId" type="kpinfo:PersonIdentifyingInfoID"/>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="PersonIdentifyingInfoID">
+				<xsd:sequence>
+					<xsd:annotation>
+						<xsd:documentation>This will be KP_XX based on the region this
+							MRN identifier is issued. This should be set to KP_EBIZ if kp.org
+							UUID is populated.</xsd:documentation>
+					</xsd:annotation>
+					<xsd:element maxOccurs="1" minOccurs="0" name="assigningOrganizationCode" type="kpinfo:PersonIdentifyingInfoIDAssigningOrganizationCode"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="idPartition" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="id" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="idType" type="xsd:string"/>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="IdentifierType">
+				<xsd:sequence>
+					<xsd:annotation>
+						<xsd:documentation>This will be used for KPIdentifier is
+							issued other organizations.</xsd:documentation>
+					</xsd:annotation>
+					<xsd:element maxOccurs="1" minOccurs="0" name="assigningOrganizationCode" type="kpinfo:PersonIdentifyingInfoIDAssigningOrganizationCode"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="idPartition" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="id" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="idType" type="xsd:string"/>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="PersonIdentifyingInfoIDAssigningOrganizationCode">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="description" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="code" type="kpinfo:PersonIdentifyingInfoIDAssigningOrganizationCodeCode"/>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:simpleType name="PersonIdentifyingInfoIDAssigningOrganizationCodeCode">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="HL7"/>
+					<xsd:enumeration value="KP_CO"/>
+					<xsd:enumeration value="KP_GA"/>
+					<xsd:enumeration value="KP_HI"/>
+					<xsd:enumeration value="KP_MAS"/>
+					<xsd:enumeration value="KP_NAT"/>
+					<xsd:enumeration value="KP_NCA"/>
+					<xsd:enumeration value="KP_NW"/>
+					<xsd:enumeration value="KP_OH"/>
+					<xsd:enumeration value="KP_SCA"/>
+					<xsd:enumeration value="X12"/>
+					<xsd:enumeration value="KP_EBIZ"/>
+					<xsd:enumeration value="EPIC"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:complexType name="RegionType">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="0" name="description" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="code" type="kpinfo:RegionCode"/>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:simpleType name="RegionCode">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="CO"/>
+					<xsd:enumeration value="GA"/>
+					<xsd:enumeration value="HI"/>
+					<xsd:enumeration value="MA"/>
+					<xsd:enumeration value="NCA"/>
+					<xsd:enumeration value="NW"/>
+					<xsd:enumeration value="OH"/>
+					<xsd:enumeration value="SCA"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:schema>
+		
+		
+		<xsd:schema targetNamespace="http://schemas.svc.kp.org/hlth_plan_admin/mbrshp_admin/v1/UserDataService" version="1.0.0">
+			<xsd:import namespace="http://schemas.svc.kp.org/info/v1/ExecutionContext"/>
+			<xsd:import namespace="http://schemas.svc.kp.org/info/PersonInfo/v1"/>
+			<xsd:import namespace="http://svc.kp.org/info/PersonIdentifyingInfo/v4"/>
+			<xsd:complexType name="PersonInfo">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="0" name="nameDetails" type="pinfo:PersonName"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="sourceSystem" type="pinfo:SourceSystem"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="gender" type="pinfo:GenderCode"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="last4SSN" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="deceasedIndicator" type="xsd:boolean"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="preferredLanguage" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="dateOfBirth" nillable="true" type="xsd:date"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="preferredSpokenLanguage" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="contactInfo" nillable="false" type="tns:ContactInfo"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="ebizProfileInfo" nillable="false" type="tns:EbizProfileInfo"/>
+					<xsd:element maxOccurs="unbounded" minOccurs="0" name="ebizAccountInfos" type="tns:EbizAccountInfo"/>
+					<xsd:element maxOccurs="unbounded" minOccurs="0" name="membershipAccountInfos" type="tns:MembershipAccountInfo"/> 
+					<xsd:element maxOccurs="unbounded" minOccurs="0" name="governmentProgramInfos" nillable="false" type="tns:GovernmentProgramInfo"/>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="AccountInfo">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="accountId" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="accountIdType" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="accountIdPrefix" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="accountStatus" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="region" type="kpinfo:RegionCode"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="activationDate" type="xsd:date"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="terminationDate" type="xsd:date"/>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="EbizAccountInfo">
+				<xsd:complexContent>
+					<xsd:extension base="tns:AccountInfo">
+						<xsd:sequence>
+							<xsd:element maxOccurs="1" minOccurs="1" name="username" type="xsd:string"/>
+							<xsd:element maxOccurs="1" minOccurs="0" name="registrationType" type="xsd:string"/>
+							<xsd:element maxOccurs="1" minOccurs="0" name="termsAndConditionAccepted" type="xsd:boolean"/>
+							<xsd:element maxOccurs="1" minOccurs="0" name="fraudIndicator" type="xsd:boolean"/>
+							<xsd:element maxOccurs="1" minOccurs="0" name="disabledDate" type="xsd:date"/>
+							<xsd:element maxOccurs="1" minOccurs="0" name="disabledIndicator" type="xsd:boolean"/>
+							<xsd:element maxOccurs="1" minOccurs="0" name="disabledReason" type="xsd:string"/>
+							<xsd:element maxOccurs="1" minOccurs="0" name="hcoCreatedInd" type="xsd:boolean"/>
+							<xsd:element maxOccurs="1" minOccurs="0" name="hcoCreatedDate" type="xsd:date"/>
+							<xsd:element maxOccurs="1" minOccurs="0" name="accountLockedInd" type="xsd:boolean"/>
+							<xsd:element maxOccurs="unbounded" minOccurs="0" name="consentInfos" nillable="false" type="tns:ConsentInfo"/>
+						</xsd:sequence>
+					</xsd:extension>
+				</xsd:complexContent>	
+			</xsd:complexType>
+			<xsd:complexType name="MembershipAccountInfo">
+				<xsd:complexContent>
+					<xsd:extension base="tns:AccountInfo">
+						<xsd:sequence>
+							<xsd:element maxOccurs="1" minOccurs="0" name="accountRole" type="xsd:string"/>
+							<xsd:element maxOccurs="1" minOccurs="0" name="enrollmentUnit" type="xsd:string"/>
+							<xsd:element maxOccurs="1" minOccurs="0" name="enrollmentUnitName" type="xsd:string"/>
+							<xsd:element maxOccurs="1" minOccurs="0" name="sequenceNumber" type="xsd:int"/>
+							<xsd:element maxOccurs="1" minOccurs="0" name="serviceAreaType" type="tns:ServiceAreaType"/>
+							<xsd:element maxOccurs="1" minOccurs="0" name="serviceArea" type="xsd:string"/>
+							<xsd:element maxOccurs="1" minOccurs="0" name="kpTerminationDate" type="xsd:date"/>
+							<xsd:element maxOccurs="1" minOccurs="0" name="primaryCarePhysician" type="xsd:string"/>
+							<xsd:element maxOccurs="1" minOccurs="0" name="homeFacility" type="xsd:string"/>
+							<xsd:element maxOccurs="1" minOccurs="0" name="fsPersonId" type="xsd:int"/>
+							<xsd:element maxOccurs="1" minOccurs="0" name="fsMembershipId" type="xsd:int"/>
+							<xsd:element maxOccurs="unbounded" minOccurs="0" name="planInfos" nillable="false" type="tns:PlanInfo"/>
+							<xsd:element maxOccurs="unbounded" minOccurs="0" name="consentInfos" nillable="false" type="tns:ConsentInfo"/>					
+						</xsd:sequence>
+					</xsd:extension>
+				</xsd:complexContent>	
+			</xsd:complexType>
+			<xsd:complexType name="PlanInfo">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="0" name="coverageStartDate" type="xsd:date"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="coverageEndDate" type="xsd:date"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="purchaserCategory" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="purchaserId" type="xsd:int"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="purchaserName" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="tpaId" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="tpaGroupId" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="tpaDivisionId" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="dhmoStatus" type="xsd:boolean"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="dpaStatus" type="xsd:boolean"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="dpaEffectiveDate" type="xsd:date"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="selfFunded" type="xsd:boolean"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="exitState" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="fundingType" type="xsd:string"/>	
+					<xsd:element maxOccurs="1" minOccurs="0" name="networkModel" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="productType" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="productSubType" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="daBuntBuIk" type="xsd:string"/>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="EbizProfileInfo">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="unbounded" minOccurs="1" name="ebizProfileProductInfos" type="tns:EbizProductInfo"/> 
+                </xsd:sequence>
+            </xsd:complexType>
+			<xsd:complexType name="EbizProductInfo">
+                <xsd:sequence>
+                	<xsd:element maxOccurs="1" minOccurs="1" name="productId" type="xsd:string"/> 
+                    <xsd:element maxOccurs="unbounded" minOccurs="0" name="profileProductAttributeInfos" type="tns:ProductAttributeInfo"/> 
+                </xsd:sequence>
+            </xsd:complexType>
+			<xsd:complexType name="ProductAttributeInfo">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="1" minOccurs="1" name="attributeType" type="xsd:string"/> 
+                    <xsd:element maxOccurs="1" minOccurs="1" name="attributeName" type="xsd:string"/> 
+                    <xsd:element maxOccurs="1" minOccurs="1" name="attributeValue" type="xsd:string"/> 
+                </xsd:sequence>
+            </xsd:complexType>
+			<xsd:complexType name="GovernmentProgramInfo">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="1" minOccurs="1" name="identifier" type="tns:GovProgramIdentifierType"/>
+                    <xsd:element maxOccurs="1" minOccurs="1" name="status" type="xsd:boolean"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:simpleType name="GovProgramIdentifierType">
+                <xsd:restriction base="xsd:string">
+                    <xsd:enumeration value="MEDICARE"/>
+                    <xsd:enumeration value="MEDICAID"/>
+                    <xsd:enumeration value="MEDICARE_PART_D"/>
+                    <xsd:enumeration value="MEDICAID_PART_D"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+			<xsd:simpleType name="ServiceAreaType">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="REGION"/>
+					<xsd:enumeration value="SUB_REGION"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:complexType name="ConsentInfo">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="type" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="consent" type="xsd:boolean"/>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="ContactInfo">
+				<xsd:sequence>
+					<xsd:element maxOccurs="unbounded" minOccurs="0" name="addressInfos" type="pinfo:AddressType"/>
+					<xsd:element maxOccurs="unbounded" minOccurs="0" name="emailInfos" type="pinfo:EmailType"/>
+					<xsd:element maxOccurs="unbounded" minOccurs="0" name="phoneInfos" type="pinfo:PhoneType"/>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:element name="GetUserByGuidRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="personInfo" type="tns:PersonInfo"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="GetUserByGuidResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="status" type="xsd:boolean"/>
+						<xsd:element name="personInfo" type="tns:PersonInfo"/>
+						<xsd:element name="executionContext" type="execContext:ExecutionContextType"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="GetUserByMrnRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="personInfo" type="tns:PersonInfo"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="GetUserByMrnResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="status" type="xsd:boolean"/>
+						<xsd:element name="personInfo" type="tns:PersonInfo"/>
+						<xsd:element name="executionContext" type="execContext:ExecutionContextType"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="CreateUserRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="personInfo" type="tns:PersonInfo"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="CreateUserResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="status" type="xsd:boolean"/>
+						<xsd:element name="executionContext" type="execContext:ExecutionContextType"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="CreateOrUpdateUserRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="personInfo" type="tns:PersonInfo"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="CreateOrUpdateUserResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="status" type="xsd:boolean"/>
+						<xsd:element name="executionContext" type="execContext:ExecutionContextType"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="UpdateUserRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="personInfo" type="tns:PersonInfo"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="UpdateUserResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="status" type="xsd:boolean"/>
+						<xsd:element name="executionContext" type="execContext:ExecutionContextType"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="DeleteUserRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="personInfo" type="tns:PersonInfo"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="DeleteUserResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="status" type="xsd:boolean"/>
+						<xsd:element name="executionContext" type="execContext:ExecutionContextType"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="GetUserAccountByGuidRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="personInfo" type="tns:PersonInfo"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="GetUserAccountByGuidResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="status" type="xsd:boolean"/>
+						<xsd:element name="personInfo" type="tns:PersonInfo"/>
+						<xsd:element name="executionContext" type="execContext:ExecutionContextType"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="GetUserAccountByMrnRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="personInfo" type="tns:PersonInfo"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="GetUserAccountByMrnResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="status" type="xsd:boolean"/>
+						<xsd:element name="personInfo" type="tns:PersonInfo"/>
+						<xsd:element name="executionContext" type="execContext:ExecutionContextType"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="CreateUserAccountRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="personInfo" type="tns:PersonInfo"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="CreateUserAccountResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="status" type="xsd:boolean"/>
+						<xsd:element name="executionContext" type="execContext:ExecutionContextType"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="UpdateUserAccountRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="personInfo" type="tns:PersonInfo"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="UpdateUserAccountResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="status" type="xsd:boolean"/>
+						<xsd:element name="executionContext" type="execContext:ExecutionContextType"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="DeleteUserAccountRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="personInfo" type="tns:PersonInfo"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="DeleteUserAccountResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="status" type="xsd:boolean"/>
+						<xsd:element name="executionContext" type="execContext:ExecutionContextType"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="GetMemberAccountRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="personInfo" type="tns:PersonInfo"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="GetMemberAccountResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="status" type="xsd:boolean"/>
+						<xsd:element name="personInfo" type="tns:PersonInfo"/>
+						<xsd:element name="executionContext" type="execContext:ExecutionContextType"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="CreateMemberAccountRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="membershipAccountInfo" type="tns:MembershipAccountInfo"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="CreateMemberAccountResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="status" type="xsd:boolean"/>
+						<xsd:element name="executionContext" type="execContext:ExecutionContextType"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="UpdateMemberAccountRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="personInfo" type="tns:PersonInfo"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="UpdateMemberAccountResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="status" type="xsd:boolean"/>
+						<xsd:element name="executionContext" type="execContext:ExecutionContextType"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:schema>
+			<xsd:element name="DeleteMemberAccountRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="personInfo" type="tns:PersonInfo"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="DeleteMemberAccountResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="status" type="xsd:boolean"/>
+						<xsd:element name="executionContext" type="execContext:ExecutionContextType"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		<xsd:schema elementFormDefault="qualified" targetNamespace="http://schemas.svc.kp.org/info/v1/ServiceStatus" version="1.0.0">
+			<xsd:import namespace="http://schemas.svc.kp.org/info/v1/ExecutionContext"/>
+			<xsd:complexType name="ServiceStatusRequestType">
+				<xsd:sequence>
+					<xsd:element name="inputMessage" type="xsd:string"/>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="ServiceStatusResponseType">
+				<xsd:sequence>
+					<xsd:element name="outputMessage" type="xsd:string"/>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:element name="serviceStatusRequest" type="ebizstatus:ServiceStatusRequestType"/>
+			<xsd:element name="serviceStatusResponse" type="ebizstatus:ServiceStatusResponseType"/>
+			<xsd:element name="GetServiceStatusRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ebizstatus:serviceStatusRequest"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="GetServiceStatusResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="1" minOccurs="1" ref="ebizstatus:serviceStatusResponse"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:schema>
+	</wsdl:types>
+	<wsdl:message name="GetUserByGuidRequest">
+		<wsdl:part element="tns:GetUserByGuidRequest" name="input"/>
+	</wsdl:message>
+	<wsdl:message name="GetUserByGuidResponse">
+		<wsdl:part element="tns:GetUserByGuidResponse" name="output"/>
+	</wsdl:message>
+	<wsdl:message name="GetUserByMrnRequest">
+		<wsdl:part element="tns:GetUserByMrnRequest" name="input"/>
+	</wsdl:message>
+	<wsdl:message name="GetUserByMrnResponse">
+		<wsdl:part element="tns:GetUserByMrnResponse" name="output"/>
+	</wsdl:message>
+	<wsdl:message name="CreateUserRequest">
+		<wsdl:part element="tns:CreateUserRequest" name="input"/>
+	</wsdl:message>
+	<wsdl:message name="CreateUserResponse">
+		<wsdl:part element="tns:CreateUserResponse" name="output"/>
+	</wsdl:message>
+	<wsdl:message name="CreateOrUpdateUserRequest">
+		<wsdl:part element="tns:CreateOrUpdateUserRequest" name="input"/>
+	</wsdl:message>
+	<wsdl:message name="CreateOrUpdateUserResponse">
+		<wsdl:part element="tns:CreateOrUpdateUserResponse" name="output"/>
+	</wsdl:message>
+	<wsdl:message name="UpdateUserRequest">
+		<wsdl:part element="tns:UpdateUserRequest" name="input"/>
+	</wsdl:message>
+	<wsdl:message name="UpdateUserResponse">
+		<wsdl:part element="tns:UpdateUserResponse" name="output"/>
+	</wsdl:message>
+	<wsdl:message name="DeleteUserRequest">
+		<wsdl:part element="tns:DeleteUserRequest" name="input"/>
+	</wsdl:message>
+	<wsdl:message name="DeleteUserResponse">
+		<wsdl:part element="tns:DeleteUserResponse" name="output"/>
+	</wsdl:message>
+	<wsdl:message name="GetUserAccountByGuidRequest">
+		<wsdl:part element="tns:GetUserAccountByGuidRequest" name="input"/>
+	</wsdl:message>
+	<wsdl:message name="GetUserAccountByGuidResponse">
+		<wsdl:part element="tns:GetUserAccountByGuidResponse" name="output"/>
+	</wsdl:message>
+	<wsdl:message name="GetUserAccountByMrnRequest">
+		<wsdl:part element="tns:GetUserAccountByMrnRequest" name="input"/>
+	</wsdl:message>
+	<wsdl:message name="GetUserAccountByMrnResponse">
+		<wsdl:part element="tns:GetUserAccountByMrnResponse" name="output"/>
+	</wsdl:message>
+	<wsdl:message name="CreateUserAccountRequest">
+		<wsdl:part element="tns:CreateUserAccountRequest" name="input"/>
+	</wsdl:message>
+	<wsdl:message name="CreateUserAccountResponse">
+		<wsdl:part element="tns:CreateUserAccountResponse" name="output"/>
+	</wsdl:message>
+	<wsdl:message name="UpdateUserAccountRequest">
+		<wsdl:part element="tns:UpdateUserAccountRequest" name="input"/>
+	</wsdl:message>
+	<wsdl:message name="UpdateUserAccountResponse">
+		<wsdl:part element="tns:UpdateUserAccountResponse" name="output"/>
+	</wsdl:message>
+	<wsdl:message name="DeleteUserAccountRequest">
+		<wsdl:part element="tns:DeleteUserAccountRequest" name="input"/>
+	</wsdl:message>
+	<wsdl:message name="DeleteUserAccountResponse">
+		<wsdl:part element="tns:DeleteUserAccountResponse" name="output"/>
+	</wsdl:message>
+	<wsdl:message name="GetMemberAccountRequest">
+		<wsdl:part element="tns:GetMemberAccountRequest" name="input"/>
+	</wsdl:message>
+	<wsdl:message name="GetMemberAccountResponse">
+		<wsdl:part element="tns:GetMemberAccountResponse" name="output"/>
+	</wsdl:message>
+	<wsdl:message name="UpdateMemberAccountRequest">
+		<wsdl:part element="tns:UpdateMemberAccountRequest" name="input"/>
+	</wsdl:message>
+	<wsdl:message name="UpdateMemberAccountResponse">
+		<wsdl:part element="tns:UpdateMemberAccountResponse" name="output"/>
+	</wsdl:message>
+	<wsdl:message name="GetBusinessExceptionMsg">
+		<wsdl:part element="execContext:businessException" name="fault"/>
+	</wsdl:message>
+	<wsdl:message name="GetSystemExceptionMsg">
+		<wsdl:part element="execContext:systemException" name="fault"/>
+	</wsdl:message>
+	<wsdl:message name="GetServiceStatusRequestMsg">
+		<wsdl:part element="ebizstatus:GetServiceStatusRequest" name="input"/>
+	</wsdl:message>
+	<wsdl:message name="GetServiceStatusResponseMsg">
+		<wsdl:part element="ebizstatus:GetServiceStatusResponse" name="output"/>
+	</wsdl:message>
+	<wsdl:portType name="UserDataServiceSOAPBindingPort">
+		<wsdl:operation name="GetUserByMrn">
+			<wsdl:input message="tns:GetUserByMrnRequest"/>
+			<wsdl:output message="tns:GetUserByMrnResponse"/>
+			<wsdl:fault message="tns:GetBusinessExceptionMsg" name="businessException"/>
+			<wsdl:fault message="tns:GetSystemExceptionMsg" name="systemException"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetUserByGuid">
+			<wsdl:input message="tns:GetUserByGuidRequest"/>
+			<wsdl:output message="tns:GetUserByGuidResponse"/>
+			<wsdl:fault message="tns:GetBusinessExceptionMsg" name="businessException"/>
+			<wsdl:fault message="tns:GetSystemExceptionMsg" name="systemException"/>
+		</wsdl:operation>
+		<wsdl:operation name="CreateUser">
+			<wsdl:input message="tns:CreateUserRequest"/>
+			<wsdl:output message="tns:CreateUserResponse"/>
+			<wsdl:fault message="tns:GetBusinessExceptionMsg" name="businessException"/>
+			<wsdl:fault message="tns:GetSystemExceptionMsg" name="systemException"/>
+		</wsdl:operation>
+		<wsdl:operation name="CreateOrUpdateUser">
+			<wsdl:input message="tns:CreateOrUpdateUserRequest"/>
+			<wsdl:output message="tns:CreateOrUpdateUserResponse"/>
+			<wsdl:fault message="tns:GetBusinessExceptionMsg" name="businessException"/>
+			<wsdl:fault message="tns:GetSystemExceptionMsg" name="systemException"/>
+		</wsdl:operation>
+		<wsdl:operation name="UpdateUser">
+			<wsdl:input message="tns:UpdateUserRequest"/>
+			<wsdl:output message="tns:UpdateUserResponse"/>
+			<wsdl:fault message="tns:GetBusinessExceptionMsg" name="businessException"/>
+			<wsdl:fault message="tns:GetSystemExceptionMsg" name="systemException"/>
+		</wsdl:operation>
+		<wsdl:operation name="DeleteUser">
+			<wsdl:input message="tns:DeleteUserRequest"/>
+			<wsdl:output message="tns:DeleteUserResponse"/>
+			<wsdl:fault message="tns:GetBusinessExceptionMsg" name="businessException"/>
+			<wsdl:fault message="tns:GetSystemExceptionMsg" name="systemException"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetUserAccountByMrn">
+			<wsdl:input message="tns:GetUserAccountByMrnRequest"/>
+			<wsdl:output message="tns:GetUserAccountByMrnResponse"/>
+			<wsdl:fault message="tns:GetBusinessExceptionMsg" name="businessException"/>
+			<wsdl:fault message="tns:GetSystemExceptionMsg" name="systemException"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetUserAccountByGuid">
+			<wsdl:input message="tns:GetUserAccountByGuidRequest"/>
+			<wsdl:output message="tns:GetUserAccountByGuidResponse"/>
+			<wsdl:fault message="tns:GetBusinessExceptionMsg" name="businessException"/>
+			<wsdl:fault message="tns:GetSystemExceptionMsg" name="systemException"/>
+		</wsdl:operation>
+		<wsdl:operation name="CreateUserAccount">
+			<wsdl:input message="tns:CreateUserAccountRequest"/>
+			<wsdl:output message="tns:CreateUserAccountResponse"/>
+			<wsdl:fault message="tns:GetBusinessExceptionMsg" name="businessException"/>
+			<wsdl:fault message="tns:GetSystemExceptionMsg" name="systemException"/>
+		</wsdl:operation>
+		<wsdl:operation name="UpdateUserAccount">
+			<wsdl:input message="tns:UpdateUserAccountRequest"/>
+			<wsdl:output message="tns:UpdateUserAccountResponse"/>
+			<wsdl:fault message="tns:GetBusinessExceptionMsg" name="businessException"/>
+			<wsdl:fault message="tns:GetSystemExceptionMsg" name="systemException"/>
+		</wsdl:operation>
+		<wsdl:operation name="DeleteUserAccount">
+			<wsdl:input message="tns:DeleteUserAccountRequest"/>
+			<wsdl:output message="tns:DeleteUserAccountResponse"/>
+			<wsdl:fault message="tns:GetBusinessExceptionMsg" name="businessException"/>
+			<wsdl:fault message="tns:GetSystemExceptionMsg" name="systemException"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetMemberAccount">
+			<wsdl:input message="tns:GetMemberAccountRequest"/>
+			<wsdl:output message="tns:GetMemberAccountResponse"/>
+			<wsdl:fault message="tns:GetBusinessExceptionMsg" name="businessException"/>
+			<wsdl:fault message="tns:GetSystemExceptionMsg" name="systemException"/>
+		</wsdl:operation>
+		<wsdl:operation name="UpdateMemberAccount">
+			<wsdl:input message="tns:UpdateMemberAccountRequest"/>
+			<wsdl:output message="tns:UpdateMemberAccountResponse"/>
+			<wsdl:fault message="tns:GetBusinessExceptionMsg" name="businessException"/>
+			<wsdl:fault message="tns:GetSystemExceptionMsg" name="systemException"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetServiceStatus">
+			<wsdl:input message="tns:GetServiceStatusRequestMsg"/>
+			<wsdl:output message="tns:GetServiceStatusResponseMsg"/>
+			<wsdl:fault message="tns:GetBusinessExceptionMsg" name="businessException"/>
+			<wsdl:fault message="tns:GetSystemExceptionMsg" name="systemException"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="UserDataServiceSOAPBinding" type="tns:UserDataServiceSOAPBindingPort">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="GetUserByMrn">
+			<soap:operation soapAction="http://schemas.svc.kp.org/hlth_plan_admin/mbrshp_admin/v1/UserDataService/GetUserByMrn"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="businessException">
+				<soap:fault name="businessException" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="systemException">
+				<soap:fault name="systemException" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="GetUserByGuid">
+			<soap:operation soapAction="http://schemas.svc.kp.org/hlth_plan_admin/mbrshp_admin/v1/UserDataService/GetUserByGuid"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="businessException">
+				<soap:fault name="businessException" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="systemException">
+				<soap:fault name="systemException" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="CreateUser">
+			<soap:operation soapAction="http://schemas.svc.kp.org/hlth_plan_admin/mbrshp_admin/v1/UserDataService/CreateUser"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="businessException">
+				<soap:fault name="businessException" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="systemException">
+				<soap:fault name="systemException" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="UpdateUser">
+			<soap:operation soapAction="http://schemas.svc.kp.org/hlth_plan_admin/mbrshp_admin/v1/UserDataService/UpdateUser"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="businessException">
+				<soap:fault name="businessException" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="systemException">
+				<soap:fault name="systemException" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="CreateOrUpdateUser">
+			<soap:operation soapAction="http://schemas.svc.kp.org/hlth_plan_admin/mbrshp_admin/v1/UserDataService/CreateOrUpdateUser"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="businessException">
+				<soap:fault name="businessException" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="systemException">
+				<soap:fault name="systemException" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="DeleteUser">
+			<soap:operation soapAction="http://schemas.svc.kp.org/hlth_plan_admin/mbrshp_admin/v1/UserDataService/DeleteUser"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="businessException">
+				<soap:fault name="businessException" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="systemException">
+				<soap:fault name="systemException" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="GetUserAccountByMrn">
+			<soap:operation soapAction="http://schemas.svc.kp.org/hlth_plan_admin/mbrshp_admin/v1/UserDataService/GetUserAccountByMrn"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="businessException">
+				<soap:fault name="businessException" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="systemException">
+				<soap:fault name="systemException" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="GetUserAccountByGuid">
+			<soap:operation soapAction="http://schemas.svc.kp.org/hlth_plan_admin/mbrshp_admin/v1/UserDataService/GetUserAccountByGuid"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="businessException">
+				<soap:fault name="businessException" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="systemException">
+				<soap:fault name="systemException" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="CreateUserAccount">
+			<soap:operation soapAction="http://schemas.svc.kp.org/hlth_plan_admin/mbrshp_admin/v1/UserDataService/CreateUserAccount"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="businessException">
+				<soap:fault name="businessException" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="systemException">
+				<soap:fault name="systemException" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="UpdateUserAccount">
+			<soap:operation soapAction="http://schemas.svc.kp.org/hlth_plan_admin/mbrshp_admin/v1/UserDataService/UpdateUserAccount"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="businessException">
+				<soap:fault name="businessException" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="systemException">
+				<soap:fault name="systemException" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="DeleteUserAccount">
+			<soap:operation soapAction="http://schemas.svc.kp.org/hlth_plan_admin/mbrshp_admin/v1/UserDataService/DeleteUserAccount"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="businessException">
+				<soap:fault name="businessException" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="systemException">
+				<soap:fault name="systemException" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="GetMemberAccount">
+			<soap:operation soapAction="http://schemas.svc.kp.org/hlth_plan_admin/mbrshp_admin/v1/UserDataService/GetMemberAccount"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="businessException">
+				<soap:fault name="businessException" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="systemException">
+				<soap:fault name="systemException" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="UpdateMemberAccount">
+			<soap:operation soapAction="http://schemas.svc.kp.org/hlth_plan_admin/mbrshp_admin/v1/UserDataService/UpdateMemberAccount"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="businessException">
+				<soap:fault name="businessException" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="systemException">
+				<soap:fault name="systemException" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="GetServiceStatus">
+			<soap:operation soapAction="http://schemas.svc.kp.org/hlth_plan_admin/mbrshp_admin/v1/UserDataService/GetServiceStatus"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="businessException">
+				<soap:fault name="businessException" use="literal"/>
+			</wsdl:fault>
+			<wsdl:fault name="systemException">
+				<soap:fault name="systemException" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="UserDataService">
+		<wsdl:port binding="tns:UserDataServiceSOAPBinding" name="UserDataServicePort">
+			<soap:address location="http://localhost:9080/wpp.is.ws.user.data/UserDataService"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

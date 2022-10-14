@@ -9,19 +9,19 @@ public interface TransportProtocolBuilder {
 	 * @param value
 	 * @return
 	 */
-	public TransportProtocolBuilder addParameter(String key, String value);
+    TransportProtocolBuilder addParameter(String key, String value);
 
 	/**
 	 * @param dataProtocolBuilder
 	 * @return
 	 */
-	public TransportProtocolBuilderImpl addRequestDataProtocol(DataProtocolBuilder dataProtocolBuilder);
+    TransportProtocolBuilderImpl addRequestDataProtocol(DataProtocolBuilder dataProtocolBuilder);
 
 	/**
 	 * @param dphBuilder
 	 * @return
 	 */
-	public TransportProtocolBuilder addResponseDataProtocol(DataProtocolBuilder dphBuilder);
+    TransportProtocolBuilder addResponseDataProtocol(DataProtocolBuilder dphBuilder);
 
 	/**
 	 * @return

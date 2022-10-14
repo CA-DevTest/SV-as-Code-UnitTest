@@ -71,5 +71,6 @@ public @interface DevTestVirtualServer {
 	 * @return protocol to access api
 	 */
 	String protocol() default "";
-
+	String keystore() default "";
+	String keystorePassword() default "";
 }

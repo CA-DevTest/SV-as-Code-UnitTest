@@ -20,14 +20,14 @@ public final class VirtualServiceRRPairsBuilder extends VirtualServiceBuilder {
 	/**
 	 * @return the rrPairsFolder
 	 */
-	protected final File getRrPairsFolder() {
+	private File getRrPairsFolder() {
 		return rrPairsFolder;
 	}
 
 	/**
 	 * @param rrPairsFolder the rrPairsFolder to set
 	 */
-	protected final void setRrPairsFolder(File rrPairsFolder) {
+	private void setRrPairsFolder(File rrPairsFolder) {
 		this.rrPairsFolder = rrPairsFolder;
 	}
 

@@ -12,6 +12,8 @@ public class ExecutionMode {
 	private int capacity=1;
     private int thinkScale=100;
     private boolean autoRestartEnabled=true;
+	private String groupTag="";
+
     private ExecutionModeType executionMode=ExecutionModeType.EFFICIENT;
 	/**
 	 * @return the capacity
@@ -61,6 +63,12 @@ public class ExecutionMode {
 	public final void setExecutionMode(ExecutionModeType executionMode) {
 		this.executionMode = executionMode;
 	}
-    
-	
+
+	public String getGroupTag() {
+		return groupTag;
+	}
+
+	public void setGroupTag(String groupTag) {
+		this.groupTag = groupTag;
+	}
 }

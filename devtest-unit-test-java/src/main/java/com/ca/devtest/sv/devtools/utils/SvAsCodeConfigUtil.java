@@ -1,10 +1,9 @@
 package com.ca.devtest.sv.devtools.utils;
 
 import java.io.File;
-
+import com.ca.devtest.sv.devtools.SVasCodeConfigHandler;
 import org.aeonbits.owner.ConfigFactory;
 import org.apache.commons.lang.StringUtils;
-
 import com.ca.devtest.sv.devtools.SVasCodeConfig;
 
 /**
@@ -15,8 +14,14 @@ import com.ca.devtest.sv.devtools.SVasCodeConfig;
  */
 public final class SvAsCodeConfigUtil {
 
-	private static final SVasCodeConfig CONFIG = ConfigFactory.create(SVasCodeConfig.class, System.getProperties(),
+	private static SVasCodeConfig CONFIG = ConfigFactory.create(SVasCodeConfig.class, System.getProperties(),
 			System.getenv());
+
+	static {
+		if((new SVasCodeConfigHandler()).encryptProperties()){
+			CONFIG = ConfigFactory.create(SVasCodeConfig.class, System.getProperties(),System.getenv());
+		}
+	}
 
 	/**
 	 * Registry server name. By default 'localhost'.
@@ -81,12 +86,21 @@ public final class SvAsCodeConfigUtil {
 		return StringUtils.defaultIfEmpty(protocol, CONFIG.protocol());
 	}
 
+	public static String keystore(String keystore){
+
+		return StringUtils.defaultIfEmpty(keystore, CONFIG.keystore());
+	}
+
+	public static String keystorePassword(String keystorePassword){
+		return StringUtils.defaultIfEmpty(keystorePassword, CONFIG.keystorePassword());
+	}
 	/**
 	 * Registry URL
 	 * 
 	 * @return url to access to registry
 	 */
 	public static String registryUrl() {
+
 		return CONFIG.registryUrl();
 	}
 	/**
@@ -95,10 +109,13 @@ public final class SvAsCodeConfigUtil {
 	 * @return url to access to registry
 	 */
 	public static String registryPort() {
+
 		return CONFIG.registryPort();
 	}
 	
-
+	public static boolean undeployIfExist() {
+		return CONFIG.undeployIfExist() != null && CONFIG.undeployIfExist().equals("true");
+	}
 	/**
 	 * DevTest home directory.
 	 * 

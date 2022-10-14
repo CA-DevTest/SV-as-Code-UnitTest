@@ -39,8 +39,7 @@ public class RawTrafficTransactionGouper {
 	private static final String SHORT_MESSAGE_LOG_ENDPOINT = "%s=%d";
 	private static final String GENERATED_FOLDERNAME = "generated";
 	private static final String SUM_MESSAGE_LOG_ENDPOINT = "# Endpoint =%d #transaction=%d";
-	private static final String GROUP_ENDPOINT = new String(
-			"DomaineDR7CandidatServiceSync,,");
+	private static final String GROUP_ENDPOINT = "DomaineDR7CandidatServiceSync,,";
 
 	private static final String TRANSCATION_FILENAME_PAT = "%s.xml";
 	private static final String SERVICE_LINE_HEADER = "serviceName;targetServer;targetPort;endpointPath;vsport;vsmName,vsmType";
@@ -90,7 +89,7 @@ public class RawTrafficTransactionGouper {
 						doc, XPathConstants.NODESET);
 				for (int i = 0; i < transactions.getLength(); i++) {
 
-					Node transaction = (Node) transactions.item(i);
+					Node transaction = transactions.item(i);
 
 					addTransaction(sortedTransactions,
 							getEndPoint(transaction), transaction,
@@ -256,13 +255,13 @@ public class RawTrafficTransactionGouper {
 			transactionCounter = transactionCounter + nbTransaction;
 			nbEndpoints++;
 			if (!deep) {
-				System.out.println(String.format(SHORT_MESSAGE_LOG_ENDPOINT,
-						endpoint, nbTransaction));
+				System.out.printf((SHORT_MESSAGE_LOG_ENDPOINT) + "%n",
+						endpoint, nbTransaction);
 			}
 
 		}
-		System.out.println(String.format(SUM_MESSAGE_LOG_ENDPOINT, nbEndpoints,
-				transactionCounter));
+		System.out.printf((SUM_MESSAGE_LOG_ENDPOINT) + "%n", nbEndpoints,
+				transactionCounter);
 	}
 
 	/**
@@ -320,7 +319,7 @@ public class RawTrafficTransactionGouper {
 
 		for (int i = 0; i < parameters.getLength(); i++) {
 
-			Node item = (Node) parameters.item(i);
+			Node item = parameters.item(i);
 			String name = XPATH.evaluate("@name", item);
 			String value = XPATH.evaluate("text()", item);
 			if ("HTTP-URI".equalsIgnoreCase(name)) {
@@ -345,7 +344,7 @@ public class RawTrafficTransactionGouper {
 
 		for (int i = 0; i < parameters.getLength(); i++) {
 
-			Node item = (Node) parameters.item(i);
+			Node item = parameters.item(i);
 			String name = XPATH.evaluate("@name", item);
 			String value = XPATH.evaluate("text()", item);
 			if ("Host".equalsIgnoreCase(name)) {
