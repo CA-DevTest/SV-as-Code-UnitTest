@@ -4,7 +4,7 @@ package com.ca.devtest.sv.devtools.services.v3;
  * @author sm632260
  *
  */
-class DataProtocol {
+public class DataProtocol {
     String typeId;
     boolean forRequest;
 

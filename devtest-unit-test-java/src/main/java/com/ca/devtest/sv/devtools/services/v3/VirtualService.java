@@ -4,7 +4,7 @@ package com.ca.devtest.sv.devtools.services.v3;
  * @author sm632260
  *
  */
-class VirtualService {
+public class VirtualService {
     String version;
     String name;
     String description;
@@ -16,6 +16,13 @@ class VirtualService {
     String groupTag;
 
     public VirtualService() {
+        this.version = "1.0";
+        this.description = "Deployed using SV-as-Code";
+        this.name="";
+        this.status="";
+        this.groupTag="";
+        this.autoRestart=true;
+        this.startOnDeploy=true;
     }
 
     public String getVersion() {
