@@ -43,7 +43,7 @@ public class UserServiceTest {
 		User[] users = bankServices.getListUser();
 		assertNotNull(users);
 		printUsers(users);
-		assertEquals(9, users.length);
+		assertEquals(1, users.length);
 	}
 
 	@DevTestVirtualServiceV3(serviceName = "getUserV3",
