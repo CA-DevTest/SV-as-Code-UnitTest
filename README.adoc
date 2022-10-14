@@ -34,7 +34,7 @@ Add below dependency with scope test in your **pom file** :
 	<dependency>
 		<groupId>com.ca.devtest.sv.devtools</groupId>
 		<artifactId>devtest-unit-test-java</artifactId>
-		<version>1.3.2</version>
+		<version>1.4.0</version>
 	</dependency>
 
 ----
