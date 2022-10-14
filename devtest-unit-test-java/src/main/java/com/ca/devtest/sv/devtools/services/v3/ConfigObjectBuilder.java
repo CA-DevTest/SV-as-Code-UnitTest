@@ -24,6 +24,11 @@ public class ConfigObjectBuilder {
         }
     }
 
+    public static String convertToJson(Config config) throws Exception {
+        return ObjectMapperUtil.objectToJSON(config);
+    }
+
+
     private static Config buildCreateConfig(DevTestVirtualServiceV3 virtualService, String deployedName){
 
         VirtualService virtualServiceConfig = VirtualService.VirtualServiceBuilder.builder()

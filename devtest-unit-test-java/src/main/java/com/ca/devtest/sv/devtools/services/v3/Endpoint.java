@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
  * @author sm632260
  *
  */
-class Endpoint {
+public class Endpoint {
     boolean useSSL;
     String host;
     String port;
@@ -14,6 +14,8 @@ class Endpoint {
     SSLConfig sslConfig;
 
     private Endpoint() {
+        this.useSSL=false;
+        host="";
     }
 
     public boolean isUseSSL() {
@@ -80,7 +82,9 @@ class Endpoint {
 
         public Endpoint build(){
             //to avoid generating empty SSL info when it is not configured
-            if(endpointInstance.getSslConfig().getAlias().isEmpty() &&
+            if(endpointInstance!=null &&
+                    endpointInstance.getSslConfig()!=null &&
+                    endpointInstance.getSslConfig().getAlias().isEmpty() &&
                     endpointInstance.getSslConfig().getAliasPassword().isEmpty() &&
                     endpointInstance.getSslConfig().getKeystoreFile().isEmpty() &&
                     endpointInstance.getSslConfig().getKeystorePassword().isEmpty()){

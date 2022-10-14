@@ -4,13 +4,17 @@ package com.ca.devtest.sv.devtools.services.v3;
  * @author sm632260
  *
  */
-class SSLConfig {
+public class SSLConfig {
     String keystoreFile;
     String keystorePassword;
     String alias;
     String aliasPassword;
 
     private SSLConfig(){
+        this.keystoreFile="";
+        this.keystorePassword="";
+        this.alias="";
+        this.aliasPassword="";
     }
 
     public String getKeystoreFile() {

@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
  * @author sm632260
  *
  */
-class Config {
+public class Config {
     VirtualService virtualService;
     TransportProtocol transportProtocol;
     @JsonInclude(JsonInclude.Include.NON_NULL)

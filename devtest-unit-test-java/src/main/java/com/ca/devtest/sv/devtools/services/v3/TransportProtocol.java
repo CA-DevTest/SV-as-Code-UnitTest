@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
  * @author sm632260
  *
  */
-class TransportProtocol {
+public class TransportProtocol {
     String typeId;
     String basePath;
     boolean useGateway;
@@ -16,6 +16,7 @@ class TransportProtocol {
     Endpoint recordingEndpoint;
 
     public TransportProtocol() {
+        this.typeId="HTTP";
     }
 
     public String getTypeId() {
@@ -107,7 +108,9 @@ class TransportProtocol {
 
         public TransportProtocol build(){
             //to avoid generating Recording Endpoint json format when it is not configured
-            if(!transportProtocolInstance.getTargetEndpoint().isUseSSL()
+            if(transportProtocolInstance!=null &&
+                    transportProtocolInstance.getTargetEndpoint()!=null &&
+                    !transportProtocolInstance.getTargetEndpoint().isUseSSL()
                     && transportProtocolInstance.getTargetEndpoint().getHost().isEmpty()
                     && transportProtocolInstance.getTargetEndpoint().getPort().isEmpty()){
                 transportProtocolInstance.setTargetEndpoint(null);
