@@ -8,7 +8,7 @@ import com.ca.devtest.sv.devtools.v3.ResponseParser;
 import org.junit.Rule;
 import org.junit.Test;
 
-@DevTestVirtualServer( registryHost = "ussv-w2k19-itc2.dhcp.broadcom.net", groupName = "remote")
+@DevTestVirtualServer( registryHost = "remoteserver", groupName = "remote")
 public class VirtualServiceV3RemoteServerTest {
 
     @Rule
