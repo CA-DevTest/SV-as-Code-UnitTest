@@ -249,9 +249,3 @@ public class VSClazzScopeSimpleDemo {
 
 ----
 
-== Contributors
-Pascal Gasp *Sr Architect Devops @ CA Technologies* +
-Vincent Mazot *Sr Consultant Devops @ CA Technologies* +
-Olivier Laplace  *Sr Presales Devops @ CA Technologies* +
-Benoit Boulc'h *Developer* +
-
