@@ -81,7 +81,8 @@ First, flag your Junit class as a Test using CA Virtual Services. This annotatio
 * *keystore :* Keystore location required when Protocol is https
 * *keystorePasswored :* Keystore Passwored
 
-all of this parameters are optional. You could set values in local-svascode.porperties file.
+all of this parameters are optional. You could set values in **local-svascode.porperties** file with following properties:
+
 * *devtest.vsename :* Name of VSE
 * *devtest.registry :* Registry hostname 
 * *devtest.registryUrl :* Registry url
