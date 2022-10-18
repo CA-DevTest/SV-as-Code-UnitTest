@@ -77,7 +77,21 @@ First, flag your Junit class as a Test using CA Virtual Services. This annotatio
 * *deployServiceToVse :* Name of VSE
 * *login :* CA Devtest username _(default value svpower)_
 * *password :* CA Devtest password _(default value svpower)_
+* *protocol :* Protcol to connect with Registry _(default value http)_
+* *keystore :* Keystore location required when Protocol is https
+* *keystorePasswored :* Keystore Passwored
+
 all of this parameters are optional. You could set values in local-svascode.porperties file.
+* *devtest.vsename :* Name of VSE
+* *devtest.registry :* Registry hostname 
+* *devtest.registryUrl :* Registry url
+* *devtest.login :* CA Devtest username
+* *devtest.password :* CA Devtest password
+* *devtest.protocol :* Protocol to connect with Registry
+* *devtest.keystore :* Keystore location
+* *devtest.keystorePassword :* Keystore password
+* *devtest.undeploy.ifexists :* Flag to undeploy existing Virtual Service before deploying 
+
 [source,java,indent=0]
 ----	
 @DevTestVirtualServer()
@@ -91,12 +105,37 @@ Add *VirtualServices* rule as a field member of Junit class. This rule will hand
 
 Above of each test method, add virtual service annotations. This annotation should refer to the Requests/Responses folder and define virtual service configuration such as service name, listnen port, path, type of protocole
 [source,java,indent=0]
-----	
+----
+DevTestVirtualService annotation which uses DCM capabilities 
 @DevTestVirtualService(serviceName = "UserServiceTest-EJB3UserControlBean",
 	port = 9080, basePath = "/itkoExamples/EJB3UserControlBean",
 	rrpairsFolder = "UserServiceTest/getListUser/EJB3UserControlBean", 
 	requestDataProtocol = {@Protocol(ProtocolType.DPH_SOAP) })
-			
+	
+DevTestVirtualServiceV3 annotation which uses V3 capabilities  
+ @DevTestVirtualServiceV3(
+            serviceName = "vsV3_SSLConfig",
+            description = "Created with annotation provided for function vsV3_RRPairConfigObject",
+            port = "24778",
+            workingFolder = "v3/rrpair",
+            inputFile2 = "operation-8-req.txt",
+            inputFile1 = "operation-8-rsp.txt",
+            transportProtocolConfig = @TransportProtocolConfig(
+                    typeId = "HTTP",
+                    useGateway = false,
+                    hostHeaderPassThrough = true,
+                    recordingEndpoint = @RecordingEndpointConfig(
+                            host = "recordinghost",
+                            useSSL = true,
+                            sslConfig = @SSLConfig (
+                                    keystorePassword = "passphrase",
+                                    keystoreFile = "/Applications/CA/DevTest/webreckeys.ks",
+                                    aliasPassword = "passphrase",
+                                    alias = "lisa"
+                            )
+                    )
+            )
+    )
 ----
 It's possible to define a set of Virtual Services with Class scope. In this case all virtual services will be deployed once at class level.
 First you should add Junit Class Rule as described below
@@ -173,6 +212,38 @@ public class VSClazzScopeSimpleDemo {
 		}
 
 	}
+	
+	@DevTestVirtualServiceV3(
+            serviceName = "vsV3_SSLConfig",
+            description = "Created with annotation provided for function vsV3_RRPairConfigObject",
+            port = "24778",
+            workingFolder = "v3/rrpair",
+            inputFile2 = "operation-8-req.txt",
+            inputFile1 = "operation-8-rsp.txt",
+            transportProtocolConfig = @TransportProtocolConfig(
+                    typeId = "HTTP",
+                    useGateway = false,
+                    hostHeaderPassThrough = true,
+                    recordingEndpoint = @RecordingEndpointConfig(
+                            host = "recordinghost",
+                            useSSL = true,
+                            sslConfig = @SSLConfig (
+                                    keystorePassword = "passphrase",
+                                    keystoreFile = "/Applications/CA/DevTest/webreckeys.ks",
+                                    aliasPassword = "passphrase",
+                                    alias = "lisa"
+                            )
+                    )
+            )
+    )
+    @Test
+    public void vsV3_SSLConfig(){
+         ResponseParser responseParser = HttpUtils.GET(HttpUtils.URL_FORMAT,  "https", "localhost",
+                "24778","import/test/operation-8");
+       ResponseParser vsResponseParser = HttpUtils.GET_VS_DETAILS(API_PROTOCOL, "localhost", "1505", "VSE", "V3Test.vsV3_Deploy");
+       assert (responseParser!=null);
+       assert (responseParser.getValue("$.TCEntry[0].termsType").equals("Operation 8 terms"));
+    }
 }
 
 ----
