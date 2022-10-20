@@ -1,11 +1,11 @@
 == Service Virtualization As Code
 
 This project provides simple **Java annotations** that can be used  in your Junit Test to deploy Virtual Services before starting your test. The scope of annotations are test methods. +
-This java annotation helps to embed your Virtual Services in your source code. This approach makes your application ready for Continous Integration testing by removing system and data constraints with **CA Service Virtualization**. **Your tests become more reliable, repeatable and automated**. +
+This java annotation helps to embed your Virtual Services in your source code. This approach makes your application ready for Continous Integration testing by removing system and data constraints with **Service Virtualization**. **Your tests become more reliable, repeatable and automated**. +
 With this approach, using **Virtual Services** from your Continuous Integration plateform becomes native. 
 
 == Projects description
-- **devtest-unit-test-java** : Source code of java annotations and java API wrapped on **CA Devtest Rest API** to build and deploy virtual services
+- **devtest-unit-test-java** : Source code of java annotations and java API wrapped on **Devtest Rest API** to build and deploy virtual services
 - **lisabank-demo** : Demo project using SV as Code annotation to deploy virtual services in junit test
 
 == Pre-requises 
